@@ -1,6 +1,6 @@
--- Database: e_hotel_projet
+-- Database: e_hotels_projet
 
--- DROP DATABASE IF EXISTS e_hotel_projet;
+-- DROP DATABASE IF EXISTS e_hotels_projet;
 
 CREATE DATABASE e_hotel_projet
     WITH
