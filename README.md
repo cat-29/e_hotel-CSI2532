@@ -6,3 +6,8 @@ Membres:\
 Mélina Rochon - 300238765\
 Caterina Rose Moquin Bosi - 300214914\
 Amani Louendriz - 300218319
+
+
+Ne pas faire de push dans GitHub des fichiers suivants une fois modifié afin de ne pas causer de problèmes aux autres:
+- application.properties
+- mvnw

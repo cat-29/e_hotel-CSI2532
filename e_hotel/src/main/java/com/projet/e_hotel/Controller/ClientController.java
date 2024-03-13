@@ -1,6 +1,9 @@
-package com.projet.e_hotel;
+package com.projet.e_hotel.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.projet.e_hotel.Service.ClientServiceImpl;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.projet.e_hotel;
+package com.projet.e_hotel.Classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
