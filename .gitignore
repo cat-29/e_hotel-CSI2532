@@ -31,3 +31,24 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Mvnw
+mvnw
+
+# application.properties
+application.properties
+
+# pom.xml
+pom.xml
+
+# .mvn
+.mvn
+
+# .hintrc
+.hintrc
+
+# mvnw.cmd
+mvnw.cmd
+
+
+
