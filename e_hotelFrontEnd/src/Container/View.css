@@ -1,0 +1,66 @@
+
+
+*{
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper{
+    /* background-color: #ECC8AE;
+    border: 2px solid red;
+    min-height: 100%; */
+
+    /* initializing bg-image and bg-image-opacity variables  */
+    --bg-image:url("../../public/images/homeBackground.jpg");
+    --bg-image-opacity:.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.wrapper::after { 
+    content:'';
+    position: fixed;
+    /* inset is a shorthand for top,bottom,left and right. Typically used when the position is absolute */
+    inset: 0;
+    z-index: -1;
+    background-image: var(--bg-image);
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+    
+    opacity: var(--bg-image-opacity);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.directBtns{
+    display: flex;
+    height: 30rem;
+    gap: 4rem;
+    /* margin: 0 auto; */
+    /* border: 4px solid red; */
+    /* padding: 4rem; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+a,.btnCustom{
+    list-style: none;
+    font-size: 1.5rem !important;
+    padding: 1rem !important;
+    width: 13rem;
+}
+
+.questionTitre{
+    font-size: 1.5rem;
+    background: #979292 ;
+    padding: 1rem;
+}
