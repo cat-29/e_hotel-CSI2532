@@ -1,6 +1,6 @@
 -- COMPTE CLIENT
 CREATE TABLE IF NOT EXISTS compte_client(
-    id_compte SERIAL NOT NULL,
+    id_compte SERIAL,
     id_client CHAR(9),
     email VARCHAR(255) check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     password VARCHAR(255) check (length(password) >= 8),
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS compte_client(
 );
 
 CREATE TABLE IF NOT EXISTS compte_employe(
-    id_compte SERIAL NOT NULL,
+    id_compte SERIAL,
     id_employe CHAR(9),
     email VARCHAR(255) check (email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
     password VARCHAR(255) check (length(password) >= 8),

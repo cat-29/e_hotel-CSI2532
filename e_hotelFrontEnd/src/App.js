@@ -6,6 +6,7 @@ import { CreateAccountForm } from './Views/CreateAccount';
 // This import of boostrap is unecessary, but let it stay here for debuggings purposes
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "./main.css";
+import { EmployeSignIn } from './Views/EmployeSignIn';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route index element={<View/>}/>
         <Route path='signIn' element={<SignIn/>}/>
         <Route path='createAccount' element={<CreateAccountForm/>}/>
-
+        <Route path='employe' element={<EmployeSignIn/>}/>
   
       </Route>
     ))

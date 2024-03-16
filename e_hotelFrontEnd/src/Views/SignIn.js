@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import compteClientService from '../services/compte-client.service';
+import ConnexionCompte from '../services/connexion-compte';
 import { PageReservation } from './PageReservation';
 import fcts from '../ApiFcts/Api';
 import ValidateFcts from '../ValidationFcts/container';
@@ -38,7 +38,7 @@ export const SignIn=()=>{
         const client = retourClient;
         console.log("Alo houston",answer);
 
-        compteClientService.getCompte(answer).then((response) => {
+        ConnexionCompte.getCompteClient(answer).then((response) => {
             setRetourClient({
                 client: response.data
             });            
