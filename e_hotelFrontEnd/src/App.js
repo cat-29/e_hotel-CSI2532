@@ -7,6 +7,8 @@ import { CreateAccountForm } from './Views/CreateAccount';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "./main.css";
 import { EmployeSignIn } from './Views/EmployeSignIn';
+import { ReservationActive } from './Views/ReservationActive';
+import { ManagementHotel } from './Views/ManagementHotel';
 
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
         <Route path='signIn' element={<SignIn/>}/>
         <Route path='createAccount' element={<CreateAccountForm/>}/>
         <Route path='employe' element={<EmployeSignIn/>}/>
-  
+        <Route path='reservationActive' element={<ReservationActive/>}/>
+        <Route path='managementHotel' element={<ManagementHotel/>}/>
       </Route>
     ))
 

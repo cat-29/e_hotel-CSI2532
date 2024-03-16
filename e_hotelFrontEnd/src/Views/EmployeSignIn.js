@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import compteClientService from "../services/connexion-compte";
 import { useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
+import { ReservationActive } from "./ReservationActive";
 
 export const EmployeSignIn=()=>{
 
@@ -15,7 +16,7 @@ export const EmployeSignIn=()=>{
         employe:[],
     });
 
-    const [typeEmploye, setTypeEmploye] = useState('');
+    // const [typeEmploye, setTypeEmploye] = useState('');
     
     useEffect(() => {
         console.log("Bonjour: " + getEmployeInfo.employe.prenom + ", " + getEmployeInfo.employe.nomFamille);
@@ -23,6 +24,11 @@ export const EmployeSignIn=()=>{
         if (getEmployeInfo.employe.prenom != undefined){ 
             // setTypeEmploye(getEmployeInfo.employe.roleEmploye);
             console.log("votre type d'employe est un ", getEmployeInfo.employe.roleEmploye);
+            if (getEmployeInfo.employe.roleEmploye=='EMPLOYE' || getEmployeInfo.employe.roleEmploye=='SUPERVISEUR') {
+                navigate("/reservationActive", {state: {employeInfo: getEmployeInfo.employe}});
+            } else if (getEmployeInfo.employe.roleEmploye=='GESTIONNAIRE') {
+                navigate("/managementHotel", {state: {employeInfo: getEmployeInfo.employe}});
+            }
         };
     },[getEmployeInfo]);
 
@@ -50,14 +56,21 @@ export const EmployeSignIn=()=>{
         setEmploye({ ...employe, [name]: value });
     }
 
-    const goToCreateAccountForm = ()=>{
-        navigate("/createAccount");
+    const goToManagementHotel = ()=> {
+        navigate("/managementHotel");
     }
+
+    const goToReservationActive = () => {
+        navigate("/reservationActive");
+    }
+    
     return(
         <>
             {/* {console.log(appelPageReservation)} */}
             {/* {(typeEmploye== 'EMPLOYE') ? {console.lo}} */}
-                {/* {(typeEmploye=='EMPLOYE' ? <PageReservation userInfo = {getEmployeInfo.employe}/> : */}
+                {/* { (getEmployeInfo.employe.roleEmploye=='EMPLOYE') ?
+                    <ReservationActive/> : */}
+                 
                 <>
                     <h2 className="text-center p-3">Veuillez vous connecter</h2>
                     <form onSubmit={handleSubmit}>
@@ -79,7 +92,7 @@ export const EmployeSignIn=()=>{
 
                     </form>
                 </>
-                {/* } */}
+            {/* } */}
         </>  
     )
 }
