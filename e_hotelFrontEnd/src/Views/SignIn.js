@@ -1,4 +1,7 @@
 import React,{useState} from 'react';
+import fcts from '../ApiFcts/Api';
+import ValidateFcts from '../ValidationFcts/container';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -10,38 +13,36 @@ export const SignIn=()=>{
         motDePasse: ''
     });
 
+    const navigate = useNavigate();
+
+    // this functions calls the api.js that calls the java endpoint.
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const answer = formData;
-        console.log("Alo houston",answer);
-        // try {
-        //     const response = await axios.post('http://localhost:8080/comptes', { name: itemName });
-        //     console.log('Item created:', response.data);
-        //     // Optionally, update UI or show a success message
-        //   } catch (error) {
-        //     console.error('Error creating item:', error);
-        //     // Optionally, handle error and show an error message
-        //   }
-        // const response = await fetch('http://localhost:8080/comptes',{method:"POST",headers:{'Accept':'application/json','Content-Type':'application/json'},
-        // body:JSON.stringify(answer),
-        // });
-        // return response.json();
+        console.log("answer is",answer);  
+        ValidateFcts.validateEmailPwd(answer.email,answer.motDePasse); 
+        const response = fcts.submitCredentials(answer); 
         setFormData({email:'',motDePasse:''});
+        // console.log("the reponse was",response);
+        // response.then((answer) => {
+        //     console.log(`Received response: ${answer.status}`);
+        //     setFormData({email:'',motDePasse:''});
+        // });    
     }
 
     const handleInputChange = (event)=>{
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        // let item = {...this.state.item};
-        // item[name] = value;
-        // this.setState({item});
         // console.log("target",target);
         // console.log("name",name);
         // console.log("value",value);
         setFormData({ ...formData, [name]: value });
         // console.log("formData",formData);
+    }
 
+    const goToCreateAccountForm = ()=>{
+        navigate("/createAccount");
     }
     return(
         <>
@@ -49,7 +50,7 @@ export const SignIn=()=>{
             <form onSubmit={handleSubmit}>
                 <div className="m-3 w-50">
                     <label htmlFor="emailUtilisateur" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="emailUtilisateur" aria-describedby="email" name='email' value={formData.username} onChange={handleInputChange}/>
+                    <input type="email" className="form-control" id="emailUtilisateur" aria-describedby="email" name='email' value={formData.username} onChange={(e)=>handleInputChange(e)}/>
                 </div>
 
                 <div className="m-3 w-50">
@@ -59,7 +60,7 @@ export const SignIn=()=>{
 
                 <div className="d-grid gap-2 d-md-flex m-3">
                     <button type="submit" className='btn btn-primary'>Connecter</button>
-                    <button className='btn btn-secondary'>Créer un compte</button>
+                    <button type='button' onClick={goToCreateAccountForm} className='btn btn-secondary'>Créer un compte</button>
                 </div>
 
             </form>
