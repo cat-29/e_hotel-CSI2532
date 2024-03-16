@@ -90,7 +90,7 @@ export const SignIn=()=>{
 
                         <div className="m-3 w-50">
                             <label htmlFor="motDePasse" className="form-label">Mot de passse</label>
-                            <input type="motDePasse" className="form-control border" id="motDePasse" name='motDePasse' value={formData.motDePasse} onChange={handleInputChange}/>
+                            <input type="password" className="form-control border" id="motDePasse" name='motDePasse' value={formData.motDePasse} onChange={handleInputChange}/>
                         </div>
 
                         
