@@ -1,5 +1,7 @@
-import React,{useState} from 'react';
-
+import React,{useEffect, useState} from 'react';
+import compteClientService from '../services/compte-client.service';
+import { PageReservation } from './PageReservation';
+import { useNavigate } from 'react-router-dom';
 
 
 export const SignIn=()=>{
@@ -10,23 +12,35 @@ export const SignIn=()=>{
         motDePasse: ''
     });
 
+    const [retourClient, setRetourClient] = useState({
+        client:[],
+    });
+
+    const [appelPageReservation, setPageReservation] = useState(false);
+    
+    useEffect(() => {
+        console.log("Bonjour: " + retourClient.client.prenom + ", " + retourClient.client.nomFamille);
+        console.log(retourClient);
+        if (retourClient.client.prenom != undefined){ 
+            setPageReservation(true);
+        };
+    },[retourClient]);
+        
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const answer = formData;
+        const client = retourClient;
         console.log("Alo houston",answer);
-        // try {
-        //     const response = await axios.post('http://localhost:8080/comptes', { name: itemName });
-        //     console.log('Item created:', response.data);
-        //     // Optionally, update UI or show a success message
-        //   } catch (error) {
-        //     console.error('Error creating item:', error);
-        //     // Optionally, handle error and show an error message
-        //   }
-        // const response = await fetch('http://localhost:8080/comptes',{method:"POST",headers:{'Accept':'application/json','Content-Type':'application/json'},
-        // body:JSON.stringify(answer),
-        // });
-        // return response.json();
-        setFormData({email:'',motDePasse:''});
+
+        compteClientService.getCompte(answer).then((response) => {
+            setRetourClient({
+                client: response.data
+            });            
+        }).catch(e => {
+            console.log(e);
+        });       
+
+
     }
 
     const handleInputChange = (event)=>{
@@ -45,24 +59,29 @@ export const SignIn=()=>{
     }
     return(
         <>
-            <h2 className="text-center p-3">Veuillez vous connecter</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="m-3 w-50">
-                    <label htmlFor="emailUtilisateur" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="emailUtilisateur" aria-describedby="email" name='email' value={formData.username} onChange={handleInputChange}/>
-                </div>
+        {console.log(appelPageReservation)}
+            {appelPageReservation ? <PageReservation userInfo = {retourClient.client}/> :
+            <>
+                <h2 className="text-center p-3">Veuillez vous connecter</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="m-3 w-50">
+                        <label htmlFor="emailUtilisateur" className="form-label">Email</label>
+                        <input type="email" className="form-control" id="emailUtilisateur" aria-describedby="email" name='email' value={formData.email} onChange={handleInputChange}/>
+                    </div>
 
-                <div className="m-3 w-50">
-                    <label htmlFor="motDePasse" className="form-label">Mot de passse</label>
-                    <input type="password" className="form-control border" id="motDePasse" name='motDePasse' value={formData.password} onChange={handleInputChange}/>
-                </div>
+                    <div className="m-3 w-50">
+                        <label htmlFor="motDePasse" className="form-label">Mot de passse</label>
+                        <input type="motDePasse" className="form-control border" id="motDePasse" name='motDePasse' value={formData.motDePasse} onChange={handleInputChange}/>
+                    </div>
 
-                <div className="d-grid gap-2 d-md-flex m-3">
-                    <button type="submit" className='btn btn-primary'>Connecter</button>
-                    <button className='btn btn-secondary'>Créer un compte</button>
-                </div>
+                    <div className="d-grid gap-2 d-md-flex m-3">
+                        <button type="submit" className='btn btn-primary'>Connecter</button>
+                        <button className='btn btn-secondary'>Créer un compte</button>
+                    </div>
 
-            </form>
+                </form>
+            </>
+            }
         </>  
     )
 }

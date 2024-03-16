@@ -11,11 +11,10 @@ function App() {
     const router = createBrowserRouter(createRoutesFromElements(
 
       // I need an element from the first englobing Route, and the second.
-      <Route path='' element={<AppShell/>}>
+      <Route path='/' element={<AppShell/>}>
   
         <Route index element={<View/>}/>
         <Route path='/signIn' element={<SignIn/>}/>
-  
       </Route>
     ))
 

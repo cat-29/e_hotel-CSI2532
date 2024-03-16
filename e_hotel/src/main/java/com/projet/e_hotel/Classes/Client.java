@@ -18,7 +18,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
     @Column(name = "nas")
-    private Integer idclient;
+    private String id;
 
     @Column(name = "prenom")
     private String prenom;
@@ -36,11 +36,11 @@ public class Client {
     private String ville;
     
     @Column(name = "province")
-    private char province;
+    private String province;
 
     @Column(name = "pays")
     private String pays;
 
     @Column(name = "code_postal")
-    private char codePostal;
+    private String codePostal;
 }
