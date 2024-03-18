@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.Client;
 import com.projet.e_hotel.Repository.ClientRepository;
+import com.projet.e_hotel.Repository.EnregistreClientRepository;
 
 @Service
 public class ClientService {
     @Autowired
 
     private ClientRepository clientRepository;
+
+    private EnregistreClientRepository enregistreClientRepository;
 
     public ClientService(){
     }
@@ -29,4 +32,13 @@ public class ClientService {
     public Client saveClient(Client client){
         return clientRepository.save(client);
     }
+
+    public Client getClientFromId(String nas) {
+        return clientRepository.findById(nas).orElseThrow();
+    }
+
+    // public EnregistreClient setEnregistrementClient(Client client, String idEmploye) {
+    //     EnregistreClient enregistreClient = new EnregistreClient(idEmploye, client.getId(), null, null);
+    //     return enregistreClient;
+    // }
 }

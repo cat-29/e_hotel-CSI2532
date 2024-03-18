@@ -26,9 +26,10 @@ public class ClientServiceImpl {
         return clientRepository.findAll();
     }
 
-    public Client getClientFromId(String nas) {
-        return clientRepository.findById(nas).orElseThrow();
-    }
+    // public Client getClientFromId(String nas) {
+    //     // retourne find by id
+    //     return clientRepository.findById(nas).orElseThrow();
+    // }
 
     // public EnregistreClient setEnregistrementClient(Client client, String idEmploye) {
     //     EnregistreClient enregistreClient = new EnregistreClient(idEmploye, client.getId(), null, null);

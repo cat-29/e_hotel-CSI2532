@@ -8,7 +8,7 @@ public class ClientMapper {
     // Convert Client JPA Entity into ClientDTO
     public static ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = new ClientDTO(
-            client.getId(),
+            client.getNas(),
             client.getPrenom()  ,
             client.getNomFamille(),
             client.getNumero(),

@@ -14,7 +14,7 @@ import com.projet.e_hotel.Classes.mapper.ClientMapper;
 import com.projet.e_hotel.Classes.mapper.ClientReserveMapper;
 import com.projet.e_hotel.Classes.mapper.LoueChambreMapper;
 import com.projet.e_hotel.Service.ClientReserveService;
-import com.projet.e_hotel.Service.ClientServiceImpl;
+import com.projet.e_hotel.Service.ClientService;
 import com.projet.e_hotel.Service.LoueChambreService;
 
 import java.util.List;
@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EmployeController {
 
         private final ClientReserveService clientReserveService;
-        private final ClientServiceImpl clientServiceImpl;
+        private final ClientService clientServiceImpl;
         private final LoueChambreService loueChambreService;
 
-        public EmployeController(ClientReserveService clientReserveService, ClientServiceImpl clientServiceImpl,
+        public EmployeController(ClientReserveService clientReserveService, ClientService clientServiceImpl,
                         LoueChambreService loueChambreService) {
                 this.clientReserveService = clientReserveService;
                 this.clientServiceImpl = clientServiceImpl;
