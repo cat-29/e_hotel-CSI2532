@@ -4,11 +4,13 @@ import { AppShell } from './components/AppShell/AppShell';
 import {SignIn} from './Views/SignIn';
 import { CreateAccountForm } from './Views/CreateAccount';
 // This import of boostrap is unecessary, but let it stay here for debuggings purposes
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./main.css";
 import { EmployeSignIn } from './Views/EmployeSignIn';
 import { ReservationActive } from './Views/ReservationActive';
 import { ManagementHotel } from './Views/ManagementHotel';
+import { MethodePaiement } from './Views/MethodePaiement';
+import { EmployeAjouteLocation } from './Views/EmployeAjouteLocation';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <Route path='employe' element={<EmployeSignIn/>}/>
         <Route path='reservationActive' element={<ReservationActive/>}/>
         <Route path='managementHotel' element={<ManagementHotel/>}/>
+        <Route path='methodePaiement' element={<MethodePaiement/>}/>
+        <Route path='ajoutLocation' element={<EmployeAjouteLocation/>}/>
       </Route>
     ))
 

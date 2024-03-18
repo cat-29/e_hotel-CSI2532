@@ -98,7 +98,53 @@ const validateSamePwd = (arrPwd,res)=>{
     return res;
 }
 
+const validateCardNumber = (cardNum, res) => {
+    let feedback = "";
+    if (cardNum.length < 16) { 
+        feedback = "Numero de carte incorrect. La taille doit être de 16"
+    }
+    res.push(feedback);
+    return res;
+}
+
+const validateDateExpiration = (dateExpiration, res) => {
+    let feedback = "";
+    if (dateExpiration.length < 4) { 
+        feedback = "Date d'expiration incorrecte. La taille doit être de 4"
+    }
+    res.push(feedback);
+    return res;
+}
+
+const validateCVC = (cvc, res) => {
+    let feedback = "";
+    if (cvc.length < 3) { 
+        feedback = "Code de sécurité incorrect. La taille doit être 3"
+    }
+    res.push(feedback);
+    return res;
+}
+
 // Validate all fields
+
+const validatePaiementFields = (answer) => {
+    let res = [];
+    let items = [];
+    for (let key in answer){
+        // items.push(answer[key]);
+        if (key == "prenom"){
+            res = validateNom(answer[key],res)
+        }else if (key == "numCarte"){
+            res = validateCardNumber(answer[key],res);
+        }else if (key == "dateExpiration"){
+            res = validateDateExpiration(answer[key],res);
+        }else if (key == "cvc"){
+            res = validateCVC(answer[key],res);
+        }
+    }
+    // console.log("at the end",items);
+    return res;
+}
 
 const validateAllfields = (answer) =>{
     console.log("the answer to be validated is",answer);
@@ -136,5 +182,9 @@ ValidateFcts.validateEmailPwd = (email,pwd)=>{
 // }
 ValidateFcts.validateAllfields = (answer)=>{
     return validateAllfields(answer);
+}
+
+ValidateFcts.validatePaiementFields = (answer) => {
+    return validatePaiementFields(answer);
 }
 export default ValidateFcts;
