@@ -59,6 +59,15 @@ const validatePlace = (place,res)=>{
     return res;
 }
 
+const validateProvince = (province,res)=>{
+    let feedback = "";
+    if (province.length != 2){
+        feedback = "Le code provincial est exactement 2 charactères"
+    }
+    res.push(feedback);
+    return res;
+}
+
 //Function to validate ZipCode
 
 const validateZip = (zip,res)=>{
@@ -159,8 +168,10 @@ const validateAllfields = (answer) =>{
             res = validateNom(answer[key],res)
         }else if (key == "numero"){
             res = validateNumero(answer[key],res);
-        }else if (key == "rue" || key == "ville" || key == "province" || key == "pays"){
+        }else if (key == "rue" || key == "ville" || key == "pays"){
             res = validatePlace(answer[key],res);
+        }else if (key == "province"){
+            res = validateProvince(answer[key],res);
         }else if (key == "codePostal"){
             res = validateZip(answer[key],res);
         }else if(key == "email"){

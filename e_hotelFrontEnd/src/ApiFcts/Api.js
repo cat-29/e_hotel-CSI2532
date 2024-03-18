@@ -1,6 +1,7 @@
 // This file will contain all our backend call functions; whenever a component need to talk to backend,
 // please use the functions here or use an existing one. That way we can easily debug errors by having them all 
 // in one central place
+import axios from "axios";
 
 const fcts = {};
 
@@ -24,7 +25,7 @@ const sendCredentials = async(answer)=>{
 
 }
 
-const createAccount = async(answer)=>{
+const createAccount = async(answerClient,answerAccount)=>{
 
 
     // This one is working
@@ -32,6 +33,26 @@ const createAccount = async(answer)=>{
     //     body:JSON.stringify(answer),
     // });
     // return response;
+
+    // Axios seems nicer
+    // Further formating is needed (I will need two objects one for client and second for clientAccount) so two post requests
+    let compteResponse = null;
+    const response = axios.post("http://localhost:8080/addClient", answerClient).then((response) => {
+    //   console.log(response.status, response.data.token);
+    // console.log("response status",response.status);
+    // console.log("response data",response.data.token);
+    if (response.status == 200){
+        compteResponse = axios.post("http://localhost:8080/addClientAccount",answerAccount).then((response)=>{
+            console.log("response status",response.status);
+            console.log("client account added successfully");
+        })
+    } else {
+        console.log("Was unable to add client");
+    }
+
+    });
+
+    return compteResponse;
 
 
 
@@ -46,12 +67,29 @@ fcts.submitCredentials = (answer)=>{
 } 
 
 fcts.createAccount = (answer)=>{
+    // We just want to submit all fields except passwordConfirmed one since it's going to be a duplicate of what we already have in pwdfield
     const answerN = {...answer};
     delete answerN["pwdConfirmed"];
-    // const response = createAccount(answer);
-    console.log("once in the api, the answer is",answerN);
-    console.log("old",answer);
-    // return response;
+    // More formating
+    const client = {};
+    client.nas = answerN.nas;
+    client.prenom = answerN.prenom;
+    client.nomFamille = answerN.nomFamille;
+    client.numero = answerN.numero;
+    client.rue = answerN.rue;
+    client.ville = answerN.ville;
+    client.province = answerN.province;
+    client.pays = answerN.pays;
+    client.codePostal = answerN.codePostal;
+
+    const compte = {};
+    compte.nas = answerN.nas;
+    compte.email = answerN.email;
+    compte.pwd = answerN.pwd;
+
+    // console.log("before sending to backend",client);
+    const response = createAccount(client,compte);
+    return response;
 }
 
 export default fcts;

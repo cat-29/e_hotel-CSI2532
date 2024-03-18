@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.projet.e_hotel.Classes.Client;
-import com.projet.e_hotel.Service.ClientServiceImpl;
+import com.projet.e_hotel.Service.ClientService;
 
 @Controller
 public class IndexController {
     
     @Autowired
-    private ClientServiceImpl clientServiceImpl;
+    private ClientService clientServiceImpl;
 
     @GetMapping("/")
     public String index(Model model) {

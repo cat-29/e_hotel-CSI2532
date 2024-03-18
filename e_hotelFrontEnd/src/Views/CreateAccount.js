@@ -20,16 +20,23 @@ export const CreateAccountForm = ()=>{
         pwdConfirmed:''
     });
 
+    // State that stores erros
+
     const [formDataError,setFormDataError] = useState([]);
 
+    const [submitted,setSubmitted] = useState(false);
+
+    // I have an idea of disabling nas inputs once it's correct, this is more like styling and not a top priority, gonna come back to it though
     const [disableNas,setDisableNas] = useState(false);
+
+    // This handles all our inputs
 
     const handleInputChange = (event)=>{
         const target = event.target;
         const value = target.value;
         const name = target.name;
         if (name == "nas" || name == "numero"){
-            // This desactivates all keyboards buttons axcept numbers
+            // This desactivates all keyboards buttons except numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
         } 
@@ -48,14 +55,20 @@ export const CreateAccountForm = ()=>{
         // console.log("formData",formData);
     }
 
+    // navigate from a page to another
+
     const navigate = useNavigate();
 
+    // Handles our submit event
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault();
         // console.log("the complete form is",formData);
+        // Validate input !
         const validationResult = ValidateFcts.validateAllfields(formData);
         // console.log("validation result",validationResult);
+
+        // Set error state to what you found
 
         setFormDataError(validationResult);
 
@@ -73,29 +86,29 @@ export const CreateAccountForm = ()=>{
             console.log("there are still errors to fix");
         } else{
             console.log("fields are ready to be submitted to backend");
+            setSubmitted(true);
             const createResponse = fcts.createAccount(formData);
-            // console.log("the response was",createResponse);
-        }
-        
-        // This is working, uncomment once backend is working properly
-        // response.then((answer)=>{
-        //     console.log(`Received response: ${answer.status}`);
-        //     setFormData({
-        //         nas: '',
-        //         prenom: '',
-        //         nomFamille:'',
-        //         numero:'',
-        //         rue:'',
-        //         ville:'',
-        //         province:'',
-        //         pays:'',
-        //         codePostal:'',
-        //         email:'',
-        //         pwd:'',
-        //         pwdConfirmed:''
-        //     });
-        // })
+            // Look deeply into that, could be improved
 
+            createResponse.then((response)=>{
+                console.log("the response was finally",response);
+                setSubmitted(false);
+                setFormData({
+                    nas: '',
+                    prenom: '',
+                    nomFamille:'',
+                    numero:'',
+                    rue:'',
+                    ville:'',
+                    province:'',
+                    pays:'',
+                    codePostal:'',
+                    email:'',
+                    pwd:'',
+                    pwdConfirmed:''
+                });
+            })
+        }
     }
 
     const backHomePage = (event)=>{
@@ -243,10 +256,9 @@ export const CreateAccountForm = ()=>{
 
 
                 <div className="d-grid gap-2 d-md-flex m-3">
-                    <button type="submit" className='btn btn-primary'>Créer un compte</button>
+                    <button type="submit" className='btn btn-primary'>{submitted ? 'soumission...':'Créer un compte'}</button>
                     <button type='button' onClick={backHomePage} className='btn btn-secondary'>Annuler</button>
                 </div>
-
             </form>
         </>  
     )
