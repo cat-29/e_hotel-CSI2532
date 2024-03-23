@@ -15,6 +15,7 @@ import com.projet.e_hotel.Classes.mapper.ClientReserveMapper;
 import com.projet.e_hotel.Classes.mapper.LoueChambreMapper;
 import com.projet.e_hotel.Service.ClientReserveService;
 import com.projet.e_hotel.Service.ClientService;
+import com.projet.e_hotel.Service.HotelService;
 import com.projet.e_hotel.Service.LoueChambreService;
 
 import java.util.List;
@@ -33,12 +34,14 @@ public class EmployeController {
         private final ClientReserveService clientReserveService;
         private final ClientService clientServiceImpl;
         private final LoueChambreService loueChambreService;
+        private final HotelService hotelService;
 
         public EmployeController(ClientReserveService clientReserveService, ClientService clientServiceImpl,
-                        LoueChambreService loueChambreService) {
+                        LoueChambreService loueChambreService, HotelService hotelService) {
                 this.clientReserveService = clientReserveService;
                 this.clientServiceImpl = clientServiceImpl;
                 this.loueChambreService = loueChambreService;
+                this.hotelService = hotelService;
         }
 
         @GetMapping("/activeReservation/{idHotel}")
@@ -73,6 +76,11 @@ public class EmployeController {
                 // clientServiceImpl.setEnregistrementClient(client, aDto.getIdEmploye());
                 
                 return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveNewLocation(dto));
+        }
+
+        @GetMapping("/worksFor/{idHotel}")
+        public String getNameHotelEmployeWorksFor(@PathVariable Integer idHotel) {
+                return this.hotelService.getNameHotel(idHotel).getNom();
         }
 
 }

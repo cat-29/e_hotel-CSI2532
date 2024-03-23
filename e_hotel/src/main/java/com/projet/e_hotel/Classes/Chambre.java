@@ -1,15 +1,12 @@
 package com.projet.e_hotel.Classes;
 
-import com.projet.e_hotel.Classes.Enum.CapaciteChambreEnum;
-import com.projet.e_hotel.Classes.Enum.VueChambreEnum;
 import com.projet.e_hotel.Classes.pk.ChambrePK;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,13 +27,11 @@ public class Chambre {
     @Column(name = "prix")
     private Double prix;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "capacite_chambre")
-    private CapaciteChambreEnum capaciteChambre;
+    @JoinColumn(name = "capacite_chambre", referencedColumnName = "type")
+    private String capaciteChambre;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "vue")
-    private VueChambreEnum vueChambre;
+    @JoinColumn(name = "vue_chambre", referencedColumnName = "type")
+    private String vueChambre;
 
     @Column(name = "capacite_a_etendre")
     private Boolean capaciteAEtendre;

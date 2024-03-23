@@ -1,11 +1,27 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ValidateFcts from "../ValidationFcts/container";
 import fcts from "../ApiFcts/Api";
 import InputMask from 'react-input-mask';
+import connexionCompte from "../services/connexion-compte";
 
 
 export const EmployeAjouteLocation = () => {
+
+    const {state} = useLocation();
+
+    // When get employe id, get the hotel 
+    useEffect(() => {
+
+        console.log("in employe ajoute location")
+        console.log(state.employeInfo);
+        connexionCompte.getNameHotelEmployeWorksFor(state.employeInfo.hotel).then((response) => {
+            console.log("name hotel employe works for is: " + response.data);
+            setFormData({...formData, nomHotel: response.data});
+        }).catch((e) => {
+            console.log(e);
+        })
+    }, state.employeInfo);
 
     // State to store form data
     const [formData, setFormData] = useState({
@@ -18,8 +34,15 @@ export const EmployeAjouteLocation = () => {
         province:'',
         pays:'',
         codePostal:'',
-        dateCheckIn:'',
-        dateCheckOut:''
+        dateCheckIn: '',
+        dateCheckOut:'',
+        email: '',
+        hotel:state.employeInfo.hotel,
+        nomHotel: '',
+        vue: 'MONTAGNE',
+        capacite: 'TRIPLE',
+        employeInfo: state.employeInfo,
+        numero_chambre: ''
     });
 
     const [formDataError,setFormDataError] = useState([]);
@@ -28,26 +51,53 @@ export const EmployeAjouteLocation = () => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        if (name == "nas" || name == "numero"){
+        if (name == "numero"){
             // This desactivates all keyboards buttons axcept numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
-        } 
+        } else if (name == "nas" || name == "codePostal") {
+            const newValue = event.target.value.replace(/ /g, '');
+            setFormData({ ...formData, [name]: newValue });
+        }
         else if (name == "prenom" || name == "nomFamille") {
             const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
             setFormData({ ...formData, [name]: newValue });
+        }
+        else if (name == "dateCheckIn" || name == "dateCheckOut") {
+            const newValue = event.target.value;
+            setFormData({ ...formData, [name]: newValue});
+            console.log("checkin" + formData.dateCheckIn);
+            console.log("checkout" + formData.dateCheckOut);
+
+        } else if (name == "vue") {
+            if (target.id == "vue_mer") {
+                console.log("vue_mer");
+            } else if (target.id == "vue_montagne") {
+                console.log("vue_montagne")
+            }
+            const newValue = event.target.id;
+            setFormData({ ...formData, [name]: newValue});
+            console.log("new value vue is " + newValue);
+        } else if (name == "capacite") {
+            const newValue = event.target.id;
+            setFormData({ ...formData, [name]: newValue});
+            console.log("new value capacite is " + newValue);
         }
         else {
             setFormData({ ...formData, [name]: value });
         }
     }
 
+    const [roomNumberInfo, setRoomNumberInfo] = useState('');
+
     const navigate = useNavigate();
 
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        const validationResult = ValidateFcts.validateAllfields(formData);
+
+        console.log("capaicte: " +  formData.capacite );
+        const validationResult = ValidateFcts.validateAllLocationFields(formData);
 
         setFormDataError(validationResult);
 
@@ -64,7 +114,24 @@ export const EmployeAjouteLocation = () => {
             console.log("there are still errors to fix");
         } else{
             console.log("fields are ready to be submitted to backend");
-            const createResponse = fcts.createAccount(formData);
+
+            // get the first room that matches the specifications.. if no room, then show alert
+            // continue to the payment section
+            connexionCompte.getNumeroChambreForSpecifications(formData.hotel, new Date(formData.dateCheckIn), new Date(formData.dateCheckOut), formData.capacite, formData.vue).then((response) => {
+                if (response.data == null) {
+                    // no room is available with the criterias. Need to change the filters.
+                    console.log("no room found. change filters.");
+                    alert("No room was found. Please change the filters.");
+                }
+                else {
+                    alert("A passee")
+                    setRoomNumberInfo(response.data);
+                    console.log(response.data);
+                }
+            }).catch((e) => {
+                alert("erreur c'est produite. Veuillez changer vos filtres");
+                console.log(e);
+            });
         }
     }
 
@@ -89,18 +156,6 @@ export const EmployeAjouteLocation = () => {
             <h2 className="text-center p-3">Ajout d'une location</h2>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
             <form noValidate className="mx-4" onSubmit={handleSubmit}>
-                <div className="m-3 col-sm-5 col-md-3 col-lg-2">
-                    <label htmlFor="nas" className="form-label">Numéro Assurance Sociale</label>
-                    <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" maskChar={''} value={formData.nas} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="nas"/>
-                    {formDataError[0] != "" ?
-        
-                    <div style={{color:"red"}}>
-                        {formDataError[0]}
-                    </div> 
-                    
-                    :<></>}
-                </div>
-
                 <div className="d-grid gap-2 d-md-flex m-3">
                     <div className="col-5">
                         <label htmlFor="prenom" className="form-label">Prénom</label>
@@ -186,20 +241,88 @@ export const EmployeAjouteLocation = () => {
                     </div>
                 </div>
 
+                <div className="d-grid gap-5 d-md-flex m-3">
+                    <div className="col-md-5">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input type="email" className="form-control border" name="email" value={formData.email} onChange={handleInputChange}/>
+                        {formDataError[11] != "" ?
+                            <div style={{color:"red"}}>
+                                {formDataError[11]}
+                            </div> 
+                        :<></>}
+                    </div>
+
+                    <div className="col-sm-5 col-md-3 col-lg-2">
+                        <label htmlFor="nas" className="form-label">Numéro Assurance Sociale</label>
+                        <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" maskChar={''} value={formData.nas} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="nas"/>
+                        {formDataError[0] != "" ?
+                            <div style={{color:"red"}}>
+                                {formDataError[0]}
+                            </div> 
+                        :<></>}
+                    </div>
+                </div>
+
+                {/* Filtres */}
+                <h3 className="m-3">Filtres</h3>
+                <div className="d-grid gap-2 d-md-flex m-3">
+                    <div className="col-md-5">
+                        <label htmlFor="hotel" className="form-label">Hotel</label>
+                        <input type="text" className="form-control border" name="hotel" value={formData.nomHotel} disabled/>
+                    </div>
+                </div>
                 <div className="d-grid gap-2 d-md-flex m-3">
                     <div>
-                        <label htmlFor="checkin" className="form-label">Date Check-In</label>
-                        <input type="date" className="form-control border" name="checkin" value={formData.dateCheckIn} onChange={handleInputChange}/>
+                        <label htmlFor="dateCheckIn" className="form-label">Date Check-In</label>
+                        <input type="date" className="form-control border" name="dateCheckIn" value={formData.dateCheckIn} onChange={handleInputChange}/>
+                        {formDataError[9] != "" ?
+                            <div style={{color:"red"}}>
+                                {formDataError[9]}
+                            </div> 
+                        :<></>}
                     </div>
 
                     <div>
-                        <label htmlFor="checkout" className="form-label">Date Check-Out</label>
-                        <input type="date" className="form-control border" name='checkout' value={formData.dateCheckOut} onChange={handleInputChange}/>
+                        <label htmlFor="dateCheckOut" className="form-label">Date Check-Out</label>
+                        <input type="date" className="form-control border" name='dateCheckOut' min={formData.dateCheckIn} onChange={handleInputChange}/>
                         {formDataError[10] != "" ?
                             <div style={{color:"red"}}>
                                 {formDataError[10]}
                             </div> 
                         :<></>}
+                    </div>
+                </div>
+                <div className="d-grid gap-2 d-md-flex mx-3">
+                    
+                    <div className="col-md-5 d-md-flex">
+                        <label className="form-label">Vue sur: </label>
+                        <div class="form-check d-md-flex mx-2">
+                            <input class="form-check-input" type="radio" name="vue" id="MER" onClick={handleInputChange}/>
+                            <label class="form-check-label ms-1" for="vue">Mer</label>
+                        </div>
+                        <div class="form-check d-md-flex">
+                            <input class="form-check-input" type="radio" name="vue" id="MONTAGNE" defaultChecked onClick={handleInputChange}/>
+                            <label class="form-check-label ms-1" for="vue">Montagne</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="d-grid gap-2 d-md-flex mx-3">
+                    
+                    <div className="col-md-5 d-md-flex">
+                        <label className="form-label">Capacité: </label>
+                        <div class="form-check d-md-flex mx-2">
+                            <input class="form-check-input" type="radio" name="capacite" id="SIMPLE"  value={formData.capacite} onClick={handleInputChange} />
+                            <label class="form-check-label ms-1" for="vue">Simple</label>
+                        </div>
+                        <div class="form-check d-md-flex me-2">
+                            <input class="form-check-input" type="radio" name="capacite" id="DOUBLE"  value={formData.capacite} onClick={handleInputChange}/>
+                            <label class="form-check-label ms-1" for="vue">Double</label>
+                        </div>
+                        <div class="form-check d-md-flex">
+                            <input class="form-check-input" type="radio" name="capacite" id="TRIPLE" value={formData.capacite} defaultChecked onClick={handleInputChange}/>
+                            <label class="form-check-label ms-1" for="vue">Triple</label>
+                        </div>
                     </div>
                 </div>
 
@@ -208,7 +331,7 @@ export const EmployeAjouteLocation = () => {
                 {/* 3. Add the payment section on Suivant and add the handleSubmit on the button */}
                 <div className="d-grid gap-2 d-md-flex m-3">
                     {/* <button type="submit" className='btn btn-primary'>Créesr un compte</button> */}
-                    <button type='submit' onClick={backHomePage} className='btn btn-secondary'>Suivant</button>
+                    <button type='submit' onClick={handleSubmit} className='btn btn-secondary'>Suivant</button>
                 </div>
 
             </form>

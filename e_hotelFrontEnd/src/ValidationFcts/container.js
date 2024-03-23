@@ -155,6 +155,27 @@ const validatePaiementFields = (answer) => {
     return res;
 }
 
+const validateDateCheckIn = (dateCheckin, res) => {
+    let feedback = "";
+    if (dateCheckin == '') { 
+        feedback = "Veuillez entrer une date de Check-In"
+    }
+    res.push(feedback);
+    return res;
+}
+
+const validateDateCheckOut = (dateCheckout, dateCheckIn, res) => {
+    console.log("lets validate the date checkout and date checkin:", dateCheckout, dateCheckIn);
+    let feedback = "";
+    if (dateCheckout == '') { 
+        feedback = "Veuillez entrer une date de Check-Out"
+    } else if (((dateCheckIn!='') && (dateCheckout < dateCheckIn)) ) {
+        feedback = "Veuillez entrer une date de Check-Out valide"
+    }
+    res.push(feedback);
+    return res;
+}
+
 const validateAllfields = (answer) =>{
     console.log("the answer to be validated is",answer);
     let res = [];
@@ -184,6 +205,35 @@ const validateAllfields = (answer) =>{
     return res;
 }
 
+const validateAllLocationFields = (answer) => {
+    console.log("the answer to be validated is",answer);
+    let res = [];
+    let items = [];
+    for (let key in answer){
+        if (key == "nas"){
+            res = validateNas(answer[key],res);
+            console.log("helo");
+        }else if (key == "prenom" || key == "nomFamille"){
+            res = validateNom(answer[key],res)
+        }else if (key == "numero"){
+            res = validateNumero(answer[key],res);
+        }else if (key == "rue" || key == "ville" || key == "pays"){
+            res = validatePlace(answer[key],res);
+        }else if (key == "province"){
+            res = validateProvince(answer[key],res);
+        }else if (key == "codePostal"){
+            res = validateZip(answer[key],res);
+        }else if(key == "email"){
+            res = validateEmail(answer[key],res);
+        }else if (key == "dateCheckIn"){
+            res = validateDateCheckIn(answer[key],res);
+        }else if (key == "dateCheckOut"){
+            res = validateDateCheckOut(answer[key], answer["dateCheckIn"],res);
+        }
+    }
+    return res;
+}
+
 
 ValidateFcts.validateEmailPwd = (email,pwd)=>{
     validateEmailPwd(email,pwd);
@@ -197,5 +247,9 @@ ValidateFcts.validateAllfields = (answer)=>{
 
 ValidateFcts.validatePaiementFields = (answer) => {
     return validatePaiementFields(answer);
+}
+
+ValidateFcts.validateAllLocationFields = (answer) => {
+    return validateAllLocationFields(answer);
 }
 export default ValidateFcts;

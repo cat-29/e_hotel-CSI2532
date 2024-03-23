@@ -29,7 +29,7 @@ export const ReservationActive = () => {
     }
 
     const ajoutLocation = () => {
-        navigate("/ajoutLocation");
+        navigate("/ajoutLocation", {state: {employeInfo: state.employeInfo}});
     }
 
     const formatDate = (date) => {

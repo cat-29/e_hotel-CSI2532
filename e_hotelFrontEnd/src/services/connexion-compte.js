@@ -25,6 +25,13 @@ class ConnexionCompteService {
         });
     }
 
+    async getNameHotelEmployeWorksFor(idHotel) {
+        return http.get(`/employe/worksFor/${idHotel}`);
+    }
+
+    async getNumeroChambreForSpecifications(hotelId, dateCheckIn, dateCheckOut, capacite, vue) {        
+        return http.get(`/chambre/numeroChambre/${hotelId}/${dateCheckIn}/${dateCheckOut}/${capacite}/${vue}`);
+    }
 }
 
 export default new ConnexionCompteService();
