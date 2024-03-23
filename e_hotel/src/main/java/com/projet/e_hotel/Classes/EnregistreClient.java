@@ -31,6 +31,10 @@ public class EnregistreClient {
     @Column(name = "date_enregistrement")
     private Date dateEnregistrement;
 
+    public EnregistreClient() {
+
+    }
+    
     public EnregistreClient(String idEmploye, String idClient, String email, Date dateEnregistrement) {
         this.idEmploye = idEmploye;
         this.idClient = idClient;

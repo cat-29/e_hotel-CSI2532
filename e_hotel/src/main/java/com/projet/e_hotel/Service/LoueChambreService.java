@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.LoueChambre;
 import com.projet.e_hotel.Classes.dto.ActiveReservationDTO;
+import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
 import com.projet.e_hotel.Classes.dto.LoueChambreDTO;
 import com.projet.e_hotel.Classes.mapper.ActiveReservationMapper;
+import com.projet.e_hotel.Classes.mapper.EmployeAjouteLocationMapper;
 import com.projet.e_hotel.Classes.mapper.LoueChambreMapper;
 import com.projet.e_hotel.Repository.LoueChambreRepository;
 
@@ -33,5 +35,11 @@ public class LoueChambreService {
         LoueChambreDTO loueChambreDTO = ActiveReservationMapper.mapToLoueChambreDTO(aDto);
         LoueChambre lChambre = LoueChambreMapper.mapTLoueChambre(loueChambreDTO);
         return loueChambreRepository.save(lChambre);
+    }
+
+    public LoueChambre saveEmployeFaitLocationChambre(EmployeAjouteLocationDTO aDto) {
+        LoueChambreDTO loueChambreDTO = EmployeAjouteLocationMapper.mapToLoueChambreDTO(aDto);
+        LoueChambre loueChambre = LoueChambreMapper.mapTLoueChambre(loueChambreDTO);
+        return loueChambreRepository.save(loueChambre);
     }
 }

@@ -56,4 +56,21 @@ public class Client {
     @JsonProperty("codePostal")
     @Column(name = "code_postal")
     private String codePostal;
+
+    public Client() {
+        
+    }
+
+    public Client(String nas, String prenom, String nomFamille, Integer numero, String rue, String ville, String province, String pays, String codePostal) {
+        this.nas = nas;
+        this.prenom = prenom;
+        this.nomFamille = nomFamille;
+        this.numero = numero;
+        this.rue = rue;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+    }
+
 }

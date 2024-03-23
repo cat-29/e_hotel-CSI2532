@@ -8,13 +8,17 @@ import com.projet.e_hotel.Classes.ClientReserve;
 import com.projet.e_hotel.Classes.dto.ActiveReservationDTO;
 import com.projet.e_hotel.Classes.dto.ClientDTO;
 import com.projet.e_hotel.Classes.dto.ClientReserveDTO;
+import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
+import com.projet.e_hotel.Classes.dto.EnregistreClientDTO;
 import com.projet.e_hotel.Classes.dto.LoueChambreDTO;
 import com.projet.e_hotel.Classes.mapper.ActiveReservationMapper;
 import com.projet.e_hotel.Classes.mapper.ClientMapper;
 import com.projet.e_hotel.Classes.mapper.ClientReserveMapper;
+import com.projet.e_hotel.Classes.mapper.EnregistreClientMapper;
 import com.projet.e_hotel.Classes.mapper.LoueChambreMapper;
 import com.projet.e_hotel.Service.ClientReserveService;
 import com.projet.e_hotel.Service.ClientService;
+import com.projet.e_hotel.Service.EnregistreClientService;
 import com.projet.e_hotel.Service.HotelService;
 import com.projet.e_hotel.Service.LoueChambreService;
 
@@ -35,13 +39,15 @@ public class EmployeController {
         private final ClientService clientServiceImpl;
         private final LoueChambreService loueChambreService;
         private final HotelService hotelService;
+        private final EnregistreClientService enregistreClientService;
 
         public EmployeController(ClientReserveService clientReserveService, ClientService clientServiceImpl,
-                        LoueChambreService loueChambreService, HotelService hotelService) {
+                        LoueChambreService loueChambreService, HotelService hotelService, EnregistreClientService enregistreClientService) {
                 this.clientReserveService = clientReserveService;
                 this.clientServiceImpl = clientServiceImpl;
                 this.loueChambreService = loueChambreService;
                 this.hotelService = hotelService;
+                this.enregistreClientService = enregistreClientService;
         }
 
         @GetMapping("/activeReservation/{idHotel}")
@@ -81,6 +87,16 @@ public class EmployeController {
         @GetMapping("/worksFor/{idHotel}")
         public String getNameHotelEmployeWorksFor(@PathVariable Integer idHotel) {
                 return this.hotelService.getNameHotel(idHotel).getNom();
+        }
+
+        @PostMapping("/locationChambre")
+        public LoueChambreDTO saveLocationChambre(@RequestBody EmployeAjouteLocationDTO aDto) {
+            return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveEmployeFaitLocationChambre(aDto));
+        }
+
+        @PostMapping("/enregistreClient")
+        public EnregistreClientDTO postMethodName(@RequestBody EmployeAjouteLocationDTO aDto) {           
+            return EnregistreClientMapper.mapToEnregistreClientDTO(enregistreClientService.saveEnregistreClient(aDto));
         }
 
 }

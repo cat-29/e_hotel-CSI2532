@@ -1,11 +1,14 @@
 package com.projet.e_hotel.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.Client;
+import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
+import com.projet.e_hotel.Classes.mapper.EmployeAjouteLocationMapper;
 import com.projet.e_hotel.Repository.ClientRepository;
 import com.projet.e_hotel.Repository.EnregistreClientRepository;
 
@@ -41,4 +44,13 @@ public class ClientService {
     //     EnregistreClient enregistreClient = new EnregistreClient(idEmploye, client.getId(), null, null);
     //     return enregistreClient;
     // }
+
+    public Optional<Client> doesClientExist(String nas) {
+        return clientRepository.findById(nas);
+    }
+
+    public Client createClient(EmployeAjouteLocationDTO eDto) {
+        Client client = EmployeAjouteLocationMapper.mapToClient(eDto);
+        return clientRepository.save(client);
+    }
 }
