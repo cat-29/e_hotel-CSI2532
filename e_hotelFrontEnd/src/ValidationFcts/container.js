@@ -196,7 +196,6 @@ const validateAllfields = (answer) =>{
         // items.push(answer[key]);
         if (key == "nas"){
             res = validateNas(answer[key],res);
-            console.log("helo");
         }else if (key == "prenom" || key == "nomFamille"){
             res = validateNom(answer[key],res)
         }else if (key == "numero"){
@@ -247,6 +246,92 @@ const validateAllLocationFields = (answer) => {
 }
 
 
+// Validation of filters dates
+
+const validateDates = (checkin,checkout,res)=>{
+    // console.log("trying to validate dates",checkout);
+    let s = '';
+    const today = new Date();
+    if (checkin !="" && checkout!=""){
+        if (checkout <= checkin || checkout < today || checkin < today){
+            s = 'Veuillez choisir des dates valides';
+        }
+    }else{
+        if (checkin == ""){
+            if (checkout != "" && checkout <= today){
+                s = 'Veuillez entrer une date de checkout valide';
+            }
+        }else{
+            console.log("here?!");
+            if (checkin!="" && checkin <= today){
+                console.log("should come here");
+                s = 'Veuillez entrer une date de checkin valide';
+            }
+        }
+    }
+   
+    res.push(s);
+    return res;
+}
+
+
+// Validation of prices
+
+const validatePrices = (min,max,res,flag)=>{
+    // More formatting because since setState takes time, if there's a comma at the end of input, sometimes 
+    // it doesn't get deleted, so more checks here just in case.
+    min = min.replace(/,/,'');
+    max = max.replace(/,/,'');
+    // console.log('min,max,flag');
+    // console.log(min,max,flag);
+    let s = '';
+
+    let numMin = 0;
+    let numMax = 100000000;
+    if (min!=""){
+        numMin = parseInt(min);
+    }if(max!=""){
+        numMax = parseInt(max);
+    }
+    if(numMin>=numMax){
+        if (flag == 0){
+            s = 'Veuillez ajuster votre intervalle de prix';
+        }else{
+            s = 'Veuillez ajuster votre intervalle de chambres';
+        }
+    }
+    res.push(s);
+    return res;
+}
+
+
+
+// Method to validate filters
+
+const validateFilters = (filters) =>{
+    console.log("the filters needing validation are",filters);
+    let errors = [];
+    let checkin = '';
+    let checkout = '';
+    try{
+        if (filters.checkin !=""){
+            checkin = new Date(filters.checkin);
+        }if(filters.checkout !=""){
+            checkout = new Date(filters.checkout);
+        }
+    }catch{
+        console.log("A problem happened while trying to parse dates");
+    }
+    errors = validateDates(checkin,checkout,errors);
+    errors = validatePrices(filters.prixMin,filters.prixMax,errors,0);
+    errors = validatePrices(filters.chambreMin,filters.chambreMax,errors,1);
+    // 0 validation of prices
+    // 1 validation of room number
+   
+    return errors;
+}
+
+
 ValidateFcts.validateEmailPwd = (email,pwd)=>{
     validateEmailPwd(email,pwd);
 }
@@ -263,5 +348,8 @@ ValidateFcts.validatePaiementFields = (answer) => {
 
 ValidateFcts.validateAllLocationFields = (answer) => {
     return validateAllLocationFields(answer);
+}
+ValidateFcts.validateFilters = (filters)=>{
+    return validateFilters(filters);
 }
 export default ValidateFcts;

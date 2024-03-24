@@ -142,4 +142,10 @@ public class ChambreService {
         // Les checkIns et CheckOuts n'interferent pas les nouvelles dates de reservations
         return true;
     }
+
+    public List<Chambre> getAllRooms(){
+        return this.chambreRepository.findAll();
+    }
+
 }
+
