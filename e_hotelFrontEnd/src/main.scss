@@ -1,59 +1,3 @@
-// /* PALETTE SUGGEREE */
-
-// /* #797D81 */
-// /* #94A89A  */
-// /* #C9B7AD */
-// /* #EFB0A1  a ajouter*/ 
-
-// $primary: #797D81;
-// $secondary: #94A89A;
-// $info: #C9B7AD;
-
-// @import "../node_modules/bootstrap/scss/functions";
-// @import "../node_modules/bootstrap/scss/variables";
-// @import "../node_modules/bootstrap/scss/mixins";
-
-// // @import '../node_modules/bootstrap/scss';
-
-
-
-// *{
-//     margin: 0;
-//     padding: 0;
-//     box-sizing: border-box;
-// }
-
-
-
-// NEW HEERE
-
-// Override Bootstrap's Sass default variables
-//
-// Nearly all variables in Bootstrap are written with the `!default` flag.
-// This allows you to override the default values of those variables before
-// you import Bootstrap's source Sass files.
-//
-// Overriding the default variable values is the best way to customize your
-// CSS without writing _new_ styles. For example, you can either change
-// `$body-color` or write more CSS that override's Bootstrap's CSS like so:
-// `body { color: red; }`.
-
-
-//
-// Bring in Bootstrap
-//
-
-// Option 1
-//
-// Import all of Bootstrap's CSS
-
-// @import "bootstrap/scss/bootstrap";
-
-// Option 2
-//
-// Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
-
-// Toggle global options
 $enable-gradients: true;
 $enable-shadows: true;
 
@@ -76,8 +20,7 @@ $focus-ring-color: $primary;
 $input-focus-border-color: $primary;
 
 
-// this is the whole border, I want the one you do with focus
-// $border-color:red;
+
 
 
 
@@ -126,15 +69,5 @@ $input-focus-border-color: $primary;
 
 // Utilities
 @import "../node_modules/bootstrap/scss/utilities/api";
-
-
-
-//
-// Custom styles
-//
-
-// @import "../node_modules/iconv-lite";
-
-// body {
-//   padding: 1.5rem;
-// }
+@import "../node_modules/bootstrap/scss/button-group";
+@import "../node_modules/bootstrap/scss/bootstrap.scss"

@@ -1,8 +1,8 @@
 import {Route,createBrowserRouter,createRoutesFromElements,RouterProvider} from 'react-router-dom';
 import { View } from './Views/View';
 import { AppShell } from './components/AppShell/AppShell';
-import {SignIn} from './Views/SignIn';
-import { CreateAccountForm } from './Views/CreateAccount';
+import {SignIn} from './Views/Client/SignIn';
+import { CreateAccountForm } from './Views/Client/CreateAccount';
 // This import of boostrap is unecessary, but let it stay here for debuggings purposes
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./main.css";
