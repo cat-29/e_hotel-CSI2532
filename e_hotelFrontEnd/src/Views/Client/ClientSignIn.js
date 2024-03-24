@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export const SignIn=()=>{
+export const ClientSignIn=()=>{
 
     // State to store form data
     const [formData, setFormData] = useState({
@@ -19,13 +19,14 @@ export const SignIn=()=>{
         client:[],
     });
 
-    const [appelPageReservation, setPageReservation] = useState(false);
+    // const [appelPageReservation, setPageReservation] = useState(false);
     
     useEffect(() => {
         console.log("Bonjour: " + retourClient.client.prenom + ", " + retourClient.client.nomFamille);
         console.log(retourClient);
         if (retourClient.client.prenom != undefined){ 
-            setPageReservation(true);
+            // setPageReservation(true);
+            navigate("/reservationChambre", {state: retourClient.client});
         };
     },[retourClient]);
 
@@ -79,7 +80,7 @@ export const SignIn=()=>{
     return(
         <>
             {/* {console.log(appelPageReservation)} */}
-                {appelPageReservation ? <PageReservation userInfo = {retourClient.client}/> :
+                {/* {appelPageReservation ? <PageReservation userInfo = {retourClient.client}/> : */}
                 <>
                     <h2 className="text-center p-3">Veuillez vous connecter</h2>
                     <form onSubmit={handleSubmit}>
@@ -101,7 +102,7 @@ export const SignIn=()=>{
 
                     </form>
                 </>
-                }
+                {/* } */}
         </>  
     )
 }

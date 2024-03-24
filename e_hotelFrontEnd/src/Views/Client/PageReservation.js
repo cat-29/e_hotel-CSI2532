@@ -1,11 +1,20 @@
 import ValidateFcts from "../../ValidationFcts/container";
 import { Filters } from "../../components/Filters/Filters";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLocation,useLoaderData } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
+import fcts from "../../ApiFcts/Api";
 
-export const PageReservation = ({userInfo}) => {
+
+// This function is getting called each time the page renders
+export const loaderAllRooms = ()=>{
+    const rooms = fcts.getAllRooms();
+    return rooms;
+}
+
+export const PageReservation = () => {
 
     // Les filtres seront recu ici de la part du component Filters
 
@@ -23,9 +32,18 @@ export const PageReservation = ({userInfo}) => {
         chambreMax:''
     });
 
+    // Avoir les details de client, state est un object client
+    const {state} = useLocation();
+
+    // console.log("state coming from useLocation",state);
+
     // Tous les erreurs doivent être enregistrés ici
 
     const [filterError,setFilterError] = useState([]);
+
+    // All rooms at the very beginning
+    const roomsTotal = useLoaderData();
+    // console.log("roomsTotal",roomsTotal);
 
     // Call back function that sets the state of PageReservation to the state of its child filters
 
@@ -44,7 +62,8 @@ export const PageReservation = ({userInfo}) => {
         setShow((prev)=>!prev);
     }
 
-    // La fonction que l'on appelle lorsque l'on clique sur filtres, elle valide la valeur de quelques 
+
+    // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
     // filtres: checkin<checkout, priceMin<prixMax,chambreMin<chambreMax
 
     const handleFilterSub=()=>{
@@ -82,7 +101,8 @@ export const PageReservation = ({userInfo}) => {
    
     return (
         <>
-            <div className="m-3 fs-3">Bonjour {userInfo.prenom} {userInfo.nomFamille},</div>
+            {console.log("when rendering",roomsTotal)}
+            <div className="m-3 fs-3">Bonjour {state.prenom} {state.nomFamille},</div>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Réserver des chambres</h5>
             {/* onStateChange passes Filters's component state to PageReservation component state */}
             <Filters onStateChange={handleFilters}/>  
@@ -104,6 +124,28 @@ export const PageReservation = ({userInfo}) => {
                     <Button variant="secondary" onClick={handleClose}>Ok</Button>
                 </Modal.Footer>
             </Modal>
+
+
+            {/* Rooms go here */}
+            {roomsTotal ?
+            <div className="d-flex flex-row p-3 gap-4 flex-wrap justify-content-center">
+                {roomsTotal.map((item,index)=>{
+                    return(
+                        <div key={`card${index}`} className="text-center">
+                            <div className="card border-3 border-dark" style={{width: "300px"}}>
+                                <img className="card-img-top" src="" alt={item.numeroChambre}/>
+                                <div className="card-body">
+                                    <h4 style={{marginTop:"10px"}} className="card-title">{item.numeroChambre}</h4>
+                                        <p style={{marginTop:"20px"}} className="card-text">
+                                            Description
+                                        </p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>:<></>
+            }
 
         </>
         

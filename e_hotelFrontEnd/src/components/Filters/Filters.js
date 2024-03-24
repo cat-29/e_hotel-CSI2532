@@ -167,7 +167,7 @@ export const Filters = ({onStateChange})=>{
                         <div className="input-group mb-3">
                             <span className="input-group-text">$</span>
                             {/* <input type="text" className="form-control" onChange={handleInputChange} aria-label="Amount (to the nearest dollar)"/> */}
-                            <InputMask id='priceMin' className="form-control border" mask='99,999,999' placeholder="XXXXXXXX" maskChar={''} value={filters.prixMin} onChange={handleInputChange} name="prixMin"/>
+                            <InputMask id='priceMin' className="form-control border" mask='99999999' placeholder="XXXXXXXX" maskChar={''} value={filters.prixMin} onChange={handleInputChange} name="prixMin"/>
                             <span className="input-group-text">.00</span>
                         </div>
                         {/* <input type="range" className="form-range" min="0" max="5" id="price"></input> */}
@@ -177,7 +177,7 @@ export const Filters = ({onStateChange})=>{
                         <div className="input-group mb-3">
                             <span className="input-group-text">$</span>
                             {/* <input type="text" className="form-control" onChange={handleInputChange} aria-label="Amount (to the nearest dollar)"/> */}
-                            <InputMask id='priceMax' className="form-control border" mask='99,999,999' placeholder="XXXXXXXX" maskChar={''} value={filters.prixMax} onChange={handleInputChange} name="prixMax"/>
+                            <InputMask id='priceMax' className="form-control border" mask='99999999' placeholder="XXXXXXXX" maskChar={''} value={filters.prixMax} onChange={handleInputChange} name="prixMax"/>
                             <span className="input-group-text">.00</span>
                         </div>
                     </div>
@@ -232,7 +232,7 @@ export const Filters = ({onStateChange})=>{
                         <label htmlFor="chambreMin" className="form-label fw-bold p-2">Nombre de chambres minimum</label>
                         <div className="input-group mb-3">
                             {/* <input type="text" className="form-control" onChange={handleInputChange} aria-label="Amount (to the nearest dollar)"/> */}
-                            <InputMask id='chambreMin' className="form-control border" mask='999,999' placeholder="XXXXXX" maskChar={''} value={filters.chambreMin} onChange={handleInputChange} name="chambreMin"/>
+                            <InputMask id='chambreMin' className="form-control border" mask='999999' placeholder="XXXXXX" maskChar={''} value={filters.chambreMin} onChange={handleInputChange} name="chambreMin"/>
                             <span className="input-group-text">chambres</span>
                         </div>
                         {/* <input type="range" className="form-range" min="0" max="5" id="price"></input> */}
@@ -241,7 +241,7 @@ export const Filters = ({onStateChange})=>{
                         <label htmlFor="chambreMax" className="form-label fw-bold p-2">Nombre de chambres maximum</label>
                         <div className="input-group mb-3">
                             {/* <input type="text" className="form-control" onChange={handleInputChange} aria-label="Amount (to the nearest dollar)"/> */}
-                            <InputMask className="form-control border" mask='999,999' placeholder="XXXXXX" maskChar={''} value={filters.chambreMax} onChange={handleInputChange} name="chambreMax"/>
+                            <InputMask className="form-control border" mask='999999' placeholder="XXXXXX" maskChar={''} value={filters.chambreMax} onChange={handleInputChange} name="chambreMax"/>
                             <span className="input-group-text">chambres</span>
                         </div>
                     </div>
