@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
-import ValidateFcts from "../ValidationFcts/container";
-import fcts from "../ApiFcts/Api";
+import ValidateFcts from "../../ValidationFcts/container";
+import fcts from "../../ApiFcts/Api";
 import { useNavigate } from "react-router-dom";
 
 export const CreateAccountForm = ()=>{

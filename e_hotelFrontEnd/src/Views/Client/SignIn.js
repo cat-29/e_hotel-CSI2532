@@ -1,8 +1,8 @@
 import React,{useEffect, useState} from 'react';
-import ConnexionCompte from '../services/connexion-compte';
+import ConnexionCompte from '../../services/connexion-compte';
 import { PageReservation } from './PageReservation';
-import fcts from '../ApiFcts/Api';
-import ValidateFcts from '../ValidationFcts/container';
+import fcts from '../../ApiFcts/Api';
+import ValidateFcts from '../../ValidationFcts/container';
 import { useNavigate } from 'react-router-dom';
 
 
