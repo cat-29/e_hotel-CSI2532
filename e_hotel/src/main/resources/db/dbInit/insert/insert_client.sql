@@ -1,7 +1,7 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
--- client(nas, prenom, nom_famille, numero, rue, ville, province, pays, code_postal)
 INSERT INTO
-    client
+    client (
+        nas, prenom, nom_famille, numero, rue, ville, province, pays, code_postal
+    )
 VALUES (
         '123446789', 'John', 'Doe', 123, 'Main Street', 'Montreal', 'QC', 'Canada', 'H1A1A1'
     ),

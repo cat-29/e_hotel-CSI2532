@@ -1,7 +1,7 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
--- chambre(numero_chambre, id_hotel, prix, capacite_chambre, vue, capacite_a_etendre)
 INSERT INTO
-    chambre(numero_chambre, id_hotel, prix, capacite_chambre, vue_chambre, capacite_a_etendre)
+    chambre (
+        numero_chambre, id_hotel, prix, capacite_chambre, vue_chambre, capacite_a_etendre
+    )
 VALUES
     -- Hotel 1
     (

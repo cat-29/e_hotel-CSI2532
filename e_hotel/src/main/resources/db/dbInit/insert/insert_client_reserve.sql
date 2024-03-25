@@ -1,7 +1,7 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
--- client_reserve(id_client, numero_chambre, id_hotel, date_checkin, date_checkout, prix)
 INSERT INTO
-    client_reserve
+    client_reserve (
+        id_client, numero_chambre, id_hotel, date_checkin, date_checkout, prix
+    )
 VALUES (
         '123446789', 100, 1, '2024-04-10', '2024-04-13', 345.00
     ),
