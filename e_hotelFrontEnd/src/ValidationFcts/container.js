@@ -176,6 +176,18 @@ const validateDateCheckOut = (dateCheckout, dateCheckIn, res) => {
     return res;
 }
 
+const validateNasWithNasEmploye = (nas_employe, nas_client, res) => {
+    console.log("lets validate the nas employe with the nas client:", nas_employe, nas_client);
+    let feedback = "";
+    if (nas_employe == nas_client) { 
+        feedback = "LE NAS entré n'est pas valide."
+    } else if(nas_client.length != 9){
+        feedback =  "La taille d'un nas est de 9 chiffres exactement.";
+    }
+    res.push(feedback);
+    return res;
+}
+
 const validateAllfields = (answer) =>{
     console.log("the answer to be validated is",answer);
     let res = [];
@@ -210,7 +222,7 @@ const validateAllLocationFields = (answer) => {
     let items = [];
     for (let key in answer){
         if (key == "nas"){
-            res = validateNas(answer[key],res);
+            res = validateNasWithNasEmploye(answer["nas"], answer["nasEmploye"],res);
             console.log("helo");
         }else if (key == "prenom" || key == "nomFamille"){
             res = validateNom(answer[key],res)
@@ -224,10 +236,10 @@ const validateAllLocationFields = (answer) => {
             res = validateZip(answer[key],res);
         }else if(key == "email"){
             res = validateEmail(answer[key],res);
-        }else if (key == "dateCheckIn"){
+        }else if (key == "dateCheckin"){
             res = validateDateCheckIn(answer[key],res);
-        }else if (key == "dateCheckOut"){
-            res = validateDateCheckOut(answer[key], answer["dateCheckIn"],res);
+        }else if (key == "dateCheckout"){
+            res = validateDateCheckOut(answer[key], answer["dateCheckin"],res);
         }
     }
     return res;
