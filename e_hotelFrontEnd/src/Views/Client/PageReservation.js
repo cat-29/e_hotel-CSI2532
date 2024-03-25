@@ -62,6 +62,20 @@ export const PageReservation = () => {
         setShow((prev)=>!prev);
     }
 
+    const renderStars = (item)=>{
+        if (item.rating == 1){
+            return (<>⭐</>);
+        }else if (item.rating == 2){
+            return (<>⭐⭐</>);
+        }else if (item.rating == 3){
+            return(<>⭐⭐⭐</>)
+        }else if(item.rating == 4){
+            return(<>⭐⭐⭐⭐</>)
+        }else{
+            return(<>⭐⭐⭐⭐⭐</>)
+        }
+    }
+
 
     // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
     // filtres: checkin<checkout, priceMin<prixMax,chambreMin<chambreMax
@@ -135,10 +149,13 @@ export const PageReservation = () => {
                             <div className="card border-3 border-dark" style={{width: "300px"}}>
                                 <img className="card-img-top" src="" alt={item.numeroChambre}/>
                                 <div className="card-body">
-                                    <h4 style={{marginTop:"10px"}} className="card-title">{item.numeroChambre}</h4>
-                                        <p style={{marginTop:"20px"}} className="card-text">
-                                            Description
-                                        </p>
+                                    <h4 style={{marginTop:"10px"}} className="card-title">{`chambre ${item.capaciteChambre.toLowerCase()}`}</h4>
+                                        <div id="hotel">{item.nom}</div>
+                                        <div id="chaine">{item.nomChaine}</div>
+                                        <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
+                                        <div id="prix">{`${item.prix} $ / nuit`}</div>
+                                        <div id="rating">{renderStars(item)}</div>
+                                        <a className="btn btn-primary p-1 m-3">Réserver</a>
                                 </div>
                             </div>
                         </div>
