@@ -1,6 +1,7 @@
 package com.projet.e_hotel.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -41,5 +42,9 @@ public class LoueChambreService {
         LoueChambreDTO loueChambreDTO = EmployeAjouteLocationMapper.mapToLoueChambreDTO(aDto);
         LoueChambre loueChambre = LoueChambreMapper.mapTLoueChambre(loueChambreDTO);
         return loueChambreRepository.save(loueChambre);
+    }
+    
+    public List<LoueChambre> getHistoriqueLocationForHotelId(Integer idHotel) {
+        return loueChambreRepository.findAllByIdHotel(idHotel);
     }
 }

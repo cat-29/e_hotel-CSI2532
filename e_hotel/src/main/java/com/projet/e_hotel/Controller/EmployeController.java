@@ -9,11 +9,13 @@ import com.projet.e_hotel.Classes.dto.ActiveReservationDTO;
 import com.projet.e_hotel.Classes.dto.ClientDTO;
 import com.projet.e_hotel.Classes.dto.ClientReserveDTO;
 import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
+import com.projet.e_hotel.Classes.dto.EmployeTableLocationDTO;
 import com.projet.e_hotel.Classes.dto.EnregistreClientDTO;
 import com.projet.e_hotel.Classes.dto.LoueChambreDTO;
 import com.projet.e_hotel.Classes.mapper.ActiveReservationMapper;
 import com.projet.e_hotel.Classes.mapper.ClientMapper;
 import com.projet.e_hotel.Classes.mapper.ClientReserveMapper;
+import com.projet.e_hotel.Classes.mapper.EmployeTableLocationMapper;
 import com.projet.e_hotel.Classes.mapper.EnregistreClientMapper;
 import com.projet.e_hotel.Classes.mapper.LoueChambreMapper;
 import com.projet.e_hotel.Service.ClientReserveService;
@@ -42,7 +44,8 @@ public class EmployeController {
         private final EnregistreClientService enregistreClientService;
 
         public EmployeController(ClientReserveService clientReserveService, ClientService clientServiceImpl,
-                        LoueChambreService loueChambreService, HotelService hotelService, EnregistreClientService enregistreClientService) {
+                        LoueChambreService loueChambreService, HotelService hotelService,
+                        EnregistreClientService enregistreClientService) {
                 this.clientReserveService = clientReserveService;
                 this.clientServiceImpl = clientServiceImpl;
                 this.loueChambreService = loueChambreService;
@@ -64,11 +67,18 @@ public class EmployeController {
                 List<ClientDTO> listClientDTO = listClient.stream().map(r -> ClientMapper.mapToClientDTO(r)).toList();
 
                 List<LoueChambreDTO> listLoueChambreDTOs = listReservations.stream()
-                                .map(r -> loueChambreService.getAllLocations(r.getIdClient(), r.getIdHotel(), r.getDateCheckin(),
+                                .map(r -> loueChambreService.getAllLocations(r.getIdClient(), r.getIdHotel(),
+                                                r.getDateCheckin(),
                                                 r.getDateCheckout()))
                                 .toList().stream().map(map -> LoueChambreMapper.mapToLoueChambreDTO(map)).toList();
                 return ActiveReservationMapper.mapToActiveReservationDTOList(listClientReserveDTO, listClientDTO,
                                 listLoueChambreDTOs);
+        }
+
+        @GetMapping("/getAllLocations/{idHotel}")
+        public List<EmployeTableLocationDTO> getHistoriqueLocationForHotelId(@PathVariable Integer idHotel) {
+                return loueChambreService.getHistoriqueLocationForHotelId(idHotel).stream()
+                                .map(r -> EmployeTableLocationMapper.mapToEmployeTableLocationDTO(r, clientServiceImpl.getClientFromId(r.getIdClient()))).toList();
         }
 
         @PostMapping("/activeReservation/loueChambre")
@@ -80,7 +90,7 @@ public class EmployeController {
 
                 // save enregistre client
                 // clientServiceImpl.setEnregistrementClient(client, aDto.getIdEmploye());
-                
+
                 return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveNewLocation(dto));
         }
 
@@ -91,12 +101,13 @@ public class EmployeController {
 
         @PostMapping("/locationChambre")
         public LoueChambreDTO saveLocationChambre(@RequestBody EmployeAjouteLocationDTO aDto) {
-            return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveEmployeFaitLocationChambre(aDto));
+                return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveEmployeFaitLocationChambre(aDto));
         }
 
         @PostMapping("/enregistreClient")
-        public EnregistreClientDTO postMethodName(@RequestBody EmployeAjouteLocationDTO aDto) {           
-            return EnregistreClientMapper.mapToEnregistreClientDTO(enregistreClientService.saveEnregistreClient(aDto));
+        public EnregistreClientDTO postMethodName(@RequestBody EmployeAjouteLocationDTO aDto) {
+                return EnregistreClientMapper
+                                .mapToEnregistreClientDTO(enregistreClientService.saveEnregistreClient(aDto));
         }
 
 }

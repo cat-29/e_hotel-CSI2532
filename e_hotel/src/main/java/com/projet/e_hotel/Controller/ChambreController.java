@@ -27,24 +27,26 @@ import com.projet.e_hotel.Service.HotelService;
 public class ChambreController {
     @Autowired
     private ChambreService chambreService;
-
     private final HotelService hotelService;
 
-    public ChambreController(HotelService hotelService){
+    public ChambreController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
 
-
     @GetMapping("/numeroChambre/{hotelId}/{dateCheckIn}/{dateCheckOut}/{capacite}/{vue}")
-    public ChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId, @PathVariable Date dateCheckIn,
-            @PathVariable Date dateCheckOut, @PathVariable String capacite,
+    public ChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId, @PathVariable Long dateCheckIn,
+            @PathVariable Long dateCheckOut, @PathVariable String capacite,
             @PathVariable String vue) {
-                Chambre infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, dateCheckIn, dateCheckOut, capacite, vue);
-                if (infoChambre == null) {
-                    // Utilisateur doit changer ces filtres car il y a quelque chose qui est problematique
-                    return ChambreMapper.mapToChambreDTO(new Chambre());
-                }
-                return ChambreMapper.mapToChambreDTO(infoChambre);
+        Date checkIn = new Date(dateCheckIn);
+        Date checkOut = new Date(dateCheckOut);
+        Chambre infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkIn, checkOut, capacite,
+                vue);
+        if (infoChambre == null) {
+            // Utilisateur doit changer ces filtres car il y a quelque chose qui est
+            // problematique
+            return ChambreMapper.mapToChambreDTO(new Chambre());
+        }
+        return ChambreMapper.mapToChambreDTO(infoChambre);
     }
 
     // Avoir tous les chambres, aucun filtres appliqués
@@ -58,23 +60,24 @@ public class ChambreController {
 
         // Then convert those rooms from type Chambre to ChambreDTO thanks to ChambreMapper
         List<ChambreDTO> listChambresDTO = listChambres.stream().map(
-            item -> ChambreMapper.mapToChambreDTO(item)).toList();
+                item -> ChambreMapper.mapToChambreDTO(item)).toList();
 
         // Now get hotels from their id, the id was present in listChambres
         List<Hotel> listHotels = listChambres.stream()
-        .map(chambre -> hotelService.getNameHotel(chambre.getIdHotel())).toList();
+                .map(chambre -> hotelService.getNameHotel(chambre.getIdHotel())).toList();
 
         // Again map listHotels to HotelDTO
         List<HotelDTO> listHotelDTO = listHotels.stream()
-        .map(hotel -> HotelMapper.mapToHotelDTO(hotel)).toList();
+                .map(hotel -> HotelMapper.mapToHotelDTO(hotel)).toList();
 
         // Now I have hotelDTOs and ChambresDTOs
         // Now merge the two so that I can access hotel and chambre details same time
 
         // At this point, I have chambre details as well as hotel details.
 
-        // Still need to get chaine details in that object, as well as tel_chaine, email_chaine, email_hotel,tel_hotel et contient_commodite;
-        return ChambreHotelMapper.mapToChambreHotelDTO(listChambresDTO,listHotelDTO);        
+        // Still need to get chaine details in that object, as well as tel_chaine,
+        // email_chaine, email_hotel,tel_hotel et contient_commodite;
+        return ChambreHotelMapper.mapToChambreHotelDTO(listChambresDTO, listHotelDTO);
     }
 
 }
