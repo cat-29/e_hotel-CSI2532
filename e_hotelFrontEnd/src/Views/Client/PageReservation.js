@@ -1,8 +1,8 @@
 import ValidateFcts from "../../ValidationFcts/container";
 import { Filters } from "../../components/Filters/Filters";
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useLocation,useLoaderData } from "react-router-dom";
+import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
 import fcts from "../../ApiFcts/Api";
@@ -12,6 +12,20 @@ import fcts from "../../ApiFcts/Api";
 export const loaderAllRooms = ()=>{
     const rooms = fcts.getAllRooms();
     return rooms;
+}
+
+export const renderStars = (item)=>{
+    if (item == 1){
+        return (<>⭐</>);
+    }else if (item == 2){
+        return (<>⭐⭐</>);
+    }else if (item == 3){
+        return(<>⭐⭐⭐</>)
+    }else if(item == 4){
+        return(<>⭐⭐⭐⭐</>)
+    }else{
+        return(<>⭐⭐⭐⭐⭐</>)
+    }
 }
 
 export const PageReservation = () => {
@@ -43,6 +57,8 @@ export const PageReservation = () => {
 
     // All rooms at the very beginning
     const roomsTotal = useLoaderData();
+
+    const navigate = useNavigate();
     // console.log("roomsTotal",roomsTotal);
 
     // Call back function that sets the state of PageReservation to the state of its child filters
@@ -62,19 +78,7 @@ export const PageReservation = () => {
         setShow((prev)=>!prev);
     }
 
-    const renderStars = (item)=>{
-        if (item.rating == 1){
-            return (<>⭐</>);
-        }else if (item.rating == 2){
-            return (<>⭐⭐</>);
-        }else if (item.rating == 3){
-            return(<>⭐⭐⭐</>)
-        }else if(item.rating == 4){
-            return(<>⭐⭐⭐⭐</>)
-        }else{
-            return(<>⭐⭐⭐⭐⭐</>)
-        }
-    }
+    
 
 
     // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
@@ -111,11 +115,18 @@ export const PageReservation = () => {
         }
     }
 
+  
+
+    // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
+
+    const voirDetail = (chambre)=>{
+        // console.log("on doit ici changer vers la chambre de details de la chambre");
+        navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {chambre:chambre,nas:state.nas}});
+    }
     
    
     return (
         <>
-            {console.log("when rendering",roomsTotal)}
             <div className="m-3 fs-3">Bonjour {state.prenom} {state.nomFamille},</div>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Réserver des chambres</h5>
             {/* onStateChange passes Filters's component state to PageReservation component state */}
@@ -154,8 +165,8 @@ export const PageReservation = () => {
                                         <div id="chaine">{item.nomChaine}</div>
                                         <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
                                         <div id="prix">{`${item.prix} $ / nuit`}</div>
-                                        <div id="rating">{renderStars(item)}</div>
-                                        <a className="btn btn-primary p-1 m-3">Réserver</a>
+                                        <div id="rating">{renderStars(item.rating)}</div>
+                                        <a className="btn btn-primary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
                                 </div>
                             </div>
                         </div>

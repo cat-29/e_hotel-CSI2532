@@ -14,6 +14,9 @@ import { EmployeAjouteLocation } from './Views/EmployeAjouteLocation';
 import { PageReservation,loaderAllRooms } from './Views/Client/PageReservation';
 import { NotFound } from './NotFound';
 import { EmployeTableLocation } from './Views/EmployeTableLocation';
+import { DetailChambre } from './Views/Client/DetailChambre';
+import { Reserver } from './Views/Client/Reserver';
+import { MethodePaiementClient } from './Views/Client/MethodePaiementClient';
 
 
 function App() {
@@ -26,6 +29,10 @@ function App() {
         <Route path='client' element={<ClientSignIn/>}/>
         <Route path='createAccount' element={<CreateAccountForm/>}/>
         <Route path='reservationChambre' element={<PageReservation/>} loader={loaderAllRooms}/>
+        <Route path='reservationChambre/:hotId/:chambreId' element={<DetailChambre/>}/>
+        <Route path='reserver' element={<Reserver/>}/>
+        <Route path='payerClient' element={<MethodePaiementClient/>}/>
+
         <Route path='employe' element={<EmployeSignIn/>}/>
         <Route path='historiqueReservation' element={<ReservationActive/>}/>
         <Route path='managementHotel' element={<ManagementHotel/>}/>

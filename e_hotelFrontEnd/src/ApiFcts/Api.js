@@ -43,6 +43,10 @@ const getAllRooms = async()=>{
 }
 
 
+const ajouterReservationDB = (data)=>{
+    console.log("In api, data is: ",data);
+}
+
 // Keys and values of the fcts object
 
 
@@ -76,6 +80,10 @@ fcts.getAllRooms = async ()=>{
     const rooms = await getAllRooms();
     // console.log("well here",rooms);
     return rooms;
+}
+
+fcts.ajouterReservationDB = (data)=>{
+    return ajouterReservationDB(data);
 }
 
 export default fcts;
