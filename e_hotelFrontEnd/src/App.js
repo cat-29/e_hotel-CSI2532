@@ -13,6 +13,7 @@ import { MethodePaiement } from './Views/MethodePaiement';
 import { EmployeAjouteLocation } from './Views/EmployeAjouteLocation';
 import { PageReservation,loaderAllRooms } from './Views/Client/PageReservation';
 import { NotFound } from './NotFound';
+import { EmployeTableLocation } from './Views/EmployeTableLocation';
 
 
 function App() {
@@ -26,10 +27,11 @@ function App() {
         <Route path='createAccount' element={<CreateAccountForm/>}/>
         <Route path='reservationChambre' element={<PageReservation/>} loader={loaderAllRooms}/>
         <Route path='employe' element={<EmployeSignIn/>}/>
-        <Route path='reservationActive' element={<ReservationActive/>}/>
+        <Route path='historiqueReservation' element={<ReservationActive/>}/>
         <Route path='managementHotel' element={<ManagementHotel/>}/>
         <Route path='methodePaiement' element={<MethodePaiement/>}/>
         <Route path='ajoutLocation' element={<EmployeAjouteLocation/>}/>
+        <Route path='historiqueLocation' element={<EmployeTableLocation/>}/>
         <Route path="*" element={<NotFound />}/>
       </Route>
     ))

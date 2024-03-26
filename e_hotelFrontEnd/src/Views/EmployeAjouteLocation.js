@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ValidateFcts from "../ValidationFcts/container";
-import fcts from "../ApiFcts/Api";
 import InputMask from 'react-input-mask';
 import connexionCompte from "../services/connexion-compte";
 
@@ -23,9 +22,10 @@ export const EmployeAjouteLocation = () => {
         })
     }, state.employeInfo);
 
+   
     // State to store form data
     const [formData, setFormData] = useState({
-        nas: '',
+        idClient: '' , 
         prenom: '',
         nomFamille:'',
         numero:'',
@@ -34,15 +34,16 @@ export const EmployeAjouteLocation = () => {
         province:'',
         pays:'',
         codePostal:'',
-        dateCheckIn: '',
-        dateCheckOut:'',
+        dateCheckin: '',
+        dateCheckout:'',
         email: '',
-        hotel:state.employeInfo.hotel,
+        idHotel: state.employeInfo.hotel,
         nomHotel: '',
         vue: 'MONTAGNE',
         capacite: 'TRIPLE',
-        employeInfo: state.employeInfo,
-        numero_chambre: ''
+        numeroChambre: '',
+        idEmploye: state.employeInfo.id, 
+        montantDu: 0
     });
 
     const [formDataError,setFormDataError] = useState([]);
@@ -55,7 +56,7 @@ export const EmployeAjouteLocation = () => {
             // This desactivates all keyboards buttons axcept numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
-        } else if (name == "nas" || name == "codePostal") {
+        } else if (name == "idClient" || name == "codePostal") {
             const newValue = event.target.value.replace(/ /g, '');
             setFormData({ ...formData, [name]: newValue });
         }
@@ -63,11 +64,11 @@ export const EmployeAjouteLocation = () => {
             const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
             setFormData({ ...formData, [name]: newValue });
         }
-        else if (name == "dateCheckIn" || name == "dateCheckOut") {
+        else if (name == "dateCheckin" || name == "dateCheckout") {
             const newValue = event.target.value;
             setFormData({ ...formData, [name]: newValue});
-            console.log("checkin" + formData.dateCheckIn);
-            console.log("checkout" + formData.dateCheckOut);
+            console.log("checkin" + formData.dateCheckin);
+            console.log("checkout" + formData.dateCheckout);
 
         } else if (name == "vue") {
             if (target.id == "vue_mer") {
@@ -92,13 +93,68 @@ export const EmployeAjouteLocation = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
 
+        //******************//
+        // CALCULE LE PRIX  //
+        //******************//
+        // Le nombre de millisecondes dans une journee
+        const JOUR_MSEC = 1000 * 60 * 60 * 24;
+
+        // Calcule la differente des deux dates en milliseconde
+        const checkOut = new Date(formData.dateCheckout);
+        const checkIn = new Date(formData.dateCheckin);
+        const diffNbrJours = Math.abs(checkOut - checkIn);
+
+        // Convertis en nombre de jour;
+        const nbrJour = Math.round(diffNbrJours / JOUR_MSEC);
+
+        // Calcule le prix de la chambre pour le nombre de jours
+        const montant = roomNumberInfo.prix * nbrJour;
+        
+        // Set le prix comme le montant du
+        formData.montantDu = montant;
+        setFormData({ ...formData, ["montantDu"]: montant});
+        console.log("nbr de jour entre = " + Math.round(diffNbrJours / JOUR_MSEC));
+
+        // Le client existe-t-il? Si oui, on continue, sinon, on cree un nouveau client avec les informations entrees
+        connexionCompte.doesClientExist(formData.idClient).then((response) => {
+            if (!response.data) {
+                // Client n'existe pas. Cree un nouveau client
+                connexionCompte.createNewClient(formData).then(() => {
+                    console.log("client cree avec succes.");
+                }).catch((e) => {
+                    console.log("une erreur est survenue lors de la creation d'un client.", e);
+                })
+            } 
+        
+            // Sauvegarde la location du client, fait par l'employe
+            connexionCompte.saveLocation(formData).then(() => {
+                console.log("Location avec les infos du client on ete sauvegarde");
+            }).catch((e) => {
+                console.log("une erreur c'est produite lors de la sauvegarde de la location. " + e);
+            })
+
+            // Ajoute dans la base de donnee l'enregistrement du client. 
+            connexionCompte.enregistreClient(formData).then(() => {
+                console.log("enregistrement du client fait avec succes.");
+
+                // L'employe sera redirigee vers la page qui s'occupe du paiement
+                continueAvecPaiement();
+            }).catch((e) => {
+                console.log("une erreur c'est produite lors de l'enregistrement. " + e);
+            })
+            
+        }).catch((e) => {
+            console.log("une erreur est survenu lors de la recherche si client existe.");
+        })
+
+    }, [roomNumberInfo]);
+    
+  
     const handleSubmit = (e)=>{
         e.preventDefault();
-
-        console.log("capaicte: " +  formData.capacite );
         const validationResult = ValidateFcts.validateAllLocationFields(formData);
-
         setFormDataError(validationResult);
 
         // flag used to track whether we submit to backend or we wait for user to fix its errors
@@ -117,27 +173,27 @@ export const EmployeAjouteLocation = () => {
 
             // get the first room that matches the specifications.. if no room, then show alert
             // continue to the payment section
-            connexionCompte.getNumeroChambreForSpecifications(formData.hotel, new Date(formData.dateCheckIn), new Date(formData.dateCheckOut), formData.capacite, formData.vue).then((response) => {
-                if (response.data == null) {
-                    // no room is available with the criterias. Need to change the filters.
-                    console.log("no room found. change filters.");
-                    alert("No room was found. Please change the filters.");
-                }
-                else {
-                    alert("A passee")
+            connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.hotel, new Date(formData.dateCheckin).getTime(), new Date(formData.dateCheckout).getTime(), formData.capacite, formData.vue).then((response) => {
+                
+                // check if an element is null in the response data. If so, then show error msg.
+                if (response.data.numeroChambre == null && response.data.idHotel == null) {
+                    alert("Veuillez changer les filtres et/ou les dates de checkin et checkout!");
+                } else {
+                    // Set les informations concernant la chambre de libre
                     setRoomNumberInfo(response.data);
                     console.log(response.data);
+                    // Prend le numero de chambre
+                    formData.numeroChambre = response.data.numeroChambre;
                 }
             }).catch((e) => {
-                alert("erreur c'est produite. Veuillez changer vos filtres");
+                alert("Une erreur c'est produite avec les données entrés. Veuillez modifier vos filtres");
                 console.log(e);
             });
         }
     }
 
-    const backHomePage = (event)=>{
-        console.log("navigating back to home ...");
-        navigate('/');
+    const continueAvecPaiement = () => {
+        navigate('/methodePaiement', {state: {userInfo: formData, employeInfo: state.employeInfo}})
     }
 
     const [isShow, setIsShown] = useState(false);
@@ -151,7 +207,6 @@ export const EmployeAjouteLocation = () => {
     }
 
     return(
-        // <div>I am the create account form</div>
         <>
             <h2 className="text-center p-3">Ajout d'une location</h2>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
@@ -253,8 +308,8 @@ export const EmployeAjouteLocation = () => {
                     </div>
 
                     <div className="col-sm-5 col-md-3 col-lg-2">
-                        <label htmlFor="nas" className="form-label">Numéro Assurance Sociale</label>
-                        <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" maskChar={''} value={formData.nas} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="nas"/>
+                        <label htmlFor="idClient" className="form-label">Numéro Assurance Sociale</label>
+                        <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" maskChar={''} value={formData.idClient} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="idClient"/>
                         {formDataError[0] != "" ?
                             <div style={{color:"red"}}>
                                 {formDataError[0]}
@@ -273,8 +328,8 @@ export const EmployeAjouteLocation = () => {
                 </div>
                 <div className="d-grid gap-2 d-md-flex m-3">
                     <div>
-                        <label htmlFor="dateCheckIn" className="form-label">Date Check-In</label>
-                        <input type="date" className="form-control border" name="dateCheckIn" value={formData.dateCheckIn} onChange={handleInputChange}/>
+                        <label htmlFor="dateCheckin" className="form-label">Date Check-In</label>
+                        <input type="date" className="form-control border" name="dateCheckin" value={formData.dateCheckin} onChange={handleInputChange}/>
                         {formDataError[9] != "" ?
                             <div style={{color:"red"}}>
                                 {formDataError[9]}
@@ -283,8 +338,8 @@ export const EmployeAjouteLocation = () => {
                     </div>
 
                     <div>
-                        <label htmlFor="dateCheckOut" className="form-label">Date Check-Out</label>
-                        <input type="date" className="form-control border" name='dateCheckOut' min={formData.dateCheckIn} onChange={handleInputChange}/>
+                        <label htmlFor="dateCheckout" className="form-label">Date Check-Out</label>
+                        <input type="date" className="form-control border" name='dateCheckout' min={formData.dateCheckin} onChange={handleInputChange}/>
                         {formDataError[10] != "" ?
                             <div style={{color:"red"}}>
                                 {formDataError[10]}

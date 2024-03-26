@@ -221,8 +221,8 @@ const validateAllLocationFields = (answer) => {
     let res = [];
     let items = [];
     for (let key in answer){
-        if (key == "nas"){
-            res = validateNasWithNasEmploye(answer["nas"], answer["nasEmploye"],res);
+        if (key == "idClient"){
+            res = validateNasWithNasEmploye(answer["idClient"], answer["idEmploye"],res);
             console.log("helo");
         }else if (key == "prenom" || key == "nomFamille"){
             res = validateNom(answer[key],res)

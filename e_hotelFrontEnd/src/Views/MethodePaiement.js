@@ -24,13 +24,13 @@ export const MethodePaiement = () => {
         idHotel: state.userInfo.idHotel,
         isPaiementComplete: true,
         isUserCheckedInLocation: state.userInfo.isUserCheckedInLocation,
-        montantDu: 0.00,
+        montantDu: state.userInfo.montantDu,
         nomFamille: state.userInfo.nomFamille,
         numero: state.userInfo.numero,
         numeroChambre: state.userInfo.numeroChambre,
         pays: state.userInfo.pays,
         prenom: state.userInfo.prenom,
-        prix: state.userInfo.prix,
+        prix: state.userInfo.montantDu,
         province: state.userInfo.province,
         rue: state.userInfo.rue,
         ville: state.userInfo.ville
@@ -113,7 +113,7 @@ export const MethodePaiement = () => {
             numeroChambre: state.userInfo.numeroChambre,
             pays: state.userInfo.pays,
             prenom: state.userInfo.prenom,
-            prix: state.userInfo.prix,
+            prix: state.userInfo.montantDu,
             province: state.userInfo.province,
             rue: state.userInfo.rue,
             ville: state.userInfo.ville
@@ -126,7 +126,7 @@ export const MethodePaiement = () => {
     }
 
      const navigateBackToReservationActive = async() => {
-        navigate("/reservationActive", {state : { employeInfo: state.employeInfo}});
+        navigate("/historiqueReservation", {state : { employeInfo: state.employeInfo}});
     }
 
     return (
@@ -135,7 +135,7 @@ export const MethodePaiement = () => {
                 <div className="mx-3">
                     <h1 className="my-4">Méthode de paiement</h1>
                     <label htmlFor="montant">Montant dû</label>
-                    <h2 id="montant">$ {state.userInfo.prix}</h2>
+                    <h2 id="montant">$ {state.userInfo.montantDu}.00</h2>
                 </div>
                 <div className="d-grid d-md-flex m-3">
                     <div className="col-sm-5">
@@ -182,7 +182,7 @@ export const MethodePaiement = () => {
                 </div>
 
                 <div className="d-grid gap-2 d-sm-flex m-3">
-                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer ${state.userInfo.prix}</button>
+                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer ${state.userInfo.montantDu}.00</button>
                 </div>
             </form>
         </>
