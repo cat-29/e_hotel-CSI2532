@@ -90,7 +90,7 @@ export const ClientSignIn=()=>{
                         </div>
 
                         <div className="m-3 w-50">
-                            <label htmlFor="motDePasse" className="form-label">Mot de passse</label>
+                            <label htmlFor="motDePasse" className="form-label">Mot de passe</label>
                             <input type="password" className="form-control border" id="motDePasse" name='motDePasse' value={formData.motDePasse} onChange={handleInputChange}/>
                         </div>
 
