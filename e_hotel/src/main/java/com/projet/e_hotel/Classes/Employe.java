@@ -51,5 +51,5 @@ public class Employe {
     private RoleEmployeeEnum roleEmploye;
 
     @JoinColumn(name = "id_hotel", referencedColumnName = "id_hotel")
-    private String hotel;
+    private Integer idHotel;
 }

@@ -78,7 +78,9 @@ public class EmployeController {
         @GetMapping("/getAllLocations/{idHotel}")
         public List<EmployeTableLocationDTO> getHistoriqueLocationForHotelId(@PathVariable Integer idHotel) {
                 return loueChambreService.getHistoriqueLocationForHotelId(idHotel).stream()
-                                .map(r -> EmployeTableLocationMapper.mapToEmployeTableLocationDTO(r, clientServiceImpl.getClientFromId(r.getIdClient()))).toList();
+                                .map(r -> EmployeTableLocationMapper.mapToEmployeTableLocationDTO(r,
+                                                clientServiceImpl.getClientFromId(r.getIdClient())))
+                                .toList();
         }
 
         @PostMapping("/activeReservation/loueChambre")

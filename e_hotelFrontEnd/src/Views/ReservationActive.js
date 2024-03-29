@@ -12,7 +12,7 @@ export const ReservationActive = () => {
 
     useEffect(() => {
         // get all reservations for that hotel
-        connexionCompte.getAllActiveReservationsForEmploye(state.employeInfo.hotel).then((response) => {
+        connexionCompte.getAllActiveReservationsForEmploye(state.employeInfo.idHotel).then((response) => {
             setActiveReservationInfo({
                 reservation: response.data
             });
