@@ -1,6 +1,7 @@
--- chaine_hoteliere(nom_chaine, nbr_hotel, numero, rue, ville, province, pays, code_postal)
 INSERT INTO
-    chaine_hoteliere
+    chaine_hoteliere (
+        nom_chaine, nbr_hotel, numero, rue, ville, province, pays, code_postal
+    )
 VALUES (
         'Hotels Bellevue', 8, 123, 'Rue Hospitalité', 'Quebec', 'QC', 'Canada', 'G0A0P1'
     ),

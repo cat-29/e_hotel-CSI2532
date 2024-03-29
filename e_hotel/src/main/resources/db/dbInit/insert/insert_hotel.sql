@@ -1,10 +1,8 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
--- hotel(id_hotel, nom_chaine, nom, num_etoile, nbr_chambre, numero, rue, ville, province, code_postal, pays)
--- Hotel Bellevue
 INSERT INTO
-    hotel(id_hotel, nom_chaine, nom, num_etoile, nbr_chambre, numero, rue, ville, province, code_postal, pays)
-VALUES 
-(
+    hotel (
+        id_hotel, nom_chaine, nom, num_etoile, nbr_chambre, numero, rue, ville, province, code_postal, pays
+    )
+VALUES (
         1, 'Hotels Bellevue', 'Hotel Bellevue Montreal', 4, 30, 1234, 'Rue Sainte-Catherine Ouest', 'Montreal', 'QC', 'H3G1P7', 'Canada'
     ),
     (

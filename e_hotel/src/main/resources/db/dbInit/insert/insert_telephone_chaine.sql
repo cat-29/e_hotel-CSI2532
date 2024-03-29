@@ -1,6 +1,5 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
 INSERT INTO
-    telephone_chaine_hoteliere
+    telephone_chaine_hoteliere (num_telephone, nom_chaine)
 VALUES (4181110000, 'Hotels Bellevue'),
     (
         6132221111, 'Grand Horizon Hotels'
