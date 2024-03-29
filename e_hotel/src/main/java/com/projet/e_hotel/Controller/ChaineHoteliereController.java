@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -32,6 +34,13 @@ public class ChaineHoteliereController {
         return chaineHoteliereService.getAllChaineHoteliere().stream()
                 .map(r -> ChaineHoteliereMapper.mapToChaineHoteliereDTO(r)).toList();
     }
+
+    @GetMapping("/nom")
+    public List<String> getAllNomChaines() {
+        return chaineHoteliereService.getAllChaineHoteliere().stream()
+                .map(r -> r.getNomChaine()).toList();
+    }
+    
 
     // @GetMapping("/hotel/{idHotel}")
     // public String getChaineHoteliere(@RequestParam String idHotel) {

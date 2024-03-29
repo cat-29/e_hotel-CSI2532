@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Filters.css';
 import InputMask from 'react-input-mask';
+import connexionCompte from '../../services/connexion-compte';
 
 // State to store filters data
 
@@ -20,9 +21,18 @@ export const Filters = ({onStateChange})=>{
     });
 
 
+    const [nomchaines, setNomChaines] = useState([]);
     // console.log("filters in filters component",filters);
     // Later on, those should come from a database
-    const chaines = ['Hotels Bellevue','Grand Horizon Hotels','Sunset Vista Hotels & Resorts','The Grand Hotels','Séjour Bonnaventure']
+    // const chaines = ['Hotels Bellevue','Grand Horizon Hotels','Sunset Vista Hotels & Resorts','The Grand Hotels','Séjour Bonnaventure']
+
+    useEffect(() => {
+        // get nomchaine
+        connexionCompte.getAllNomChaines().then((response) => {
+            console.log(response.data);
+            setNomChaines(response.data);
+        });
+    }, []);
 
     useEffect(()=>{
         console.log("filters are now child",{filters});
@@ -188,7 +198,7 @@ export const Filters = ({onStateChange})=>{
             <div id='rightFilters' className="container-fluid text-center flex-wrap col-md-4 bg-primary">
                     <div id='chaine' className=''>
                         <label className='p-2 m-1 fw-bold'>Chaîne Hôtelière</label>
-                        {chaines.map((item,index)=>(
+                        {nomchaines.map((item,index)=>(
                             <div key={index} className='form-check'>
                                 <input className="form-check-input" type="checkbox" name='chaines' onChange={handleInputChange} id={`chaine${index}`} value={item}/>
                                 <label className="form-check-label" htmlFor={`chaine${index}`}>{item}</label>
