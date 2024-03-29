@@ -359,8 +359,10 @@ const isRoomAvailable = async (checkin,checkout,state)=>{
     const checkoutN = new Date(checkout);
     console.log("checking new",checkinN.getTime());
     console.log("checkout new",checkoutN.getTime())
-    data.checkin = checkinN.getTime();
-    data.checkout = checkoutN.getTime();
+    // data.checkin = checkinN.getTime();
+    // data.checkout = checkoutN.getTime();
+    data.checkin = checkinN.toISOString().slice(0,10);
+    data.checkout = checkoutN.toISOString().slice(0,10);
     data.numeroChambre = state.numeroChambre;
     data.idHotel = state.idHotel;
     const res = await fcts.isRoomAvailable(data);
