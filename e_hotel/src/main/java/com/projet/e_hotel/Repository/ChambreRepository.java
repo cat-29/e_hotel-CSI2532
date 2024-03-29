@@ -30,9 +30,9 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                 "(client_reserve.date_checkin >= :checkin \r\n" + //
                 "AND client_reserve.date_checkout <= :checkout ))\r\n" + //
                 "UNION (Select numero_chambre,id_hotel \r\n" + // cas 2: il y a quelqu'un qui a une date de checkin avant nous(ou meme), 
-                "from client_reserve where \r\n" + // mais qui sort apres que l on rentre notre checkin (strictement sup)
-                "(client_reserve.date_checkin) <= :checkin \r\n" + //
-                "AND (client_reserve.date_checkout > :checkin  ) AND (client_reserve.date_checkout <= :checkout))\r\n" + //
+                "from client_reserve where \r\n" + // mais qui sort apres que l on rentre (ou egal)
+                "(client_reserve.date_checkin <= :checkin) \r\n" + //
+                "AND (client_reserve.date_checkout >= :checkin) AND (client_reserve.date_checkout <= :checkout))\r\n" + //
                 "UNION (Select numero_chambre,id_hotel \r\n" + // cas3: un client qui entre apres nous (ou egale),
                 "from client_reserve where\r\n" + // mais avant notre checkout et son checkout est apres notre checkout. (ou egale)
                 "((client_reserve.date_checkin >= :checkin)\r\n" + //
@@ -47,8 +47,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                 "AND loue_chambre.date_checkout <= :checkout ))\r\n" + //
                 "UNION (Select numero_chambre,id_hotel \r\n" + //
                 "from loue_chambre where \r\n" + //
-                "(loue_chambre.date_checkin) <= :checkin \r\n" + //
-                "AND (loue_chambre.date_checkout > :checkin)AND (loue_chambre.date_checkout <= :checkout))\r\n" + //
+                "(loue_chambre.date_checkin <= :checkin ) \r\n" + //
+                "AND (loue_chambre.date_checkout >= :checkin)AND (loue_chambre.date_checkout <= :checkout))\r\n" + //
                 "UNION (Select numero_chambre,id_hotel \r\n" + //
                 "from loue_chambre where\r\n" + //
                 "((loue_chambre.date_checkin >= :checkin)\r\n" + //
