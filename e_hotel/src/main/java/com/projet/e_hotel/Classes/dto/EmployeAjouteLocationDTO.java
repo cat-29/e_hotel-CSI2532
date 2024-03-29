@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeAjouteLocationDTO {
-    private String nas;
+    private String idClient;
     private String prenom;
     private String nomFamille;
     private Integer numero;
@@ -24,11 +24,11 @@ public class EmployeAjouteLocationDTO {
     private Date dateCheckin;
     private Date dateCheckout;
     private String email;
-    private Integer hotel;
+    private Integer idHotel;
     private String nomHotel;
     private String vue;
     private String capacite;
     private Integer numeroChambre;
-    private String nasEmploye;
+    private String idEmploye;
     private Double montantDu;
 }

@@ -176,6 +176,18 @@ const validateDateCheckOut = (dateCheckout, dateCheckIn, res) => {
     return res;
 }
 
+const validateNasWithNasEmploye = (nas_employe, nas_client, res) => {
+    console.log("lets validate the nas employe with the nas client:", nas_employe, nas_client);
+    let feedback = "";
+    if (nas_employe == nas_client) { 
+        feedback = "LE NAS entré n'est pas valide."
+    } else if(nas_client.length != 9){
+        feedback =  "La taille d'un nas est de 9 chiffres exactement.";
+    }
+    res.push(feedback);
+    return res;
+}
+
 const validateAllfields = (answer) =>{
     console.log("the answer to be validated is",answer);
     let res = [];
@@ -209,8 +221,8 @@ const validateAllLocationFields = (answer) => {
     let res = [];
     let items = [];
     for (let key in answer){
-        if (key == "nas"){
-            res = validateNas(answer[key],res);
+        if (key == "idClient"){
+            res = validateNasWithNasEmploye(answer["idClient"], answer["idEmploye"],res);
             console.log("helo");
         }else if (key == "prenom" || key == "nomFamille"){
             res = validateNom(answer[key],res)
@@ -224,10 +236,10 @@ const validateAllLocationFields = (answer) => {
             res = validateZip(answer[key],res);
         }else if(key == "email"){
             res = validateEmail(answer[key],res);
-        }else if (key == "dateCheckIn"){
+        }else if (key == "dateCheckin"){
             res = validateDateCheckIn(answer[key],res);
-        }else if (key == "dateCheckOut"){
-            res = validateDateCheckOut(answer[key], answer["dateCheckIn"],res);
+        }else if (key == "dateCheckout"){
+            res = validateDateCheckOut(answer[key], answer["dateCheckin"],res);
         }
     }
     return res;
@@ -236,28 +248,37 @@ const validateAllLocationFields = (answer) => {
 
 // Validation of filters dates
 
-const validateDates = (checkin,checkout,res)=>{
+const validateDates = (checkin,checkout,res,flag)=>{
     // console.log("trying to validate dates",checkout);
+    // flag == 0 means we are calling this from the filter section
+    // flag == 1 means we are calling this from the point were we might make a reservation
     let s = '';
-    const today = new Date();
-    if (checkin !="" && checkout!=""){
-        if (checkout <= checkin || checkout < today || checkin < today){
-            s = 'Veuillez choisir des dates valides';
-        }
+    if((flag == 1)&& (checkin == "" || checkout == "")){
+        s = 'Svp veuillez indiquer les deux dates checkin et checkout';
     }else{
-        if (checkin == ""){
-            if (checkout != "" && checkout <= today){
-                s = 'Veuillez entrer une date de checkout valide';
+        const today = new Date();
+        console.log("checkout",checkout);
+        if (checkin !="" && checkout!=""){
+            if (checkout <= checkin || checkout < today || checkin < today){
+                s = 'Veuillez choisir des dates valides';
             }
         }else{
-            console.log("here?!");
-            if (checkin!="" && checkin <= today){
-                console.log("should come here");
-                s = 'Veuillez entrer une date de checkin valide';
+            if (checkin == ""){
+                if (checkout != "" && checkout <= today){
+                    s = 'Veuillez entrer une date de checkout valide';
+                }
+            }else{
+                console.log("here?!");
+                console.log("checkin is",checkin);
+                console.log(checkin<=today);
+
+                if (checkin !="" && checkin <= today){
+                    console.log("should come here");
+                    s = 'Veuillez entrer une date de checkin valide';
+                }
             }
         }
     }
-   
     res.push(s);
     return res;
 }
@@ -310,13 +331,21 @@ const validateFilters = (filters) =>{
     }catch{
         console.log("A problem happened while trying to parse dates");
     }
-    errors = validateDates(checkin,checkout,errors);
+    errors = validateDates(checkin,checkout,errors,0);
     errors = validatePrices(filters.prixMin,filters.prixMax,errors,0);
     errors = validatePrices(filters.chambreMin,filters.chambreMax,errors,1);
     // 0 validation of prices
     // 1 validation of room number
    
     return errors;
+}
+
+// Method used to calculate number of days between two dates so that we can calculate totalPrice in reservation client
+
+const calculateNumberOfDays = (start,end)=>{
+    let diffTime = end.getTime() - start.getTime();
+    let diffDays = Math.round(diffTime / (1000*3600*24));
+    return diffDays;
 }
 
 
@@ -339,5 +368,13 @@ ValidateFcts.validateAllLocationFields = (answer) => {
 }
 ValidateFcts.validateFilters = (filters)=>{
     return validateFilters(filters);
+}
+
+ValidateFcts.validateDates = (checkin,checkout,res,flag) =>{
+    return validateDates(checkin,checkout,res,flag);
+}
+
+ValidateFcts.calculateNumberOfDays = (start,end)=>{
+    return calculateNumberOfDays(start,end);
 }
 export default ValidateFcts;

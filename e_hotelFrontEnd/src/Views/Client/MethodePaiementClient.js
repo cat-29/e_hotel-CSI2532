@@ -1,44 +1,18 @@
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import InputMask from 'react-input-mask';
-import ValidateFcts from "../ValidationFcts/container";
-import connexionCompte from "../services/connexion-compte";
+import ValidateFcts from "../../ValidationFcts/container";
+import { useState } from "react";
+import fcts from "../../ApiFcts/Api";
 
-export const MethodePaiement = () => {
 
-    const { state } = useLocation();
-    const [formData, setFormData] = useState({
-        prenom: '',
-        numCarte: '',
-        dateExpiration: '',
-        cvc: ''
-    });
+export const MethodePaiementClient = ()=>{
 
-    const [newLocation, setNewLocation] = useState({
-        codePostal: state.userInfo.codePostal,
-        dateCheckin: state.userInfo.dateCheckin,
-        dateCheckout: state.userInfo.dateCheckout,
-        datePaiementComplete: new Date(),
-        idClient: state.userInfo.idClient,
-        idEmploye: state.employeInfo.id,
-        idHotel: state.userInfo.idHotel,
-        isPaiementComplete: true,
-        isUserCheckedInLocation: state.userInfo.isUserCheckedInLocation,
-        montantDu: state.userInfo.montantDu,
-        nomFamille: state.userInfo.nomFamille,
-        numero: state.userInfo.numero,
-        numeroChambre: state.userInfo.numeroChambre,
-        pays: state.userInfo.pays,
-        prenom: state.userInfo.prenom,
-        prix: state.userInfo.montantDu,
-        province: state.userInfo.province,
-        rue: state.userInfo.rue,
-        ville: state.userInfo.ville
-    });
+    // The state here has: nas,num_chambre,id_hotel,checkin,checkout,price,prix
 
-    const [formDataError, setFormDataError] = useState([]);
-
+    const {state} = useLocation();
+    let [formDataError,setFormDataError] = useState([]);
     const navigate = useNavigate();
+    // console.log("in methode paiement client",state);
 
     const handleInputChange = (event) => {
         const target = event.target;
@@ -61,6 +35,13 @@ export const MethodePaiement = () => {
             setFormData({ ...formData, [name]: value });
         }
     }
+
+    const [formData, setFormData] = useState({
+        prenom: '',
+        numCarte: '',
+        dateExpiration: '',
+        cvc: ''
+    });
 
     const [isShow, setIsShown] = useState(false);
 
@@ -90,52 +71,20 @@ export const MethodePaiement = () => {
             console.log("there are still errors to fix");
         } else{
             console.log("fields are ready to be submitted to backend");
-            console.log(state.userInfo);
-            console.log(state.employeInfo);
-            sending();
+            fcts.ajouterReservationDB(state);
+            // same remark as before in reserver if client doesnt want to pay
+            navigate('/');
         }
     }
 
-    const sending = () => {
-        setNewLocation ({
-            codePostal: state.userInfo.codePostal,
-            dateCheckin: state.userInfo.dateCheckin,
-            dateCheckout: state.userInfo.dateCheckout,
-            datePaiementComplete: new Date(),
-            idClient: state.userInfo.idClient,
-            idEmploye: state.employeInfo.id,
-            idHotel: state.userInfo.idHotel,
-            isPaiementComplete: true,
-            isUserCheckedInLocation: true,
-            montantDu: 0.00,
-            nomFamille: state.userInfo.nomFamille,
-            numero: state.userInfo.numero,
-            numeroChambre: state.userInfo.numeroChambre,
-            pays: state.userInfo.pays,
-            prenom: state.userInfo.prenom,
-            prix: state.userInfo.montantDu,
-            province: state.userInfo.province,
-            rue: state.userInfo.rue,
-            ville: state.userInfo.ville
-        });
-
-        // enregistre les donnees dans la base de donnee
-        connexionCompte.saveMethodePaiementForClientLoueChambre(newLocation).then(() => {
-            navigateBackToReservationActive();
-        });       
-    }
-
-     const navigateBackToReservationActive = async() => {
-        navigate("/historiqueReservation", {state : { employeInfo: state.employeInfo}});
-    }
-
-    return (
+    return(
         <>
-            <form noValidate className="mx-4" onSubmit={handleSubmit}>
+         <form noValidate className="mx-4" onSubmit={handleSubmit}>
+                {/* Thinking about how to send price here */}
                 <div className="mx-3">
                     <h1 className="my-4">Méthode de paiement</h1>
-                    <label htmlFor="montant">Montant dû</label>
-                    <h2 id="montant">$ {state.userInfo.montantDu}.00</h2>
+                    <label htmlFor="montant">Montant dû:</label>
+                    <h2 id="montant">$ {state.priceTotal}</h2>
                 </div>
                 <div className="d-grid d-md-flex m-3">
                     <div className="col-sm-5">
@@ -182,9 +131,15 @@ export const MethodePaiement = () => {
                 </div>
 
                 <div className="d-grid gap-2 d-sm-flex m-3">
-                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer ${state.userInfo.montantDu}.00</button>
+                    {/* <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer ${state.userInfo.prix}</button> */}
+                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer</button>
+
                 </div>
             </form>
+
+
+
         </>
-    )
+
+    );
 }

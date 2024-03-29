@@ -5,35 +5,7 @@ import axios from "axios";
 
 const fcts = {};
 
-const sendCredentials = async(answer)=>{
-    console.log("once in the api");
-    console.log(answer);
-    // try {
-        //     const response = await axios.post('http://localhost:8080/comptes', { name: itemName });
-        //     console.log('Item created:', response.data);
-        //     // Optionally, update UI or show a success message
-        //   } catch (error) {
-        //     console.error('Error creating item:', error);
-        //     // Optionally, handle error and show an error message
-        //   }
-
-    // This one is working
-    // const response = await fetch('http://localhost:8080/addAccount',{method:"POST",headers:{'Accept':'application/json','Content-Type':'application/json'},
-    //     body:JSON.stringify(answer),
-    // });
-    // return response;
-
-}
-
 const createAccount = async(answerClient,answerAccount)=>{
-
-
-    // This one is working
-    // const response = await fetch('http://localhost:8080/addAccount',{method:"POST",headers:{'Accept':'application/json','Content-Type':'application/json'},
-    //     body:JSON.stringify(answer),
-    // });
-    // return response;
-
     // Axios seems nicer
     // Further formating is needed (I will need two objects one for client and second for clientAccount) so two post requests
     let compteResponse = null;
@@ -49,22 +21,34 @@ const createAccount = async(answerClient,answerAccount)=>{
     } else {
         console.log("Was unable to add client");
     }
-
     });
-
     return compteResponse;
+}
 
+const getAllRooms = async()=>{
+    let rooms = null;
+    try{
+        const response = await axios.get("http://localhost:8080/chambre/tous");
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            rooms = response.data;
+        }else{
+            console.log("Sorry, something went wrong while fetching");
+        }
 
-
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return rooms;
 }
 
 
+const ajouterReservationDB = (data)=>{
+    console.log("In api, data is: ",data);
+}
+
 // Keys and values of the fcts object
 
-fcts.submitCredentials = (answer)=>{
-   const  response = sendCredentials(answer);
-   return response;
-} 
 
 fcts.createAccount = (answer)=>{
     // We just want to submit all fields except passwordConfirmed one since it's going to be a duplicate of what we already have in pwdfield
@@ -90,6 +74,16 @@ fcts.createAccount = (answer)=>{
     // console.log("before sending to backend",client);
     const response = createAccount(client,compte);
     return response;
+}
+
+fcts.getAllRooms = async ()=>{
+    const rooms = await getAllRooms();
+    // console.log("well here",rooms);
+    return rooms;
+}
+
+fcts.ajouterReservationDB = (data)=>{
+    return ajouterReservationDB(data);
 }
 
 export default fcts;

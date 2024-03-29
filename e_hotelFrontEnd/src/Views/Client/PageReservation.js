@@ -2,10 +2,33 @@ import ValidateFcts from "../../ValidationFcts/container";
 import { Filters } from "../../components/Filters/Filters";
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
+import fcts from "../../ApiFcts/Api";
 
-export const PageReservation = ({userInfo}) => {
+
+// This function is getting called each time the page renders
+export const loaderAllRooms = ()=>{
+    const rooms = fcts.getAllRooms();
+    return rooms;
+}
+
+export const renderStars = (item)=>{
+    if (item == 1){
+        return (<>⭐</>);
+    }else if (item == 2){
+        return (<>⭐⭐</>);
+    }else if (item == 3){
+        return(<>⭐⭐⭐</>)
+    }else if(item == 4){
+        return(<>⭐⭐⭐⭐</>)
+    }else{
+        return(<>⭐⭐⭐⭐⭐</>)
+    }
+}
+
+export const PageReservation = () => {
 
     // Les filtres seront recu ici de la part du component Filters
 
@@ -23,9 +46,20 @@ export const PageReservation = ({userInfo}) => {
         chambreMax:''
     });
 
+    // Avoir les details de client, state est un object client
+    const {state} = useLocation();
+
+    // console.log("state coming from useLocation",state);
+
     // Tous les erreurs doivent être enregistrés ici
 
     const [filterError,setFilterError] = useState([]);
+
+    // All rooms at the very beginning
+    const roomsTotal = useLoaderData();
+
+    const navigate = useNavigate();
+    // console.log("roomsTotal",roomsTotal);
 
     // Call back function that sets the state of PageReservation to the state of its child filters
 
@@ -44,7 +78,10 @@ export const PageReservation = ({userInfo}) => {
         setShow((prev)=>!prev);
     }
 
-    // La fonction que l'on appelle lorsque l'on clique sur filtres, elle valide la valeur de quelques 
+    
+
+
+    // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
     // filtres: checkin<checkout, priceMin<prixMax,chambreMin<chambreMax
 
     const handleFilterSub=()=>{
@@ -78,11 +115,19 @@ export const PageReservation = ({userInfo}) => {
         }
     }
 
+  
+
+    // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
+
+    const voirDetail = (chambre)=>{
+        // console.log("on doit ici changer vers la chambre de details de la chambre");
+        navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {chambre:chambre,nas:state.nas}});
+    }
     
    
     return (
         <>
-            <div className="m-3 fs-3">Bonjour {userInfo.prenom} {userInfo.nomFamille},</div>
+            <div className="m-3 fs-3">Bonjour {state.prenom} {state.nomFamille},</div>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Réserver des chambres</h5>
             {/* onStateChange passes Filters's component state to PageReservation component state */}
             <Filters onStateChange={handleFilters}/>  
@@ -104,6 +149,31 @@ export const PageReservation = ({userInfo}) => {
                     <Button variant="secondary" onClick={handleClose}>Ok</Button>
                 </Modal.Footer>
             </Modal>
+
+
+            {/* Rooms go here */}
+            {roomsTotal ?
+            <div className="d-flex flex-row p-3 gap-4 flex-wrap justify-content-center">
+                {roomsTotal.map((item,index)=>{
+                    return(
+                        <div key={`card${index}`} className="text-center">
+                            <div className="card border-3 border-dark" style={{width: "300px"}}>
+                                <img className="card-img-top" src="" alt={item.numeroChambre}/>
+                                <div className="card-body">
+                                    <h4 style={{marginTop:"10px"}} className="card-title">{`chambre ${item.capaciteChambre.toLowerCase()}`}</h4>
+                                        <div id="hotel">{item.nom}</div>
+                                        <div id="chaine">{item.nomChaine}</div>
+                                        <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
+                                        <div id="prix">{`${item.prix} $ / nuit`}</div>
+                                        <div id="rating">{renderStars(item.rating)}</div>
+                                        <a className="btn btn-primary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>:<></>
+            }
 
         </>
         

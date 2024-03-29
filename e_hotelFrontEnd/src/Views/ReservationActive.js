@@ -28,6 +28,10 @@ export const ReservationActive = () => {
         }
     }
 
+    const showHistoriqueLocation = () => {
+        navigate("/historiqueLocation", {state: {employeInfo: state.employeInfo}});
+    }
+
     const ajoutLocation = () => {
         navigate("/ajoutLocation", {state: {employeInfo: state.employeInfo}});
     }
@@ -39,16 +43,17 @@ export const ReservationActive = () => {
     return ( 
         <>
             <div className="titre text-center">
-                <h1 className="mx-4 my-4">Réservations actives</h1>                    
+                <h1 className="mx-4 my-4">Historique des réservations</h1>                    
             </div>
 
-            <div className="mx-5 text-end">
+            <div className="mx-5 d-flex justify-content-between">
+                <button type="button" className="btn btn-info me-3" onClick={showHistoriqueLocation}>Voir l'historique des locations</button>
                 <button type="button" className="btn btn-secondary" onClick={ajoutLocation}>Ajout d'une location
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
                         <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
                     </svg>
-                </button>
+                </button>                
             </div>
             
             <table className="table align-middle table-bordered mx-5 my-2 w-auto">
@@ -59,7 +64,8 @@ export const ReservationActive = () => {
                         <th className="col-2">Date checkin</th>
                         <th className="col-2">Date checkout</th>
                         <th className="col-2">CheckIn location</th>
-                        <th className="col-2">Paiement Complété</th>
+                        <th className="col-1"># Chambre réservé</th>
+                        <th className="col-2">Paiement complété</th>
                     </tr>
                 </thead>
 
@@ -80,6 +86,7 @@ export const ReservationActive = () => {
                                     </td>
                                     : <td className="text-center"><button className="btn btn-secondary" onClick={() => {checkIfPaiementComplete((val))}}>CheckIn</button></td>
                                 }
+                                <td className="text-center">{val.numeroChambre}</td>
                                 {val.isPaiementComplete ? <td className="text-center" style={{color: 'green'}}>Oui</td> : <td className="text-center" style={{color: 'red'}}>Non</td>}
                             </tr>
                         </tbody>
