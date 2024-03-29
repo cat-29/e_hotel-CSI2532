@@ -8,7 +8,7 @@ import fcts from '../../ApiFcts/Api';
 
 export const Reserver = () => {
     const {state} = useLocation();
-    console.log("the state in reserver",state);
+    // console.log("the state in reserver",state);
 
     const [dates, setDates] = useState({
         checkin: '',
@@ -40,7 +40,7 @@ export const Reserver = () => {
         });
     }
 
-    const checkDatesAndCalculatePrice = ()=>{
+    const checkDatesAndCalculatePrice = async()=>{
         // console.log("let's check whether dates is saved or not");
         // console.log(dates);
         // Validating dates
@@ -54,7 +54,7 @@ export const Reserver = () => {
         }
         let res = [];
         ValidateFcts.validateDates(checkin,checkout,res,1);
-        console.log("errors are",res);
+        // console.log("errors are",res);
         setErrors(res); 
         let flag = false;
 
@@ -70,13 +70,25 @@ export const Reserver = () => {
 
         }else{
             console.log("Ready for further processing");
-            let days = ValidateFcts.calculateNumberOfDays(checkin,checkout);
-            let totPrice = days * parseInt(state.prix);
-            // console.log("days are ",days);
-            // console.log("prix",state.prix);
-            // console.log("for you, price is", totPrice);
-            setShownPrice(true);
-            setPrice(totPrice);
+            // Validate first by determining if a room is available
+            let isRoomAvailable = await ValidateFcts.isRoomAvailable(checkin,checkout,state);
+            console.log("isRoomAvailable",isRoomAvailable);
+            let room = isRoomAvailable[0];
+            // Ce premier if veut dire que la chambre n'est as disponible
+            if ((room.numeroChambre != 0) && (room.id_hotel != 0)){
+                let err = ["La chambre n'est pas disponible pour les dates indiquées. Veuillez changer la sélection."];
+                setErrors(err);
+                setShown(true);
+            }else{
+                let days = ValidateFcts.calculateNumberOfDays(checkin,checkout);
+                let totPrice = days * parseInt(state.prix);
+                // console.log("days are ",days);
+                // console.log("prix",state.prix);
+                // console.log("for you, price is", totPrice);
+                setShownPrice(true);
+                setPrice(totPrice);
+            }
+            
         }
     }
 
@@ -90,7 +102,9 @@ export const Reserver = () => {
         const newState = {...data};
         newState.priceTotal = price;
         console.log("Dans ajouter reservation BD",newState);
+
         fcts.ajouterReservationDB(newState);
+
         // Should await for reservation to be added first, then navigate back
         navigate('/');
     }

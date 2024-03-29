@@ -47,6 +47,30 @@ const ajouterReservationDB = (data)=>{
     console.log("In api, data is: ",data);
 }
 
+
+const isRoomAvailable = async (data)=>{
+    let res = false;
+    try{
+        const response = await axios.get(`http://localhost:8080/chambre/getIsRoomAvailable/${data.checkin}/${data.checkout}/${data.idHotel}/${data.numeroChambre}`);
+        if (response.status == 200){
+            console.log("completed successfully");
+            res = response.data;
+            // console.log("the res after get is",res);
+        }else{
+            console.log("Sorry, something went wrong.");
+        }
+
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return res;
+}
+
+
+
+
+
+
 // Keys and values of the fcts object
 
 
@@ -86,4 +110,8 @@ fcts.ajouterReservationDB = (data)=>{
     return ajouterReservationDB(data);
 }
 
+fcts.isRoomAvailable = async(data)=>{
+    const res = await isRoomAvailable(data);
+    return res;
+}
 export default fcts;

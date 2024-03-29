@@ -2,6 +2,7 @@ package com.projet.e_hotel.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.projet.e_hotel.Classes.Chambre;
 import com.projet.e_hotel.Classes.ClientReserve;
 import com.projet.e_hotel.Classes.LoueChambre;
+import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
+import com.projet.e_hotel.Classes.mapper.sqlMapping.ChambrePkMapper;
 import com.projet.e_hotel.Repository.ChambreRepository;
 import com.projet.e_hotel.Repository.ClientReserveRepository;
 import com.projet.e_hotel.Repository.LoueChambreRepository;
@@ -195,4 +198,23 @@ public class ChambreService {
         return this.chambreRepository.findAll();
     }
 
+
+
+    public List<ChambrePKDTO> isRoomAvailable(Date checkin, Date checkout,Integer idHotel, Integer numeroChambre){
+        // Convert from List<Object[]>  to List<ChambrePKM>
+        List<Object[]> rawResult = this.chambreRepository.determineIfNotAvailable(checkin,checkout,idHotel,numeroChambre);
+
+        if (rawResult.isEmpty()){
+            ChambrePKDTO rawResultFormatted = ChambrePkMapper.mapToEmptyObject(rawResult);
+            List<ChambrePKDTO> res = new LinkedList<ChambrePKDTO>();
+            res.add(rawResultFormatted);
+            return res;  
+        }else{
+            // Map accordingly
+            List<ChambrePKDTO> rawResultFormatted = rawResult.stream()
+            .map(item -> ChambrePkMapper.mapToChambrePKObject(item)).toList();
+            return rawResultFormatted;
+        }
+    }
 }
+

@@ -1,6 +1,8 @@
 // Similar to ApiFcts, container.js will be where we do all our validation from a client side perspective. 
 // either use those fcts or create your own, you should import  functions objects to your page so you can use it.
 
+import fcts from "../ApiFcts/Api";
+
 const ValidateFcts = {};
 
 // Sign In section Validation
@@ -348,6 +350,24 @@ const calculateNumberOfDays = (start,end)=>{
     return diffDays;
 }
 
+// Determining if a room is free or not
+const isRoomAvailable = async (checkin,checkout,state)=>{
+    // console.log("in isRoom available,"+ checkin + " "+ checkout);
+    // console.log("the state is",state);
+    const data = {};
+    const checkinN = new Date(checkin);
+    const checkoutN = new Date(checkout);
+    console.log("checking new",checkinN.getTime());
+    console.log("checkout new",checkoutN.getTime())
+    data.checkin = checkinN.getTime();
+    data.checkout = checkoutN.getTime();
+    data.numeroChambre = state.numeroChambre;
+    data.idHotel = state.idHotel;
+    const res = await fcts.isRoomAvailable(data);
+    return res;
+    // const res = await fcts.isRoomAvailable(data);
+}
+
 
 ValidateFcts.validateEmailPwd = (email,pwd)=>{
     validateEmailPwd(email,pwd);
@@ -376,5 +396,10 @@ ValidateFcts.validateDates = (checkin,checkout,res,flag) =>{
 
 ValidateFcts.calculateNumberOfDays = (start,end)=>{
     return calculateNumberOfDays(start,end);
+}
+
+ValidateFcts.isRoomAvailable = async (checkin,checkout,data)=>{
+    const res = await isRoomAvailable(checkin,checkout,data);
+    return res;
 }
 export default ValidateFcts;

@@ -14,6 +14,7 @@ import com.projet.e_hotel.Classes.Chambre;
 import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
+import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.mapper.ChambreHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreMapper;
@@ -47,6 +48,22 @@ public class ChambreController {
             return ChambreMapper.mapToChambreDTO(new Chambre());
         }
         return ChambreMapper.mapToChambreDTO(infoChambre);
+    }
+
+
+    // Detecter si une chambre est disponible pour les dates indiques
+    @GetMapping("/getIsRoomAvailable/{checkin}/{checkout}/{idHotel}/{numeroChambre}")
+    public  List<ChambrePKDTO> isRoomAvailable(@PathVariable Long checkin,@PathVariable Long checkout,@PathVariable Integer idHotel,@PathVariable Integer numeroChambre){
+        // System.out.println("I am testing");
+        // System.out.println(checkin);
+        Date checkinFormatted = new Date(checkin);
+        Date checkoutFormatted = new Date(checkout);
+        // System.out.println("I am testing");
+        // System.out.println(checkinFormatted);
+        // System.out.println(checkoutFormatted);
+
+        List<ChambrePKDTO> result = chambreService.isRoomAvailable(checkinFormatted,checkoutFormatted,idHotel,numeroChambre);
+        return result;
     }
 
     // Avoir tous les chambres, aucun filtres appliqués
