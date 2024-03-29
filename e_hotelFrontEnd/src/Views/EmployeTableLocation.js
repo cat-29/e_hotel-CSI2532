@@ -16,7 +16,7 @@ export const EmployeTableLocation = () => {
         console.log("in employe table kocation")
         console.log(state.employeInfo)
 
-        connexionCompte.getAllLocationsFromIdHotelOfEmploye(state.employeInfo.hotel).then((response) => {
+        connexionCompte.getAllLocationsFromIdHotelOfEmploye(state.employeInfo.idHotel).then((response) => {
             console.log(response.data);
             setHistoriqueLocation({
                 location: response.data

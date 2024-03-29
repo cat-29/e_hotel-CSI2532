@@ -14,7 +14,7 @@ export const EmployeAjouteLocation = () => {
 
         console.log("in employe ajoute location")
         console.log(state.employeInfo);
-        connexionCompte.getNameHotelEmployeWorksFor(state.employeInfo.hotel).then((response) => {
+        connexionCompte.getNameHotelEmployeWorksFor(state.employeInfo.idHotel).then((response) => {
             console.log("name hotel employe works for is: " + response.data);
             setFormData({...formData, nomHotel: response.data});
         }).catch((e) => {
@@ -37,7 +37,7 @@ export const EmployeAjouteLocation = () => {
         dateCheckin: '',
         dateCheckout:'',
         email: '',
-        idHotel: state.employeInfo.hotel,
+        idHotel: state.employeInfo.idHotel,
         nomHotel: '',
         vue: 'MONTAGNE',
         capacite: 'TRIPLE',
@@ -173,7 +173,7 @@ export const EmployeAjouteLocation = () => {
 
             // get the first room that matches the specifications.. if no room, then show alert
             // continue to the payment section
-            connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.hotel, new Date(formData.dateCheckin).getTime(), new Date(formData.dateCheckout).getTime(), formData.capacite, formData.vue).then((response) => {
+            connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.idHotel, new Date(formData.dateCheckin).getTime(), new Date(formData.dateCheckout).getTime(), formData.capacite, formData.vue).then((response) => {
                 
                 // check if an element is null in the response data. If so, then show error msg.
                 if (response.data.numeroChambre == null && response.data.idHotel == null) {
