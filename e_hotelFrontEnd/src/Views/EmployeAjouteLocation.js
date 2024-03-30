@@ -173,8 +173,8 @@ export const EmployeAjouteLocation = () => {
 
             // get the first room that matches the specifications.. if no room, then show alert
             // continue to the payment section
-            connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.idHotel, new Date(formData.dateCheckin).getTime(), new Date(formData.dateCheckout).getTime(), formData.capacite, formData.vue).then((response) => {
-                
+            connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.idHotel, new Date(formData.dateCheckin).toISOString().slice(0,10), new Date(formData.dateCheckout).toISOString().slice(0,10), formData.capacite, formData.vue).then((response) => {
+
                 // check if an element is null in the response data. If so, then show error msg.
                 if (response.data.numeroChambre == null && response.data.idHotel == null) {
                     alert("Veuillez changer les filtres et/ou les dates de checkin et checkout!");

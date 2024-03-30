@@ -1,5 +1,7 @@
 package com.projet.e_hotel.Classes.mapper;
 
+import java.util.Date;
+
 import com.projet.e_hotel.Classes.Client;
 import com.projet.e_hotel.Classes.EnregistreClient;
 import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
@@ -8,14 +10,14 @@ import com.projet.e_hotel.Classes.dto.LoueChambreDTO;
 public class EmployeAjouteLocationMapper {
 
     // Convert EmployeAjouteLocationDTO into LoueChambreDTO JPA Entities
-    public static LoueChambreDTO mapToLoueChambreDTO(EmployeAjouteLocationDTO ajouteLocationDTO) {
+    public static LoueChambreDTO mapToLoueChambreDTO(EmployeAjouteLocationDTO ajouteLocationDTO, Date checkin, Date checkout) {
         return new LoueChambreDTO(
                 ajouteLocationDTO.getNumeroChambre(),
                 ajouteLocationDTO.getIdHotel(),
                 ajouteLocationDTO.getIdClient(),
                 ajouteLocationDTO.getIdEmploye(),
-                ajouteLocationDTO.getDateCheckin(),
-                ajouteLocationDTO.getDateCheckout(),
+                checkin,
+                checkout,
                 ajouteLocationDTO.getMontantDu(),
                 false,
                 null);
@@ -27,7 +29,7 @@ public class EmployeAjouteLocationMapper {
                 ajouteLocationDTO.getIdEmploye(),
                 ajouteLocationDTO.getIdClient(),
                 ajouteLocationDTO.getEmail(),
-                ajouteLocationDTO.getDateCheckin()
+                new Date()
         );
     }
 

@@ -32,14 +32,14 @@ public class LoueChambreService {
         return loueChambreRepository.findByIdClientAndDateCheckinAndDateCheckout(idClient, checkIn, checkout);
     }
 
-    public LoueChambre saveNewLocation(ActiveReservationDTO aDto) {
-        LoueChambreDTO loueChambreDTO = ActiveReservationMapper.mapToLoueChambreDTO(aDto);
+    public LoueChambre saveNewLocation(ActiveReservationDTO aDto, Date checkin, Date checkout) {
+        LoueChambreDTO loueChambreDTO = ActiveReservationMapper.mapToLoueChambreDTO(aDto, checkin, checkout);
         LoueChambre lChambre = LoueChambreMapper.mapTLoueChambre(loueChambreDTO);
         return loueChambreRepository.save(lChambre);
     }
 
-    public LoueChambre saveEmployeFaitLocationChambre(EmployeAjouteLocationDTO aDto) {
-        LoueChambreDTO loueChambreDTO = EmployeAjouteLocationMapper.mapToLoueChambreDTO(aDto);
+    public LoueChambre saveEmployeFaitLocationChambre(EmployeAjouteLocationDTO aDto, Date checkin, Date checkout) {
+        LoueChambreDTO loueChambreDTO = EmployeAjouteLocationMapper.mapToLoueChambreDTO(aDto, checkin, checkout);
         LoueChambre loueChambre = LoueChambreMapper.mapTLoueChambre(loueChambreDTO);
         return loueChambreRepository.save(loueChambre);
     }

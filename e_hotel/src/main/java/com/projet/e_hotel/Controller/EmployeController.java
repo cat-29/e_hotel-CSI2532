@@ -24,6 +24,9 @@ import com.projet.e_hotel.Service.EnregistreClientService;
 import com.projet.e_hotel.Service.HotelService;
 import com.projet.e_hotel.Service.LoueChambreService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -84,8 +87,12 @@ public class EmployeController {
         }
 
         @PostMapping("/activeReservation/loueChambre")
-        public LoueChambreDTO saveNewLocation(@RequestBody ActiveReservationDTO aDto) {
+        public LoueChambreDTO saveNewLocation(@RequestBody ActiveReservationDTO aDto) throws ParseException {
                 ActiveReservationDTO dto = new ActiveReservationDTO(aDto);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date checkinFormatted = sdf.parse(dto.getDateCheckin());
+                Date checkoutFormatted = sdf.parse(dto.getDateCheckout());
 
                 // get client to add email in enregistre client
                 // Client client = clientServiceImpl.getClientFromId(aDto.getIdClient());
@@ -93,7 +100,7 @@ public class EmployeController {
                 // save enregistre client
                 // clientServiceImpl.setEnregistrementClient(client, aDto.getIdEmploye());
 
-                return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveNewLocation(dto));
+                return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveNewLocation(dto, checkinFormatted, checkoutFormatted));
         }
 
         @GetMapping("/worksFor/{idHotel}")
@@ -102,8 +109,13 @@ public class EmployeController {
         }
 
         @PostMapping("/locationChambre")
-        public LoueChambreDTO saveLocationChambre(@RequestBody EmployeAjouteLocationDTO aDto) {
-                return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveEmployeFaitLocationChambre(aDto));
+        public LoueChambreDTO saveLocationChambre(@RequestBody EmployeAjouteLocationDTO aDto) throws ParseException{
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date checkinFormatted = sdf.parse(aDto.getDateCheckin());
+                Date checkoutFormatted = sdf.parse(aDto.getDateCheckout());
+
+                return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveEmployeFaitLocationChambre(aDto, checkinFormatted, checkoutFormatted));
         }
 
         @PostMapping("/enregistreClient")

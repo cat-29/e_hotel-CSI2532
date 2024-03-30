@@ -97,10 +97,16 @@ export const MethodePaiement = () => {
     }
 
     const sending = () => {
+
+        const checkinN = new Date(state.userInfo.dateCheckin);
+        const checkoutN = new Date(state.userInfo.dateCheckout);
+        console.log("checking new",checkinN.getTime());
+        console.log("checkout new",checkoutN.getTime())
+
         setNewLocation ({
             codePostal: state.userInfo.codePostal,
-            dateCheckin: state.userInfo.dateCheckin,
-            dateCheckout: state.userInfo.dateCheckout,
+            dateCheckin: checkinN.toISOString().slice(0,10),
+            dateCheckout: checkoutN.toISOString().slice(0,10),
             datePaiementComplete: new Date(),
             idClient: state.userInfo.idClient,
             idEmploye: state.employeInfo.id,
