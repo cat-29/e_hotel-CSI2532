@@ -2,11 +2,12 @@ package com.projet.e_hotel.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,15 @@ import com.projet.e_hotel.Classes.mapper.ChambreMapper;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
 import com.projet.e_hotel.Service.ChambreService;
 import com.projet.e_hotel.Service.HotelService;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@CrossOrigin(origins = "http://localhost:3000")
+
+// @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/chambre")
 public class ChambreController {
     @Autowired
-    private ChambreService chambreService;
+    private ChambreService chambreService;   
     private final HotelService hotelService;
 
     public ChambreController(HotelService hotelService) {
@@ -55,6 +58,73 @@ public class ChambreController {
     }
 
 
+    @GetMapping("/getAllRooms/rating")
+    public List<ChambreDTO> getAllChambresFromClassement(@RequestParam("rating") Integer[] rating) {
+        // Converti les classement d'un array a une liste
+        List<Integer> listRating = Arrays.asList(rating);
+
+        // Trouve tout les hotels qui satisfont chaque classement
+        List<Integer> listHotel = hotelService.getAllHotelsFromRating(listRating);
+        
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRoomsFromIdHotels(listHotel).stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+
+
+    @GetMapping("/getAllRooms/chaine")
+    public List<ChambreDTO> getAllChambresFromChaineHoteliere(@RequestParam("chaines") String[] chaines) {
+        // Converti les chaines d'un array a une liste
+        List<String> listNomChaines = Arrays.asList(chaines);
+
+        // Trouve tout les hotels qui appartiennent a chaque chaine
+        List<Integer> listHotel = hotelService.getAllHotelsFromNomChaine(listNomChaines);
+
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRoomsFromIdHotels(listHotel).stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+   
+
+    @GetMapping("/getAllRooms")
+    public List<ChambreDTO> getAllChambres() {
+
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRooms().stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+
+
+    @GetMapping("/getAllRooms/nbrChambreMin/{chambreMin}")
+    public List<ChambreDTO> getChambresFromNombreDeChambresMin(@PathVariable String chambreMin) {
+        Integer min = Integer.valueOf(chambreMin);
+        
+        // Trouve juste les chambres qui satisfont la borne chambreMin
+        List<Integer> listHotelNbrChambreMin = hotelService.findAllHotelsFromChambreMin(min);
+
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRoomsFromIdHotels(listHotelNbrChambreMin).stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+
+
+    @GetMapping("/getAllRooms/nbrChambreMax/{chambreMax}")
+    public List<ChambreDTO> getChambresFromNombreDeChambresMax(@PathVariable String chambreMax) {
+        Integer max = Integer.valueOf(chambreMax);
+        // Trouve juste les chambres qui satisfont la borne chambreMax seulement
+        List<Integer> listHotelNbrChambreMax = hotelService.findAllHotelsFromChambreMax(max);
+
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRoomsFromIdHotels(listHotelNbrChambreMax).stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+    
+
+    @GetMapping("/getAllRooms/{chambreMin}/{chambreMax}")
+    public List<ChambreDTO> getChambresFromNombreDeChambres(@PathVariable Integer chambreMin, @PathVariable Integer chambreMax) {
+        // Cas ou on trouve toutes les chambres qui satisfont les deux bornes
+        List<Integer> listHotelNbrChambreBornes = hotelService.findAllHotelsFromChambreMinAndChambreMax(chambreMin, chambreMax);
+
+        //  Trouve toutes les chambres pour les hotels trouvees
+        return chambreService.getAllRoomsFromIdHotels(listHotelNbrChambreBornes).stream().map(m -> ChambreMapper.mapToChambreDTO(m)).toList();
+    }
+
+
     // Detecter si une chambre est disponible pour les dates indiques
     @GetMapping("/getIsRoomAvailable/{checkin}/{checkout}/{idHotel}/{numeroChambre}")
     public  List<ChambrePKDTO> isRoomAvailable(@PathVariable String checkin,@PathVariable String checkout,@PathVariable Integer idHotel,@PathVariable Integer numeroChambre) throws ParseException{
@@ -77,7 +147,6 @@ public class ChambreController {
     // Avoir tous les chambres, aucun filtres appliqués
 
     @GetMapping("/tous")
-
     // La methode doit retourner une list de type ChambreDTO
     public List<ChambreHotelDTO> getAllRooms(){
         // First get all rooms from db as Chambre

@@ -6,7 +6,7 @@ import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
 import fcts from "../../ApiFcts/Api";
-
+import connexionComptes from "../../services/connexion-compte";
 
 // This function is getting called each time the page renders
 export const loaderAllRooms = ()=>{
@@ -112,10 +112,51 @@ export const PageReservation = () => {
         }else{
             console.log("fields are ready to be submitted to backend");
             console.log("filters to be applied are",filters);
+
+            // Insert les appels au API pour les filtres ici
+            
+            // get Chaine Hoteliere
+            getChambresFromChaines();
+
+            // get Classement
+            getChambresFromClassement();
+
+            // Get nombre de chambres
+            getChambresFromNombreDeChambres();
+
         }
     }
 
-  
+  const getChambresFromChaines = async () => {
+    try {
+        const data = await ValidateFcts.getAllChambresFromChaineHoteliere(filters.chaines);
+        console.log("Chaine hoteliere: ");
+        console.log(data.data);
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
+  const getChambresFromClassement = async () => {
+    try {
+        const data = await ValidateFcts.getAllChambresFromClassement(filters.classement);
+        console.log("Classement des chambres: ");
+        console.log(data.data);
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
+  const getChambresFromNombreDeChambres = async () => {
+    try {
+        const data = await ValidateFcts.getChambresFromNombreDeChambres(filters.chambreMin, filters.chambreMax);
+        console.log("Filtres du nombre de chambre min et max: ");
+        console.log(data.data);
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
 
     // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
 

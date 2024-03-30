@@ -76,6 +76,68 @@ class ConnexionCompteService {
     async getAllNomChaines() {
         return http.get("/chaine/nom");
     }
+
+
+    async getChambresFromNombreDeChambres(chambreMin, chambreMax) {
+
+        console.log("value of chambre min = " + chambreMin + ", chambreMax = " + chambreMax);
+        if (chambreMin == '' && chambreMax == '') {
+            
+            // returne toutes les chambres
+            console.log("il n'y a pas de chambres min et chambres max de selectionnees. Retourne tout les hotels")
+            return await this.getAllRooms();
+        } 
+        else if (chambreMin == '') {
+            // trouve juste les chambres qui satisfont la borne chambreMax
+            console.log("il n'y a pas de classements chambreMin de selectionnee. Retourne tout les hotels qui respectent chambreMax")
+            return http.get(`/chambre/getAllRooms/nbrChambreMax/${chambreMax}`)
+        } 
+        else if (chambreMax == '') {
+            // trouve juste les chambres qui satisfont la borne chambreMin
+            console.log("il n'y a pas de classements chambreMax de selectionnee. Retourne tout les hotels qui respectent chambreMin")
+            return http.get(`/chambre/getAllRooms/nbrChambreMin/${chambreMin}`)
+        }
+
+        // Dernier cas... retourne toutes les chambres qui satisfont aux deux bornes
+        return http.get(`/chambre/getAllRooms/${chambreMin}/${chambreMax}`);
+    }
+
+
+    async getAllChambresFromClassement(classement) {
+        const params = new URLSearchParams();
+
+        if (classement.length == 0) {
+            console.log("il n'y a pas de classements selectionnees. Retourne tout les hotels")
+            return await this.getAllRooms();
+        }
+        classement.forEach((item, idx) => {
+            params.append(`rating`, item);
+        });
+        return http.get("/chambre/getAllRooms/rating?" + params.toString());
+    }
+
+
+    async getAllRooms() {
+        // Retourne toutes les chambres
+        return http.get("/chambre/getAllRooms"); 
+    }
+
+
+    async getAllChambresFromChaineHoteliere(arrayChaine) {
+        const params = new URLSearchParams();
+
+        if (arrayChaine.length == 0) {
+            console.log("il n'y a pas de chaines selectionnees. Retourne tout les hotels")
+            return await this.getAllRooms();
+        }
+        arrayChaine.forEach((item, idx) => {
+            params.append(`chaines`, item);
+        });
+        
+        return http.get("/chambre/getAllRooms/chaine?" + params.toString());
+    }
+
+
 }
 
 export default new ConnexionCompteService();

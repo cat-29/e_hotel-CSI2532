@@ -2,6 +2,7 @@
 // either use those fcts or create your own, you should import  functions objects to your page so you can use it.
 
 import fcts from "../ApiFcts/Api";
+import connexionCompte from "../services/connexion-compte";
 
 const ValidateFcts = {};
 
@@ -350,6 +351,21 @@ const calculateNumberOfDays = (start,end)=>{
     return diffDays;
 }
 
+const getAllChambresFromChaineHoteliere = async (chaine) => {
+    const res = await connexionCompte.getAllChambresFromChaineHoteliere(chaine);
+    return res;
+}
+
+const getAllChambresFromClassement = async (classement) => {
+    const res = await connexionCompte.getAllChambresFromClassement(classement);
+    return res;
+}
+
+const getChambresFromNombreDeChambres = async (chambreMin, chambreMax) => {
+    const res = await connexionCompte.getChambresFromNombreDeChambres(chambreMin, chambreMax);
+    return res;
+}
+
 // Determining if a room is free or not
 const isRoomAvailable = async (checkin,checkout,state)=>{
     // console.log("in isRoom available,"+ checkin + " "+ checkout);
@@ -404,4 +420,20 @@ ValidateFcts.isRoomAvailable = async (checkin,checkout,data)=>{
     const res = await isRoomAvailable(checkin,checkout,data);
     return res;
 }
+
+ValidateFcts.getAllChambresFromChaineHoteliere = async (chaine) => {
+    const res = await getAllChambresFromChaineHoteliere(chaine);
+    return res;
+}
+
+ValidateFcts.getAllChambresFromClassement = async (classement) => {
+    const res = await getAllChambresFromClassement(classement);
+    return res;
+}
+
+ValidateFcts.getChambresFromNombreDeChambres = async (chambreMin, chambreMax) => {
+    const res = await getChambresFromNombreDeChambres(chambreMin, chambreMax);
+    return res;
+}
+
 export default ValidateFcts;

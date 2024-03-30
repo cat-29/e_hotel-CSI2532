@@ -198,7 +198,30 @@ public class ChambreService {
         return this.chambreRepository.findAll();
     }
 
+    
+    public List<Chambre> findAllRoomFromIdHotel(Integer idChaineHotel) {
+        return this.chambreRepository.findAllByIdHotel(idChaineHotel);
+    }
 
+
+    public List<Chambre> getAllRoomsFromIdHotels(List<Integer> listIdHotel) {
+
+        // Cree une liste ou on va inserer les chambres de toutes chaines
+        List<Chambre> listOfAllChambres = new ArrayList<>();
+
+        // Va chercher toutes les chambres de toutes les chaines
+        for (int i = 0; i < listIdHotel.size(); i++) {
+            List<Chambre> chambresForHotel = findAllRoomFromIdHotel(listIdHotel.get(i));
+
+            // Insere chaque chambre separement dans la liste qui contient
+            // toutes les chambres
+            for (int j = 0; j < chambresForHotel.size(); j++) {
+                listOfAllChambres.add(chambresForHotel.get(j));
+            }
+        }
+
+        return listOfAllChambres;
+    }
 
     public List<ChambrePKDTO> isRoomAvailable(Date checkin, Date checkout,Integer idHotel, Integer numeroChambre){
         // Convert from List<Object[]>  to List<ChambrePKM>
@@ -206,7 +229,13 @@ public class ChambreService {
 
         if (rawResult.isEmpty()){
             ChambrePKDTO rawResultFormatted = ChambrePkMapper.mapToEmptyObject(rawResult);
-            List<ChambrePKDTO> res = new LinkedList<ChambrePKDTO>();
+            /****************
+             * AMANI!!!!!   *
+             ****************/
+            // List<ChambrePKDTO> res = new LinkedList<ChambrePKDTO>();
+            // Possiblement Reglee probleme avec le linkedList??
+            List<ChambrePKDTO> res = new ArrayList<ChambrePKDTO>();
+
             res.add(rawResultFormatted);
             return res;  
         }else{
