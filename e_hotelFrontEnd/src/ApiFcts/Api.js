@@ -9,7 +9,7 @@ const createAccount = async(answerClient,answerAccount)=>{
     // Axios seems nicer
     // Further formating is needed (I will need two objects one for client and second for clientAccount) so two post requests
     let compteResponse = null;
-    const response = axios.post("http://localhost:8080/addClient", answerClient).then((response) => {
+    const response = axios.post("http://localhost:8080/client/addClient", answerClient).then((response) => {
     //   console.log(response.status, response.data.token);
     // console.log("response status",response.status);
     // console.log("response data",response.data.token);
