@@ -154,7 +154,7 @@ export const Filters = ({onStateChange})=>{
                                     <label htmlFor='switcher'></label>
                             </span> */}
 
-                        <div className='form-check'>
+                        <div className='form-check text-start'>
 
                             <input className="form-check-input" type="checkbox" name='etendre' onChange={handleInputChange} id="etendreOui"/>
                                 <label className="form-check-label" htmlFor="etendreOui">Oui</label>
@@ -162,12 +162,12 @@ export const Filters = ({onStateChange})=>{
                     </div>
                     <div id='vue' className=''>
                         <label className='p-2 fw-bold'>Vue</label>
-                            <div className='form-check'>
+                            <div className='form-check text-start'>
                                 <input className="form-check-input" type="checkbox" name='vueMer' onChange={handleInputChange} id="merCheck"/>
                                 <label className="form-check-label" htmlFor="merCheck">Mer</label>
                             </div>
 
-                            <div className='form-check'>
+                            <div className='form-check text-start'>
                                 <input className="form-check-input" type="checkbox" name='vueMontagne' onChange={handleInputChange} id="montagneCheck"/>
                                 <label className="form-check-label" htmlFor="montagneCheck">Montagne</label>
                             </div>  
@@ -196,14 +196,19 @@ export const Filters = ({onStateChange})=>{
            
 
             <div id='rightFilters' className="container-fluid text-center flex-wrap col-md-4 bg-primary">
-                    <div id='chaine' className=''>
-                        <label className='p-2 m-1 fw-bold'>Chaîne Hôtelière</label>
-                        {nomchaines.map((item,index)=>(
-                            <div key={index} className='form-check'>
-                                <input className="form-check-input" type="checkbox" name='chaines' onChange={handleInputChange} id={`chaine${index}`} value={item}/>
-                                <label className="form-check-label" htmlFor={`chaine${index}`}>{item}</label>
-                            </div>
-                        ))}
+                    <div id='chaine'>
+                        <div className="text-center">
+                            <label className='p-2 m-1 fw-bold text-center'>Chaîne Hôtelière</label>
+                        </div>
+                        <div className="text-start">
+                            {nomchaines.map((item,index)=>(
+                                <div key={index} className='form-check'>
+                                    <input className="form-check-input" type="checkbox" name='chaines' onChange={handleInputChange} id={`chaine${index}`} value={item}/>
+                                    <label className="form-check-label" htmlFor={`chaine${index}`}>{item}</label>
+                                </div>
+                            ))}
+                        </div>
+                       
                         
                         
                         
