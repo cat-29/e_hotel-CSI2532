@@ -1,7 +1,5 @@
 package com.projet.e_hotel.Classes.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +19,8 @@ public class EmployeAjouteLocationDTO {
     private String province;
     private String pays;
     private String codePostal;
-    private Date dateCheckin;
-    private Date dateCheckout;
+    private String dateCheckin;
+    private String dateCheckout;
     private String email;
     private Integer idHotel;
     private String nomHotel;

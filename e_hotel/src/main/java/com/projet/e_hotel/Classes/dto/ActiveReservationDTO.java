@@ -22,8 +22,10 @@ public class ActiveReservationDTO {
     private String codePostal;
     private Integer numeroChambre;
     private Integer idHotel;
-    private Date dateCheckin;
-    private Date dateCheckout;
+    // private Date dateCheckin;
+    // private Date dateCheckout;
+    private String dateCheckin;
+    private String dateCheckout;
     private Double prix;
     private String idEmploye;
     private Double montantDu;

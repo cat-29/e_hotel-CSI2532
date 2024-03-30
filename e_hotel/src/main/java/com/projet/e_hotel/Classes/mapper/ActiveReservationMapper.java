@@ -1,6 +1,7 @@
 package com.projet.e_hotel.Classes.mapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.projet.e_hotel.Classes.dto.ActiveReservationDTO;
 import com.projet.e_hotel.Classes.dto.ClientDTO;
@@ -29,8 +30,8 @@ public class ActiveReservationMapper {
                         client.get(i).getCodePostal(),
                         clientReserve.get(i).getNumeroChambre(),
                         clientReserve.get(i).getIdHotel(),
-                        clientReserve.get(i).getDateCheckin(),
-                        clientReserve.get(i).getDateCheckout(),
+                        clientReserve.get(i).getDateCheckin().toString(),
+                        clientReserve.get(i).getDateCheckout().toString(),
                         clientReserve.get(i).getPrix(),
                         null,
                         clientReserve.get(i).getPrix(),
@@ -52,8 +53,8 @@ public class ActiveReservationMapper {
                         client.get(i).getCodePostal(),
                         clientReserve.get(i).getNumeroChambre(),
                         clientReserve.get(i).getIdHotel(),
-                        clientReserve.get(i).getDateCheckin(),
-                        clientReserve.get(i).getDateCheckout(),
+                        clientReserve.get(i).getDateCheckin().toString(),
+                        clientReserve.get(i).getDateCheckout().toString(),
                         clientReserve.get(i).getPrix(),
                         loueChambreDTOs.get(i).getIdEmploye(),
                         loueChambreDTOs.get(i).getMontantDu(),
@@ -70,14 +71,14 @@ public class ActiveReservationMapper {
 
     
     // Convert ActiveReservationDTO into LoueChambreDTO JPA Entities
-    public static LoueChambreDTO mapToLoueChambreDTO (ActiveReservationDTO activeReservationDTO) {
+    public static LoueChambreDTO mapToLoueChambreDTO (ActiveReservationDTO activeReservationDTO, Date checkin, Date checkout) {
         return new LoueChambreDTO(
             activeReservationDTO.getNumeroChambre(),
             activeReservationDTO.getIdHotel(),
             activeReservationDTO.getIdClient(),
             activeReservationDTO.getIdEmploye(),
-            activeReservationDTO.getDateCheckin(),
-            activeReservationDTO.getDateCheckout(),
+            checkin,
+            checkout,
             activeReservationDTO.getMontantDu(),
             activeReservationDTO.getIsPaiementComplete(),
             activeReservationDTO.getDatePaiementComplete()

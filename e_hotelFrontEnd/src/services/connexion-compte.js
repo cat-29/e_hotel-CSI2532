@@ -72,6 +72,10 @@ class ConnexionCompteService {
             body: JSON.stringify(infoClient)
         });
     }
+
+    async getAllNomChaines() {
+        return http.get("/chaine/nom");
+    }
 }
 
 export default new ConnexionCompteService();
