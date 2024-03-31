@@ -2,7 +2,6 @@ package com.projet.e_hotel.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +18,7 @@ import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
+import com.projet.e_hotel.Classes.dto.ProvinceCountAvDTO;
 import com.projet.e_hotel.Classes.mapper.ChambreHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreMapper;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
@@ -173,5 +173,15 @@ public class ChambreController {
         // email_chaine, email_hotel,tel_hotel et contient_commodite;
         return ChambreHotelMapper.mapToChambreHotelDTO(listChambresDTO, listHotelDTO);
     }
+    // Permettant de voir le nombre de chambres disponibles par zone(province)
+    @GetMapping("/disponibiliteParZone")
+    public List<ProvinceCountAvDTO> getDisponibilites(){
+        List<ProvinceCountAvDTO> result = chambreService.getCountRoomAvailable();
+        return result;
+    }
+
+
+
+
 
 }
