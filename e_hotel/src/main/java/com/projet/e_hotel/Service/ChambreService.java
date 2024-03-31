@@ -2,7 +2,6 @@ package com.projet.e_hotel.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,9 @@ import com.projet.e_hotel.Classes.SubiDommage;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
 import com.projet.e_hotel.Classes.dto.ChambreSubiDommageDTO;
 import com.projet.e_hotel.Classes.mapper.ChambreSubiDommageMapper;
+import com.projet.e_hotel.Classes.dto.ProvinceCountAvDTO;
 import com.projet.e_hotel.Classes.mapper.sqlMapping.ChambrePkMapper;
+import com.projet.e_hotel.Classes.mapper.sqlMapping.ProvinceCountAvMapper;
 import com.projet.e_hotel.Repository.ChambreRepository;
 import com.projet.e_hotel.Repository.ClientReserveRepository;
 import com.projet.e_hotel.Repository.DommageRepository;
@@ -284,5 +285,15 @@ public class ChambreService {
                     .map(item -> ChambrePkMapper.mapToChambrePKObject(item)).toList();
             return rawResultFormatted;
         }
+    }
+
+    // Getting all available rooms / province
+    public List<ProvinceCountAvDTO> getCountRoomAvailable(){
+        List<Object[]> rawResult = this.chambreRepository.getCountRoomAvailable();
+        List<ProvinceCountAvDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ProvinceCountAvMapper.mapToProvinceCountDtoObject(item)).toList();
+
+        return rawResultFormatted   ;
+
     }
 }

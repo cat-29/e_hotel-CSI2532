@@ -69,4 +69,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
             "UNION (Select * from ErrLoue where ErrLoue.numero_chambre = :numeroChambre AND ErrLoue.id_hotel = :idHotel) ", nativeQuery = true)
     List<Object[]> determineIfNotAvailable(@Param("checkin") Date checkin, @Param("checkout") Date checkout,
             @Param("idHotel") Integer idHotel, @Param("numeroChambre") Integer numeroChambre);
+
+//     Determine number of all available rooms per province
+    @Query(value="select * from chambre_disponibles",nativeQuery = true)
+    List<Object[]> getCountRoomAvailable(); 
 }
