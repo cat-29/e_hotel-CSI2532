@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
-export const AjoutHotel = () => {
+export const AjoutEmploye = () => {
   const { state } = useLocation();
+  console.log("ds ajout employe: ", state);
 
   return (
     <>
@@ -112,12 +112,6 @@ export const AjoutHotel = () => {
           </div>
         </div>
       </form>
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button type="submit" className="btn btn-secondary">
-          Soumettre
-        </button>
-      </div>
-      {console.log("ds ajout chaine: ", state)}
     </>
   );
 };

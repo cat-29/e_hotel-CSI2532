@@ -1,10 +1,13 @@
 package com.projet.e_hotel.Controller;
 
 import com.projet.e_hotel.Classes.dto.ChaineHoteliereDTO;
+import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.mapper.ChaineHoteliereMapper;
+import com.projet.e_hotel.Classes.mapper.ChambreMapper;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
 import com.projet.e_hotel.Service.ChaineHoteliereService;
+import com.projet.e_hotel.Service.ChambreService;
 import com.projet.e_hotel.Service.HotelService;
 
 import java.util.List;
@@ -27,6 +30,8 @@ public class ChaineHoteliereController {
     private ChaineHoteliereService chaineHoteliereService;
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private ChambreService chambreService;
 
     @GetMapping("/hotel")
     public String admin(Model model) {
@@ -43,6 +48,11 @@ public class ChaineHoteliereController {
     @GetMapping("/hotels/{nomChaine}")
     public List<HotelDTO> getHotelsFromChaine(@PathVariable String nomChaine) {
         return hotelService.getHotelsFromChaine(nomChaine).stream().map(q -> HotelMapper.mapToHotelDTO(q)).toList();
+    }
+
+    @GetMapping("/hotels/chambres/{id}")
+    public List<ChambreDTO> getChambresFromHotel(@PathVariable Integer id) {
+        return chambreService.getChambresFromHotel(id).stream().map(w -> ChambreMapper.mapToChambreDTO(w)).toList();
     }
 
     @GetMapping("/nom")

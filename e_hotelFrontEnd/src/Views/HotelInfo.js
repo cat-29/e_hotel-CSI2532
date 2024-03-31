@@ -1,32 +1,35 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import adminService from "../services/adminService";
 import { useEffect, useState } from "react";
+import adminService from "../services/adminService";
 
-export const ChaineInfo = () => {
+export const HotelInfo = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const [hotel, setHotel] = useState([]);
+  const [chambre, setChambre] = useState([]);
   const [modify, setModify] = useState(false);
 
-  console.log("ds chaine info: ", state);
+  console.log("ds hotel info: ", state);
 
-  const showHotelInfo = (hotelInfo) => {
-    navigate("/hotelInfo", { state: { hotelInfo: hotelInfo } });
+  const showChambreInfo = (chambreInfo) => {
+    navigate("/chambreInfo", { state: { chambreInfo: chambreInfo } });
   };
 
-  const showAjoutHotel = () => {
-    navigate("/ajoutHotel");
+  const showAjoutChambre = () => {
+    navigate("/ajoutChambre");
   };
 
-  // When get chaine, get the hotels
+  const showAjoutEmploye = () => {
+    navigate("/ajoutEmploye");
+  };
+
+  // When get hotel, get the chambres
   useEffect(() => {
-    //console.log("test hotels before");
     adminService
-      .getHotelsFromChaine(state.chaineInfo.nomChaine)
+      .getChambresFromHotel(state.hotelInfo.id)
       .then((response) => {
-        setHotel(response.data);
-        //console.log("test hotels after");
+        setChambre(response.data);
+        console.log(response);
       })
       .catch((e) => {
         console.log(e);
@@ -38,36 +41,49 @@ export const ChaineInfo = () => {
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
-      <h2 className="text-center p-3">Information chaîne hôtelière</h2>
+      <h2 className="text-center p-3">Information hôtel</h2>
 
       <form noValidate className="mx-4">
         <fieldset disabled={!modify}>
           <div className="d-grid gap-2 d-md-flex m-3">
             <div className="col-5">
-              <label htmlFor="nomChaine" className="form-label">
-                Nom de Chaîne Hôtelière
+              <label htmlFor="nom" className="form-label">
+                Nom d'hôtel
               </label>
               <input
                 required
-                value={state.chaineInfo.nomChaine}
+                value={state.hotelInfo.nom}
                 type="text"
                 className="form-control border"
-                id="nomChaine"
-                name="nomChaine"
+                id="nomHotel"
+                name="nomHotel"
               ></input>
             </div>
             <div className="col-md-2">
               <label htmlFor="nbrHotel" className="form-label">
-                Nombre d'hôtels
+                Nombre de chambres
               </label>
               <input
                 required
-                value={state.chaineInfo.nbrHotel}
+                value={state.hotelInfo.nbrChambre}
                 type="text"
                 className="form-control border"
                 id="nbrHotel"
                 name="nbrHotel"
                 disabled
+              ></input>
+            </div>
+            <div className="col-md-2">
+              <label htmlFor="rating" className="form-label">
+                Nombre d'étoiles
+              </label>
+              <input
+                required
+                value={state.hotelInfo.rating}
+                type="text"
+                className="form-control border"
+                id="rating"
+                name="rating"
               ></input>
             </div>
           </div>
@@ -79,7 +95,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.numero}
+                value={state.hotelInfo.numero}
                 type="text"
                 className="form-control border"
                 id="numero"
@@ -92,7 +108,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.rue}
+                value={state.hotelInfo.rue}
                 type="text"
                 className="form-control border"
                 id="rue"
@@ -105,7 +121,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.ville}
+                value={state.hotelInfo.ville}
                 type="text"
                 className="form-control border"
                 id="ville"
@@ -121,7 +137,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.province}
+                value={state.hotelInfo.province}
                 type="text"
                 className="form-control border"
                 id="province"
@@ -134,7 +150,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.pays}
+                value={state.hotelInfo.pays}
                 type="text"
                 className="form-control border"
                 id="pays"
@@ -147,7 +163,7 @@ export const ChaineInfo = () => {
               </label>
               <input
                 required
-                value={state.chaineInfo.codePostal}
+                value={state.hotelInfo.codePostal}
                 type="text"
                 className="form-control border"
                 id="codePostal"
@@ -172,36 +188,87 @@ export const ChaineInfo = () => {
         </button>
       </div>
       <div className="titre text-center">
-        <h4 className="">Hôtels</h4>
+        <h4 className="">Employés</h4>
       </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto">
         <thead>
           <tr className="text-center">
             <th>#</th>
-            <th>Nom d'hôtel</th>
-            <th>Nombre d'étoiles</th>
-            <th>Nombre de chambres</th>
-            <th>Adresse</th>
+            <th>Numéro de chambre</th>
+            <th>Prix par nuit</th>
+            <th>Capacité</th>
+            <th>Vue</th>
+            <th>Capacité à étendre</th>
           </tr>
         </thead>
-        {hotel.map((val, key) => {
+        {chambre.map((val, key) => {
           return (
             <tbody>
-              <tr>
+              {/* <tr>
                 <th className="text-center">{key + 1}</th>
-                <th>{val.nom}</th>
-                <th className="text-center">{val.rating}</th>
-                <th className="text-center">{val.nbrChambre}</th>
-                <th>
-                  {val.numero} {val.rue}, {val.ville}, {val.province} {val.pays}{" "}
-                  {val.codePostal}
-                </th>
+                <th className="text-center">{val.numeroChambre}</th>
+                <th className="text-center">{val.prix}</th>
+                <th className="text-center">{val.capaciteChambre}</th>
+                <th className="text-center">{val.vueChambre}</th>
+                <th className="text-center">{val.capaciteAEtendre}</th>
                 <th className="text-center">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => {
-                      showHotelInfo(val);
+                      showChambreInfo(val);
+                    }}
+                  >
+                    {">"}
+                  </button>
+                </th>
+              </tr> */}
+            </tbody>
+          );
+        })}
+      </table>
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            showAjoutEmploye();
+          }}
+        >
+          Ajouter un employé
+        </button>
+      </div>
+      <br />
+      <div className="titre text-center">
+        <h4 className="">Chambres</h4>
+      </div>
+      <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+        <thead>
+          <tr className="text-center">
+            <th>#</th>
+            <th>Numéro de chambre</th>
+            <th>Prix par nuit</th>
+            <th>Capacité</th>
+            <th>Vue</th>
+            <th>Capacité à étendre</th>
+          </tr>
+        </thead>
+        {chambre.map((val, key) => {
+          return (
+            <tbody>
+              <tr>
+                <th className="text-center">{key + 1}</th>
+                <th className="text-center">{val.numeroChambre}</th>
+                <th className="text-center">{val.prix}</th>
+                <th className="text-center">{val.capaciteChambre}</th>
+                <th className="text-center">{val.vueChambre}</th>
+                <th className="text-center">{val.capaciteAEtendre}</th>
+                <th className="text-center">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      showChambreInfo(val);
                     }}
                   >
                     {">"}
@@ -217,10 +284,10 @@ export const ChaineInfo = () => {
           type="button"
           className="btn btn-secondary"
           onClick={() => {
-            showAjoutHotel();
+            showAjoutChambre();
           }}
         >
-          Ajouter un hôtel
+          Ajouter une chambre
         </button>
       </div>
     </>

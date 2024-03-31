@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export const ManagementHotel = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const [chaine, setChaine] = useState([]);
 
   const showChaineInfo = (chaineInfo) => {

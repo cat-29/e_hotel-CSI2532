@@ -31,6 +31,10 @@ public class ChambreService {
 
     }
 
+    public List<Chambre> getChambresFromHotel(Integer id) {
+        return chambreRepository.findChambresByIdHotel(id);
+    }
+
     public Chambre getNumeroChambreForSpecifications(Integer hotelId, Date dateCheckIn, Date dateCheckOut,
             String capacite, String vue) {
 
@@ -50,17 +54,17 @@ public class ChambreService {
         for (int idx = 0; idx < chambres.get().size(); idx++) {
             List<LoueChambre> listeChambreValides = new ArrayList<LoueChambre>();
             List<Chambre> list = chambres.get();
-            
+
             // Check pour des reservations de client fait avec les specifications
             Optional<List<ClientReserve>> listClientReserve = clientReserveRepository
                     .findAllByNumeroChambreAndIdHotel(list.get(idx).getNumeroChambre(), list.get(idx).getIdHotel());
-            
+
             // Il n'y a pas de reservations faites dans le passe pour cette chambre, check
             // dans loue chambre que c'est pareil
             if (!listClientReserve.isPresent()) {
                 Optional<List<LoueChambre>> listCheckLoueChambrePresent = loueChambreRepository
                         .findAllByNumeroChambreAndIdHotel(list.get(idx).getNumeroChambre(), list.get(idx).getIdHotel());
-                
+
                 // Pas present dans loue chambre aussi, ainsi on peut louer cette chambre
                 // Cette chambre a JAMAIS ete reserve et loue. Alors ca fonctionne!
                 if (!listCheckLoueChambrePresent.isPresent()) {
@@ -74,11 +78,11 @@ public class ChambreService {
                         List<LoueChambre> list2 = listCheckLoueChambrePresent.get();
                         Boolean areDatesRespected = checkIfDatesAreRespected(dateCheckIn, dateCheckOut,
                                 list2.get(i).getDateCheckin(), list2.get(i).getDateCheckout());
-                        
+
                         // Dates respectee. Retourne la chambre
                         if (areDatesRespected) {
                             return chambreRepository.findByNumeroChambre(list2.get(i).getNumeroChambre());
-                        } 
+                        }
                         // Dates pas respecte. Continue
                     }
                 }
@@ -105,7 +109,7 @@ public class ChambreService {
                             // Assurons nous que les dates pour les locations dans loue_chambre respectent
                             // les specifications
                             for (int j = 0; j < listCheckLoueChambrePresent.get().size(); j++) {
-                                
+
                                 // Dates respectees, Retourne chambre
                                 listeChambreValides.add(listCheckLoueChambrePresent.get().get(j));
                             }
@@ -115,7 +119,7 @@ public class ChambreService {
                     // Dates pas respecte. Continue
                 }
 
-                Boolean isThisRoomValid = true; // variable qui sera appeler si une chambre est valide ou non 
+                Boolean isThisRoomValid = true; // variable qui sera appeler si une chambre est valide ou non
 
                 // Check le arrayList. Retourne 1ere chambre qui est valide, si il y en a une.
                 for (int i = 0; i < listeChambreValides.size(); i++) {
@@ -128,7 +132,8 @@ public class ChambreService {
                 }
 
                 if (isThisRoomValid) {
-                    // Chambre est valide et la liste qui comportait les chambres valides a un size plus grand que 1
+                    // Chambre est valide et la liste qui comportait les chambres valides a un size
+                    // plus grand que 1
                     if (listeChambreValides.size() > 0) {
                         return chambreRepository.findByNumeroChambre(listeChambreValides.get(0).getNumeroChambre());
                     }
@@ -198,23 +203,21 @@ public class ChambreService {
         return this.chambreRepository.findAll();
     }
 
+    public List<ChambrePKDTO> isRoomAvailable(Date checkin, Date checkout, Integer idHotel, Integer numeroChambre) {
+        // Convert from List<Object[]> to List<ChambrePKM>
+        List<Object[]> rawResult = this.chambreRepository.determineIfNotAvailable(checkin, checkout, idHotel,
+                numeroChambre);
 
-
-    public List<ChambrePKDTO> isRoomAvailable(Date checkin, Date checkout,Integer idHotel, Integer numeroChambre){
-        // Convert from List<Object[]>  to List<ChambrePKM>
-        List<Object[]> rawResult = this.chambreRepository.determineIfNotAvailable(checkin,checkout,idHotel,numeroChambre);
-
-        if (rawResult.isEmpty()){
+        if (rawResult.isEmpty()) {
             ChambrePKDTO rawResultFormatted = ChambrePkMapper.mapToEmptyObject(rawResult);
             List<ChambrePKDTO> res = new LinkedList<ChambrePKDTO>();
             res.add(rawResultFormatted);
-            return res;  
-        }else{
+            return res;
+        } else {
             // Map accordingly
             List<ChambrePKDTO> rawResultFormatted = rawResult.stream()
-            .map(item -> ChambrePkMapper.mapToChambrePKObject(item)).toList();
+                    .map(item -> ChambrePkMapper.mapToChambrePKObject(item)).toList();
             return rawResultFormatted;
         }
     }
 }
-

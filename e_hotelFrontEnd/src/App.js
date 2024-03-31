@@ -26,8 +26,15 @@ import { DetailChambre } from "./Views/Client/DetailChambre";
 import { Reserver } from "./Views/Client/Reserver";
 import { MethodePaiementClient } from "./Views/Client/MethodePaiementClient";
 import { ChaineInfo } from "./Views/ChaineInfo";
+import { HotelInfo } from "./Views/HotelInfo";
+import { ChambreInfo } from "./Views/ChambreInfo";
+import { EmployeInfo } from "./Views/EmployeInfo";
+import { ChambreDommageInfo } from "./Views/ChambreDommageInfo";
 import { AjoutChaine } from "./Views/AjoutChaine";
 import { AjoutHotel } from "./Views/AjoutHotel";
+import { AjoutChambre } from "./Views/AjoutChambre";
+import { AjoutEmploye } from "./Views/AjoutEmploye";
+import { AjoutChambreDommage } from "./Views/AjoutChambreDommage";
 
 function App() {
   const router = createBrowserRouter(
@@ -53,8 +60,15 @@ function App() {
         <Route path="historiqueReservation" element={<ReservationActive />} />
         <Route path="managementHotel" element={<ManagementHotel />} />
         <Route path="chaineInfo" element={<ChaineInfo />} />
+        <Route path="hotelInfo" element={<HotelInfo />} />
+        <Route path="chambreInfo" element={<ChambreInfo />} />
+        <Route path="employeInfo" element={<EmployeInfo />} />
+        <Route path="chambreDommageInfo" element={<ChambreDommageInfo />} />
         <Route path="ajoutChaine" element={<AjoutChaine />} />
         <Route path="ajoutHotel" element={<AjoutHotel />} />
+        <Route path="ajoutChambre" element={<AjoutChambre />} />
+        <Route path="ajoutEmploye" element={<AjoutEmploye />} />
+        <Route path="ajoutChambreDommage" element={<AjoutChambreDommage />} />
         <Route path="methodePaiement" element={<MethodePaiement />} />
         <Route path="ajoutLocation" element={<EmployeAjouteLocation />} />
         <Route path="historiqueLocation" element={<EmployeTableLocation />} />
