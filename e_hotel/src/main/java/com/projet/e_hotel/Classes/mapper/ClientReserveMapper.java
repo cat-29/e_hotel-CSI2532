@@ -13,7 +13,9 @@ public class ClientReserveMapper {
             cReserve.getIdHotel(), 
             cReserve.getDateCheckin(), 
             cReserve.getDateCheckout(), 
-            cReserve.getPrix()
+            cReserve.getPrix(),
+            cReserve.getIsPaiementComplete(),
+            cReserve.getDatePaiementComplete()
         );
         return cDto;
     }

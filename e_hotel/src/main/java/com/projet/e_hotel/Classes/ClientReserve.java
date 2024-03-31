@@ -18,7 +18,7 @@ import lombok.Setter;
 @IdClass(ClientReservePK.class)
 public class ClientReserve {
 
-    @Id
+    @Id    
     private String idClient;
 
     @Id
@@ -35,4 +35,23 @@ public class ClientReserve {
 
     @Column(name = "prix")
     private Double prix;
+
+    @Column(name = "paiement_complete")
+    private Boolean isPaiementComplete;
+
+    @Column(name = "date_paiement_complete")
+    private Date datePaiementComplete;
+
+    public ClientReserve(Integer idHotel,String idClient,Integer numeroChambre, Date dateCheckin, Date dateCheckout, Double prix, Boolean isPaiementComplete, Date datePaiementComplete) {
+        this.idHotel = idHotel;
+        this.idClient = idClient;
+        this.numeroChambre = numeroChambre;
+        this.dateCheckin = dateCheckin;
+        this.dateCheckout = dateCheckout;
+        this.prix = prix;
+        this.isPaiementComplete = isPaiementComplete;
+        this.datePaiementComplete = datePaiementComplete;
+    }
+
+    public ClientReserve() {}
 }
