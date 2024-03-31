@@ -42,9 +42,31 @@ const getAllRooms = async()=>{
     return rooms;
 }
 
+// Cette fonction ajoute une reservation en ligne d'une chambre de la part d'un client a la base de donnees
+ 
+const ajouterReservationDB = async(data)=>{
 
-const ajouterReservationDB = (data)=>{
-    console.log("In api, data is: ",data);
+    // console.log("In api, data is: ",data);
+    let reservationResponse = null;
+    try{
+        reservationResponse = axios.post("http://localhost:8080/client/addReservation", data).then((response) => {
+    
+        //   console.log(response.status, response.data.token);
+        // console.log("response status",response.status);
+        // console.log("response data",response.data.token);
+        if (response.status == 200){
+            // console.log("response status",response.status);
+            // console.log("booking added successfully");
+            console.log("response is",response);
+        } else {
+            console.log("Was unable to add booking");
+        }
+    });
+    }catch(e){
+        console.log("Was unable to add reservation. Error occured");
+    }
+    return reservationResponse;
+
 }
 
 
@@ -106,8 +128,9 @@ fcts.getAllRooms = async ()=>{
     return rooms;
 }
 
-fcts.ajouterReservationDB = (data)=>{
-    return ajouterReservationDB(data);
+fcts.ajouterReservationDB = async (data)=>{
+    const res = await ajouterReservationDB(data);
+    return res;
 }
 
 fcts.isRoomAvailable = async(data)=>{
