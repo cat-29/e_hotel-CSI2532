@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "employe")
 public class Employe {
-    
+
     @Id
     @Column(name = "nas")
     private String id;
@@ -46,9 +46,8 @@ public class Employe {
     @Column(name = "code_postal")
     private String codePostal;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private RoleEmployeeEnum roleEmploye;
+    private String roleEmploye;
 
     @JoinColumn(name = "id_hotel", referencedColumnName = "id_hotel")
     private Integer idHotel;
