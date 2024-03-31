@@ -21,10 +21,10 @@ public class IndexController {
         return "index";
     }
     
-    @GetMapping("/addnew")
-    public String addNewClient(Model model) {
-        Client client = new Client();
-        model.addAttribute("client", client);
-        return "newclient";
-    }
+    // @GetMapping("/addnew")
+    // public String addNewClient(Model model) {
+    //     Client client = new Client();
+    //     model.addAttribute("client", client);
+    //     return "newclient";
+    // }
 }
