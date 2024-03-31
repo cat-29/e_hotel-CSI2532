@@ -8,9 +8,9 @@ export const AjoutEmploye = () => {
     <>
       <form noValidate className="mx-4">
         <div className="d-grid gap-2 d-md-flex m-3">
-          <div className="col-5">
-            <label htmlFor="nomHotel" className="form-label">
-              Nom d'hôtel
+          <div className="col-md-2">
+            <label htmlFor="nom" className="form-label">
+              NAS
             </label>
             <input
               required
@@ -20,9 +20,21 @@ export const AjoutEmploye = () => {
               name="nomHotel"
             ></input>
           </div>
-          <div className="col-5">
+          <div className="col-md-2">
+            <label htmlFor="nbrHotel" className="form-label">
+              Prénom
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control border"
+              id="nbrHotel"
+              name="nbrHotel"
+            ></input>
+          </div>
+          <div className="col-md-2">
             <label htmlFor="rating" className="form-label">
-              Nombre d'étoiles
+              Nom
             </label>
             <input
               required
@@ -32,8 +44,19 @@ export const AjoutEmploye = () => {
               name="rating"
             ></input>
           </div>
+          <div className="col-md-2">
+            <label htmlFor="nom" className="form-label">
+              Role
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control border"
+              id="nomHotel"
+              name="nomHotel"
+            ></input>
+          </div>
         </div>
-
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-md-1">
             <label htmlFor="numero" className="form-label">
@@ -72,7 +95,6 @@ export const AjoutEmploye = () => {
             ></input>
           </div>
         </div>
-
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-md-1">
             <label htmlFor="province" className="form-label">
@@ -112,6 +134,12 @@ export const AjoutEmploye = () => {
           </div>
         </div>
       </form>
+      <div className="d-grid gap-2 d-md-flex m-3">
+        {/* <button type="submit" className='btn btn-primary'>Créesr un compte</button> */}
+        <button type="submit" className="btn btn-secondary">
+          Soumettre
+        </button>
+      </div>
     </>
   );
 };

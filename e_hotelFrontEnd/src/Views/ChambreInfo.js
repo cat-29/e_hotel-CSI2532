@@ -67,7 +67,6 @@ export const ChambreInfo = () => {
                 className="form-control border"
                 id="nbrHotel"
                 name="nbrHotel"
-                disabled
               ></input>
             </div>
             <div className="col-md-2">
