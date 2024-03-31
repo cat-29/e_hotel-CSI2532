@@ -28,6 +28,7 @@ export const renderStars = (item)=>{
     }
 }
 
+// La premiere page que l utilisateur voie quand il log in
 export const PageReservation = () => {
 
     // Les filtres seront recu ici de la part du component Filters
@@ -124,6 +125,7 @@ export const PageReservation = () => {
             // Get nombre de chambres
             getChambresFromNombreDeChambres();
 
+            // console.log("filters to be applied are",filters);
         }
     }
 
@@ -162,7 +164,7 @@ export const PageReservation = () => {
 
     const voirDetail = (chambre)=>{
         // console.log("on doit ici changer vers la chambre de details de la chambre");
-        navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {chambre:chambre,nas:state.nas}});
+        navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {client:state, chambre:chambre,nas:state.nas}});
     }
     
    

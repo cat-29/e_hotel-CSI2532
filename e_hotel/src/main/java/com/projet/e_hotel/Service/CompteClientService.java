@@ -3,7 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.Client;
-import com.projet.e_hotel.Classes.Compte;
 import com.projet.e_hotel.Classes.CompteClient;
 import com.projet.e_hotel.Repository.ClientRepository;
 import com.projet.e_hotel.Repository.CompteClientRepository;

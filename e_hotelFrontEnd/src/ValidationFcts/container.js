@@ -260,7 +260,7 @@ const validateDates = (checkin,checkout,res,flag)=>{
         s = 'Svp veuillez indiquer les deux dates checkin et checkout';
     }else{
         const today = new Date();
-        console.log("checkout",checkout);
+        // console.log("checkout",checkout);
         if (checkin !="" && checkout!=""){
             if (checkout <= checkin || checkout < today || checkin < today){
                 s = 'Veuillez choisir des dates valides';
@@ -271,12 +271,12 @@ const validateDates = (checkin,checkout,res,flag)=>{
                     s = 'Veuillez entrer une date de checkout valide';
                 }
             }else{
-                console.log("here?!");
-                console.log("checkin is",checkin);
-                console.log(checkin<=today);
+                // console.log("here?!");
+                // console.log("checkin is",checkin);
+                // console.log(checkin<=today);
 
                 if (checkin !="" && checkin <= today){
-                    console.log("should come here");
+                    // console.log("should come here");
                     s = 'Veuillez entrer une date de checkin valide';
                 }
             }
@@ -373,8 +373,8 @@ const isRoomAvailable = async (checkin,checkout,state)=>{
     const data = {};
     const checkinN = new Date(checkin);
     const checkoutN = new Date(checkout);
-    console.log("checking new",checkinN.getTime());
-    console.log("checkout new",checkoutN.getTime())
+    // console.log("checking new",checkinN.getTime());
+    // console.log("checkout new",checkoutN.getTime())
     // data.checkin = checkinN.getTime();
     // data.checkout = checkoutN.getTime();
     data.checkin = checkinN.toISOString().slice(0,10);

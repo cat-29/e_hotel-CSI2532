@@ -35,8 +35,8 @@ public class ActiveReservationMapper {
                         clientReserve.get(i).getPrix(),
                         null,
                         clientReserve.get(i).getPrix(),
-                        false,
-                        null,
+                        clientReserve.get(i).getIsPaiementComplete(),
+                        clientReserve.get(i).getDatePaiementComplete(),
                         false);
 
                 listDTOs.add(activeReservationDTO);
