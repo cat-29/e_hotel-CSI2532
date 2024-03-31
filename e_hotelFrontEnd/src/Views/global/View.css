@@ -12,7 +12,7 @@
     min-height: 100%; */
 
     /* initializing bg-image and bg-image-opacity variables  */
-    --bg-image:url("../../public/images/homeBackground.jpg");
+    --bg-image:url("../../../public/images/homeBackground.jpg");
     --bg-image-opacity:.8;
     display: flex;
     flex-direction: column;
@@ -63,4 +63,8 @@ a,.btnCustom{
     font-size: 1.5rem;
     background: #979292 ;
     padding: 1rem;
+}
+
+.backgroundColumn{
+
 }

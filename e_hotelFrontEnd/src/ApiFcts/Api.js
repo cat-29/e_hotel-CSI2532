@@ -88,6 +88,23 @@ const isRoomAvailable = async (data)=>{
     return res;
 }
 
+const getAvailabilities = async()=>{
+    let count = null;
+    try{
+        const response = await axios.get("http://localhost:8080/chambre/disponibiliteParZone");
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            count = response.data;
+        }else{
+            console.log("Sorry, something went wrong while fetching");
+        }
+
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return count;
+}
+
 
 
 
@@ -136,5 +153,11 @@ fcts.ajouterReservationDB = async (data)=>{
 fcts.isRoomAvailable = async(data)=>{
     const res = await isRoomAvailable(data);
     return res;
+}
+
+fcts.getAvailabilities = async()=>{
+    const count = await getAvailabilities();
+    return count;
+
 }
 export default fcts;

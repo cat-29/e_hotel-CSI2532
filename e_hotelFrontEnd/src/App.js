@@ -4,9 +4,9 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import { View } from "./Views/View";
+import { View } from "./Views/global/View";
 import { AppShell } from "./components/AppShell/AppShell";
-import { ClientSignIn, SignIn } from "./Views/Client/ClientSignIn";
+import { ClientSignIn } from "./Views/Client/ClientSignIn";
 import { CreateAccountForm } from "./Views/Client/CreateAccount";
 // This import of boostrap is unecessary, but let it stay here for debuggings purposes
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -35,6 +35,9 @@ import { AjoutHotel } from "./Views/AjoutHotel";
 import { AjoutChambre } from "./Views/AjoutChambre";
 import { AjoutEmploye } from "./Views/AjoutEmploye";
 import { AjoutChambreDommage } from "./Views/AjoutChambreDommage";
+import { ChambreSubiDommage } from "./Views/ChambreSubiDommage";
+import { Stats } from "./Views/global/Stats";
+import { loadCountAv } from "./Views/global/Stats";
 
 function App() {
   const router = createBrowserRouter(
@@ -55,6 +58,7 @@ function App() {
         />
         <Route path="reserver" element={<Reserver />} />
         <Route path="payerClient" element={<MethodePaiementClient />} />
+        <Route path="stats" element={<Stats/>} loader={loadCountAv}/>
 
         <Route path="employe" element={<EmployeSignIn />} />
         <Route path="historiqueReservation" element={<ReservationActive />} />
@@ -72,6 +76,7 @@ function App() {
         <Route path="methodePaiement" element={<MethodePaiement />} />
         <Route path="ajoutLocation" element={<EmployeAjouteLocation />} />
         <Route path="historiqueLocation" element={<EmployeTableLocation />} />
+        <Route path="dommagesSubi" element={<ChambreSubiDommage/>}/>
         <Route path="*" element={<NotFound />} />
       </Route>
     )
