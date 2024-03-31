@@ -2,6 +2,7 @@ package com.projet.e_hotel.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,4 +85,9 @@ public class HotelService {
 
         return hotelsOfAllRating.stream().map(idx -> idx.getId()).toList();
     }
+
+    public List<Hotel> getHotelsFromChaine(String nomChaine) {
+        return hotelRepository.findHotelsByNomChaine(nomChaine);
+    }
+
 }
