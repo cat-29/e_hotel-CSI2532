@@ -138,6 +138,11 @@ class ConnexionCompteService {
     }
 
 
+    async getAllDommagesSubiForIdHotel(idHotel) {
+        return http.get(`/chambre/${idHotel}/getAllRooms/dommages`);
+    }
+
+
 }
 
 export default new ConnexionCompteService();

@@ -9,12 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.projet.e_hotel.Classes.Chambre;
 import com.projet.e_hotel.Classes.ClientReserve;
+import com.projet.e_hotel.Classes.Dommage;
 import com.projet.e_hotel.Classes.LoueChambre;
+import com.projet.e_hotel.Classes.SubiDommage;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
+import com.projet.e_hotel.Classes.dto.ChambreSubiDommageDTO;
+import com.projet.e_hotel.Classes.mapper.ChambreSubiDommageMapper;
 import com.projet.e_hotel.Classes.mapper.sqlMapping.ChambrePkMapper;
 import com.projet.e_hotel.Repository.ChambreRepository;
 import com.projet.e_hotel.Repository.ClientReserveRepository;
+import com.projet.e_hotel.Repository.DommageRepository;
 import com.projet.e_hotel.Repository.LoueChambreRepository;
+import com.projet.e_hotel.Repository.SubiDommageRepository;
 
 @Service
 public class ChambreService {
@@ -27,12 +33,42 @@ public class ChambreService {
     @Autowired
     private LoueChambreRepository loueChambreRepository;
 
+    @Autowired
+    private SubiDommageRepository subiDommageRepository;
+
+    @Autowired
+    private DommageRepository dommageRepository;
+
     public ChambreService() {
 
     }
 
     public List<Chambre> getChambresFromHotel(Integer id) {
         return chambreRepository.findChambresByIdHotel(id);
+    }
+
+    public List<SubiDommage> getAllDommagesForHotel(Integer idHotel) {
+        return subiDommageRepository.findAllByIdHotel(idHotel);
+    }
+
+    public List<Dommage> getAllDommageFromIdDommage(Integer idDommage) {
+        return dommageRepository.findAllByIdDommage(idDommage);
+    }
+
+    public List<ChambreSubiDommageDTO> getAllDommages(Integer idHotel) {
+        List<SubiDommage> listAllDommagesForIdHotel = getAllDommagesForHotel(idHotel);
+        List<Dommage> listAllDommages = new ArrayList<>();
+        for (int i = 0; i < listAllDommagesForIdHotel.size(); i++) {
+            List<Dommage> dommages = getAllDommageFromIdDommage(listAllDommagesForIdHotel.get(i).getIdDommage());
+
+            // Insere tout les dommages dans la liste
+            for (int j = 0; j < dommages.size(); j++) {
+                
+                listAllDommages.add(dommages.get(j));
+            }
+        }
+        
+        return ChambreSubiDommageMapper.mapToListOfChambreSubiDommageDTO(listAllDommagesForIdHotel, listAllDommages);
     }
 
     public Chambre getNumeroChambreForSpecifications(Integer hotelId, Date dateCheckIn, Date dateCheckOut,

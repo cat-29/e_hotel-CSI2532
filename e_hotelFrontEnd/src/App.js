@@ -35,6 +35,7 @@ import { AjoutHotel } from "./Views/AjoutHotel";
 import { AjoutChambre } from "./Views/AjoutChambre";
 import { AjoutEmploye } from "./Views/AjoutEmploye";
 import { AjoutChambreDommage } from "./Views/AjoutChambreDommage";
+import { ChambreSubiDommage } from "./Views/ChambreSubiDommage";
 
 function App() {
   const router = createBrowserRouter(
@@ -72,6 +73,7 @@ function App() {
         <Route path="methodePaiement" element={<MethodePaiement />} />
         <Route path="ajoutLocation" element={<EmployeAjouteLocation />} />
         <Route path="historiqueLocation" element={<EmployeTableLocation />} />
+        <Route path="dommagesSubi" element={<ChambreSubiDommage/>}/>
         <Route path="*" element={<NotFound />} />
       </Route>
     )

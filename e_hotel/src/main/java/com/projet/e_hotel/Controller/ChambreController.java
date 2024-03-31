@@ -18,6 +18,7 @@ import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
+import com.projet.e_hotel.Classes.dto.ChambreSubiDommageDTO;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.mapper.ChambreHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreMapper;
@@ -84,6 +85,11 @@ public class ChambreController {
     }
    
 
+    @GetMapping("/{idHotel}/getAllRooms/dommages")
+    public List<ChambreSubiDommageDTO> getAllDommagesSubiForIdHotel(@PathVariable Integer idHotel) {
+        return chambreService.getAllDommages(idHotel);
+    }
+    
     @GetMapping("/getAllRooms")
     public List<ChambreDTO> getAllChambres() {
 
