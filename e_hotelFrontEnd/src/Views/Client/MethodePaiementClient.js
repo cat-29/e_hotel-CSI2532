@@ -8,10 +8,16 @@ import fcts from "../../ApiFcts/Api";
 export const MethodePaiementClient = ()=>{
 
     // The state here has: nas,num_chambre,id_hotel,checkin,checkout,price,prix
+    // as well as an object for client details
 
     const {state} = useLocation();
+    const paiementInfo = state.paiementInfo;
+    const userInfo = state.clientInfo;
+
+    // console.log("paiementInfo",paiementInfo);
     let [formDataError,setFormDataError] = useState([]);
     const navigate = useNavigate();
+    const [pending,setPending] = useState(false);
     // console.log("in methode paiement client",state);
 
     const handleInputChange = (event) => {
@@ -53,7 +59,7 @@ export const MethodePaiementClient = ()=>{
         setIsShown(true);
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault();
         const validationResult = ValidateFcts.validatePaiementFields(formData);
         setFormDataError(validationResult);
@@ -71,9 +77,14 @@ export const MethodePaiementClient = ()=>{
             console.log("there are still errors to fix");
         } else{
             console.log("fields are ready to be submitted to backend");
-            fcts.ajouterReservationDB(state);
-            // same remark as before in reserver if client doesnt want to pay
-            navigate('/');
+            setPending(true);
+            const data = {...paiementInfo};
+            data.isPaiementComplete = true;
+            data.datePaiementComplete = new Date().toISOString().slice(0,10);
+            // console.log("sur le point d envoyer",data);
+            const res = await fcts.ajouterReservationDB(data);
+            setPending(false);
+            navigate('/reservationChambre',{state:userInfo});
         }
     }
 
@@ -84,7 +95,7 @@ export const MethodePaiementClient = ()=>{
                 <div className="mx-3">
                     <h1 className="my-4">Méthode de paiement</h1>
                     <label htmlFor="montant">Montant dû:</label>
-                    <h2 id="montant">$ {state.priceTotal}</h2>
+                    <h2 id="montant">$ {paiementInfo.prix}</h2>
                 </div>
                 <div className="d-grid d-md-flex m-3">
                     <div className="col-sm-5">
@@ -131,10 +142,9 @@ export const MethodePaiementClient = ()=>{
                 </div>
 
                 <div className="d-grid gap-2 d-sm-flex m-3">
-                    {/* <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer ${state.userInfo.prix}</button> */}
-                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2'>Payer</button>
-
+                    <button type="submit" className='btn btn-secondary col-sm-3 col-md-2' disabled={pending}>Payer</button>
                 </div>
+                {pending ? <p>Soumission...</p>:<></>}
             </form>
 
 

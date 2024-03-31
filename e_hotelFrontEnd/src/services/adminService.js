@@ -9,5 +9,8 @@ class AdminService {
   async getChambresFromHotel(id) {
     return http.get(`/chaine/hotels/chambres/${id}`);
   }
+  async getEmployeFromHotel(id) {
+    return http.get(`/chaine/hotels/employe/${id}`);
+  }
 }
 export default new AdminService();

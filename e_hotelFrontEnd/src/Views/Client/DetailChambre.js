@@ -7,11 +7,14 @@ export const DetailChambre = ()=>{
     const chambre = state.chambre;
     const userNas = state.nas;
     const navigate = useNavigate();
+    // Having different info on a particular client, so that our app wont crash when we redirect users to rooms page after booking.
+    const userInfo = state.client;
 
-    // console.log('state',state);
+    // console.log('state user',state.client);
     // console.log('chambre',chambre);
     // console.log('nas',userNas);
 
+    // construct an object with all required fields for booking, and go to book page 
     const reserve = (numeroChambre,nom,nas,prix,idHotel)=>{
         // console.log("si on veut reserver, les params sont:",numeroChambre);
         // console.log("nom",nom);
@@ -23,7 +26,7 @@ export const DetailChambre = ()=>{
         data.nas = nas;
         data.prix = prix;
         data.idHotel = idHotel;
-        navigate('/reserver',{state:data});
+        navigate('/reserver',{state:{client:userInfo,bookingInfo:data}});
     }
 
     

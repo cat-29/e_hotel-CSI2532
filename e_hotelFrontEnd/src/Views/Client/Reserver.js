@@ -9,6 +9,10 @@ import fcts from '../../ApiFcts/Api';
 export const Reserver = () => {
     const {state} = useLocation();
     // console.log("the state in reserver",state);
+    // General booking info
+    const booking = state.bookingInfo; 
+    // containing user details
+    const userInfo = state.client;
 
     const [dates, setDates] = useState({
         checkin: '',
@@ -27,7 +31,13 @@ export const Reserver = () => {
  
     const [price,setPrice] = useState(0);
 
+    // pending state
+
+    const [pending,setPending] = useState(false);
+
     const navigate = useNavigate();
+
+    const today = new Date().toISOString().slice(0,10);
  
 
     const handleInputChange = (event)=>{
@@ -70,20 +80,20 @@ export const Reserver = () => {
 
         }else{
             console.log("Ready for further processing");
-            // Validate first by determining if a room is available
-            let isRoomAvailable = await ValidateFcts.isRoomAvailable(checkin,checkout,state);
-            console.log("isRoomAvailable",isRoomAvailable);
+            // Validate first by determining if the room is available
+            let isRoomAvailable = await ValidateFcts.isRoomAvailable(checkin,checkout,booking);
+            // console.log("isRoomAvailable",isRoomAvailable);
             let room = isRoomAvailable[0];
-            // Ce premier if veut dire que la chambre n'est as disponible
+            // Ce premier if veut dire que la chambre n'est pas disponible
             if ((room.numeroChambre != 0) && (room.id_hotel != 0)){
                 let err = ["La chambre n'est pas disponible pour les dates indiquées. Veuillez changer la sélection."];
                 setErrors(err);
                 setShown(true);
             }else{
                 let days = ValidateFcts.calculateNumberOfDays(checkin,checkout);
-                let totPrice = days * parseInt(state.prix);
+                let totPrice = days * parseInt(booking.prix);
                 // console.log("days are ",days);
-                // console.log("prix",state.prix);
+                // console.log("prix",booking.prix);
                 // console.log("for you, price is", totPrice);
                 setShownPrice(true);
                 setPrice(totPrice);
@@ -98,22 +108,40 @@ export const Reserver = () => {
         setShown((prev)=>!prev);
     }
 
-    const ajouterReservationDB = (data)=>{
-        const newState = {...data};
-        newState.priceTotal = price;
-        console.log("Dans ajouter reservation BD",newState);
+    // fonction appelee quand on ne veut pas payer en ligne
+    const ajouterReservationDB = async (data)=>{
+        setPending(true);
+        const newState = {};
+        newState.idClient = data.nas;
+        newState.numeroChambre = data.numeroChambre;
+        newState.idHotel = data.idHotel;
+        newState.dateCheckin = dates.checkin;
+        newState.dateCheckout = dates.checkout;
+        newState.prix = price;
+        newState.isPaiementComplete = false;
+        newState.datePaiementComplete = null;
+        // console.log("Dans ajouter reservation BD",newState);
 
-        fcts.ajouterReservationDB(newState);
-
+        const answer = await fcts.ajouterReservationDB(newState);
+        setPending(false);
+        // console.log("the state is",booking);
         // Should await for reservation to be added first, then navigate back
-        navigate('/');
+
+        navigate('/reservationChambre',{state:userInfo});
+        // console.log("back in reserverJs: ",answer);
     }
 
+    // In case user wants to pay online
     const goToPaiement = (event)=>{
-        const newState = {...state};
-        newState.priceTotal = price;
+        const newState = {};
+        newState.idClient = booking.nas;
+        newState.numeroChambre = booking.numeroChambre;
+        newState.idHotel = booking.idHotel;
+        newState.dateCheckin = dates.checkin;
+        newState.dateCheckout = dates.checkout;
+        newState.prix = price;
         // console.log('dans go to paiement',newState);
-        navigate('/payerClient',{state:newState});
+        navigate('/payerClient',{state:{paiementInfo:newState,clientInfo:userInfo}});
     }
 
     return (
@@ -122,7 +150,7 @@ export const Reserver = () => {
             <div className="m-3">
                 <div className='w-50 p-3'>
                     <label htmlFor="dateCheckIn" className="form-label">Date Check-In</label>
-                    <input type="date" className="form-control border" name="checkin" value={dates.checkin} onChange={handleInputChange}/>
+                    <input type="date" className="form-control border" name="checkin" min={today} value={dates.checkin} onChange={handleInputChange}/>
                 </div>
 
                 <div className='w-50 p-3'>
@@ -140,13 +168,14 @@ export const Reserver = () => {
                                     <label className="form-check-label" htmlFor="paieOui">Oui</label>
                             </div> 
                             <div className='form-check'>
-                                <input className="form-check-input" type="checkbox" name='paie' onChange={()=>ajouterReservationDB(state)} id="paieNon"/>
+                                <input className="form-check-input" type="checkbox" name='paie' onChange={()=>ajouterReservationDB(booking)} id="paieNon"/>
                                     <label className="form-check-label" htmlFor="paieNon">Non</label>
                             </div>
                              {/*Si oui alors on navigue vers la page payerClient ou le client doit pouvoir payer en avance 
                              et c'est de la ou on fait un post request pour creer la reservation, */}
                              {/* S'il dit non, alors on  fait le post request maintenant, completedPaye false et prix = prixTotal */}
                     </div>:<></>}
+                {pending ? <p>Soumission...</p>:<></>}
 
             </div>
 

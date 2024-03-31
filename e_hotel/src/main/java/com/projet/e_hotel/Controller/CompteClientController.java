@@ -1,10 +1,8 @@
 package com.projet.e_hotel.Controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.e_hotel.Classes.Client;
-import com.projet.e_hotel.Classes.Compte;
 import com.projet.e_hotel.Classes.CompteClient;
 import com.projet.e_hotel.Service.CompteClientService;
 

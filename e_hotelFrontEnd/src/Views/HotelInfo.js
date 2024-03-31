@@ -7,12 +7,17 @@ export const HotelInfo = () => {
   const navigate = useNavigate();
 
   const [chambre, setChambre] = useState([]);
+  const [employe, setEmploye] = useState([]);
   const [modify, setModify] = useState(false);
 
   console.log("ds hotel info: ", state);
 
   const showChambreInfo = (chambreInfo) => {
     navigate("/chambreInfo", { state: { chambreInfo: chambreInfo } });
+  };
+
+  const showEmployeInfo = (employeInfo) => {
+    navigate("/employeInfo", { state: { employeInfo: employeInfo } });
   };
 
   const showAjoutChambre = () => {
@@ -29,6 +34,19 @@ export const HotelInfo = () => {
       .getChambresFromHotel(state.hotelInfo.id)
       .then((response) => {
         setChambre(response.data);
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  // When get hotel, get the employes
+  useEffect(() => {
+    adminService
+      .getEmployeFromHotel(state.hotelInfo.id)
+      .then((response) => {
+        setEmploye(response.data);
         console.log(response);
       })
       .catch((e) => {
@@ -194,35 +212,38 @@ export const HotelInfo = () => {
         <thead>
           <tr className="text-center">
             <th>#</th>
-            <th>Numéro de chambre</th>
-            <th>Prix par nuit</th>
-            <th>Capacité</th>
-            <th>Vue</th>
-            <th>Capacité à étendre</th>
+            <th>NAS</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Role</th>
           </tr>
         </thead>
-        {chambre.map((val, key) => {
+        {employe.map((val, key) => {
           return (
             <tbody>
-              {/* <tr>
+              <tr>
                 <th className="text-center">{key + 1}</th>
-                <th className="text-center">{val.numeroChambre}</th>
-                <th className="text-center">{val.prix}</th>
-                <th className="text-center">{val.capaciteChambre}</th>
-                <th className="text-center">{val.vueChambre}</th>
-                <th className="text-center">{val.capaciteAEtendre}</th>
+                <th className="text-center">{val.id}</th>
+                <th className="text-center">
+                  {val.prenom} {val.nomFamille}
+                </th>
+                <th className="text-center">
+                  {val.numero} {val.rue}, {val.ville}, {val.province} {val.pays}{" "}
+                  {val.codePostal}
+                </th>
+                <th className="text-center">{val.roleEmploye}</th>
                 <th className="text-center">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => {
-                      showChambreInfo(val);
+                      showEmployeInfo(val);
                     }}
                   >
                     {">"}
                   </button>
                 </th>
-              </tr> */}
+              </tr>
             </tbody>
           );
         })}
