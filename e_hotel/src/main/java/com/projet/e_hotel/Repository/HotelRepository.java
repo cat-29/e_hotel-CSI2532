@@ -8,9 +8,21 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import com.projet.e_hotel.Classes.Hotel;
+import java.util.List;
+
 
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Optional<Hotel> findById(Integer idHotel);
 
+    List<Hotel> findAllByNomChaine(String nomChaine);
+
+    List<Hotel> findAllByRating(Integer rating);
+    
+    List<Hotel> findAllByNbrChambreGreaterThanEqual(Integer nbrChambre);
+
+    List<Hotel> findAllByNbrChambreLessThanEqual(Integer nbrChambre);
+
+    List<Hotel> findAllByNbrChambreBetween(Integer chambreMin, Integer chambreMax);
+    
     List<Hotel> findHotelsByNomChaine(String nomChaine);
 }

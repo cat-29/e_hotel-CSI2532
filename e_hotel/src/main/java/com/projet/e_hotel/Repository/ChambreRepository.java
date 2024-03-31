@@ -26,6 +26,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
     List<Chambre> findAllByNumeroChambre(Integer numeroChambre);
 
+    List<Chambre> findAllByIdHotel(Integer idHotel);
+
     // Determine if a room is available
     @Query(value = "With ErrReserve as (\r\n" + // ici validation client_reserve
             "\t(Select numero_chambre,id_hotel \r\n" + // cas 1: il y a quelqu'un qui a booke exactement la ou on a,
