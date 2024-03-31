@@ -57,7 +57,7 @@ public class ChambreController {
 
     // Detecter si une chambre est disponible pour les dates indiques
     @GetMapping("/getIsRoomAvailable/{checkin}/{checkout}/{idHotel}/{numeroChambre}")
-    public  List<ChambrePKDTO> isRoomAvailable(@PathVariable String checkin,@PathVariable String checkout,@PathVariable Integer idHotel,@PathVariable Integer numeroChambre) throws ParseException{
+    public List<ChambrePKDTO> isRoomAvailable(@PathVariable String checkin,@PathVariable String checkout,@PathVariable Integer idHotel,@PathVariable Integer numeroChambre) throws ParseException{
         // System.out.println("I am testing before");
         // Using this to not have problems with date conversion
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,7 +66,7 @@ public class ChambreController {
         Date checkoutFormatted = sdf.parse(checkout);
         // Date checkinFormatted = new Date(checkin);
         // Date checkoutFormatted = new Date(checkout);
-        System.out.println("I am testing after");
+        // System.out.println("I am testing after");
         // System.out.println(checkinFormatted);
         // System.out.println(checkoutFormatted);
 
