@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const EmployeTableLocation = () => {
 
@@ -40,6 +41,7 @@ export const EmployeTableLocation = () => {
 
     return (
         <>
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             <div className="titre text-center">
                 <h1 className="mx-4 my-4">Historique des locations</h1>                    
             </div>

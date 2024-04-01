@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
 import ValidateFcts from "../ValidationFcts/container";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const AjouteDommage = () => {
     
@@ -156,10 +157,11 @@ export const AjouteDommage = () => {
     
     return (
         <>
-        <div className="titre text-center">
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
+            <div className="titre text-center">
                 <h1 className="mx-4 my-4">Ajouter un dommage</h1>                    
             </div>
-        <div className="align-middle mx-5 my-2 mx-auto" style={{height: '240px', maxWidth: '900px'}}>
+            <div className="align-middle mx-5 my-2 mx-auto" style={{height: '240px', maxWidth: '900px'}}>
                 <form noValidate className="mx-5 border h-100" onSubmit={handleSubmit}>
                     <div className=""> 
                         <div className="d-grid gap-2 d-md-flex justify-content-between m-3">

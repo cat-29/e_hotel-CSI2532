@@ -249,6 +249,34 @@ const validateAllfields = (answer) =>{
     return res;
 }
 
+const validateAllModifProfile = (answer) => {
+    console.log("the answer to be validated are",answer);
+    let res = [];
+    let items = [];
+    for (let key in answer){
+        // items.push(answer[key]);
+        if (key == "nas"){
+            res = validateNas(answer[key],res);
+        }else if (key == "prenom" || key == "nomFamille"){
+            res = validateNom(answer[key],res)
+        }else if (key == "numero"){
+            res = validateNumero(answer[key],res);
+        }else if (key == "rue" || key == "ville" || key == "pays"){
+            res = validatePlace(answer[key],res);
+        }else if (key == "province"){
+            res = validateProvince(answer[key],res);
+        }else if (key == "codePostal"){
+            res = validateZip(answer[key],res);
+        }else if(key == "email"){
+            res = validateEmail(answer[key],res);
+        }else if (key == "password"){
+            res = validateSamePwd([answer[key],answer["passwordConfirme"]],res);
+        }
+    }
+    // console.log("at the end",items);
+    return res;
+}
+
 const validateAllLocationFields = (answer) => {
     console.log("the answer to be validated is",answer);
     let res = [];
@@ -468,6 +496,10 @@ ValidateFcts.calculateNumberOfDays = (start,end)=>{
 ValidateFcts.isRoomAvailable = async (checkin,checkout,data)=>{
     const res = await isRoomAvailable(checkin,checkout,data);
     return res;
+}
+
+ValidateFcts.validateAllModifProfile = (answer) => {
+    return validateAllModifProfile(answer);
 }
 
 ValidateFcts.getAllChambresFromChaineHoteliere = async (chaine) => {

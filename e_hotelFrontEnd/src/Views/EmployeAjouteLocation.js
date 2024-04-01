@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ValidateFcts from "../ValidationFcts/container";
 import InputMask from 'react-input-mask';
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 
 export const EmployeAjouteLocation = () => {
@@ -208,6 +209,7 @@ export const EmployeAjouteLocation = () => {
 
     return(
         <>
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             <h2 className="text-center p-3">Ajout d'une location</h2>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
             <form noValidate className="mx-4" onSubmit={handleSubmit}>

@@ -1,11 +1,8 @@
 package com.projet.e_hotel.Classes;
 
-import com.projet.e_hotel.Classes.Enum.RoleEmployeeEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -51,4 +48,22 @@ public class Employe {
 
     @JoinColumn(name = "id_hotel", referencedColumnName = "id_hotel")
     private Integer idHotel;
+
+    public Employe() {
+
+    }
+
+
+    public Employe(String id, String prenom, String nomFamille, Integer numero, String rue, String ville, String province, String pays, String codePostal) {
+        this.id = id;
+        this.prenom = prenom;
+        this.nomFamille = nomFamille;
+        this.numero = numero;
+        this.rue = rue;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+    }
+    
 }

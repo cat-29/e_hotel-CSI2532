@@ -34,6 +34,12 @@ public class CompteEmploye {
         this.password = password;
     }
 
+    public CompteEmploye(String idEmploye, String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.idEmploye = idEmploye;
+    }
+
     public CompteEmploye() {
         
     }

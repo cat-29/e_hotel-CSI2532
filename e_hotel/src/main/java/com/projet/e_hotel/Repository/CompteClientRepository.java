@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface CompteClientRepository extends JpaRepository<CompteClient,Long> {
     
     Optional<CompteClient> findByEmailAndPassword(String email, String password);
+
+    Optional<CompteClient> findByIdClient(String idClient);
 }    

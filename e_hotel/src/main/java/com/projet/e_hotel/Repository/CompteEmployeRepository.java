@@ -10,4 +10,5 @@ public interface CompteEmployeRepository extends JpaRepository<CompteEmploye,Lon
     
     Optional<CompteEmploye> findByEmailAndPassword(String email, String password);
 
+    Optional<CompteEmploye> findByIdEmploye(String idEmploye);
 }    

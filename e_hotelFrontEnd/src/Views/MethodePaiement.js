@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import ValidateFcts from "../ValidationFcts/container";
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const MethodePaiement = () => {
 
@@ -137,6 +138,7 @@ export const MethodePaiement = () => {
 
     return (
         <>
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             <form noValidate className="mx-4" onSubmit={handleSubmit}>
                 <div className="mx-3">
                     <h1 className="my-4">Méthode de paiement</h1>

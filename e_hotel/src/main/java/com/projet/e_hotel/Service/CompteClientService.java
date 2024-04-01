@@ -33,4 +33,8 @@ public class CompteClientService {
         return compteClientRepository.save(compte);
     }
 
+    public CompteClient findCompteClient(String nas) {
+        return compteClientRepository.findByIdClient(nas).get();
+    }
+
 }

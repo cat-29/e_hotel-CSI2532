@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const ReservationActive = () => {
     const {state} = useLocation();
@@ -46,6 +47,7 @@ export const ReservationActive = () => {
 
     return ( 
         <>
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             <div className="titre text-center">
                 <h1 className="mx-4 my-4">Historique des réservations</h1>                    
             </div>

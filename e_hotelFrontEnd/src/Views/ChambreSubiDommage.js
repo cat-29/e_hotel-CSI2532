@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const ChambreSubiDommage = () => {
     
@@ -58,6 +59,7 @@ export const ChambreSubiDommage = () => {
 
     return (
         <>
+            <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             {/* Bouton pour le retour a la page d'historique de reservation */}
             <div className="titre text-center">
                 <h1 className="mx-4 mt-4">Liste des dommages enregistrés</h1>                    
