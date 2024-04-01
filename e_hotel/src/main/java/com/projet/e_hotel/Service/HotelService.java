@@ -2,12 +2,13 @@ package com.projet.e_hotel.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.Hotel;
+import com.projet.e_hotel.Classes.dto.HotelCapaciteDto;
+import com.projet.e_hotel.Classes.mapper.sqlMapping.HotelCapaciteMapper;
 import com.projet.e_hotel.Repository.HotelRepository;
 
 @Service
@@ -88,6 +89,15 @@ public class HotelService {
 
     public List<Hotel> getHotelsFromChaine(String nomChaine) {
         return hotelRepository.findHotelsByNomChaine(nomChaine);
+    }
+
+    // Pour la vue 2
+    public List<HotelCapaciteDto> getCapaciteAllRooms(){
+        List<Object[]> rawResult = this.hotelRepository.getCapaciteAllRooms();
+        List<HotelCapaciteDto> rawResultFormatted = HotelCapaciteMapper.mapToHotelCapaciteDtoObject(rawResult);
+       
+
+        return rawResultFormatted;
     }
 
 }
