@@ -4,6 +4,7 @@ import { PageReservation } from './PageReservation';
 import fcts from '../../ApiFcts/Api';
 import ValidateFcts from '../../ValidationFcts/container';
 import { useNavigate } from 'react-router-dom';
+import { AppHeader } from '../../components/AppHeader/AppHeader';
 
 
 
@@ -81,6 +82,7 @@ export const ClientSignIn=()=>{
     }
     return(
         <>
+            <AppHeader/>
             {/* {console.log(appelPageReservation)} */}
                 {/* {appelPageReservation ? <PageReservation userInfo = {retourClient.client}/> : */}
                 <>

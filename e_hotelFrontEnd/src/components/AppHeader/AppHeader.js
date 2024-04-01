@@ -21,34 +21,52 @@ export const AppHeader=(info)=>{
     const [roleUser, setRoleUser] = useState('');
 
     useEffect(() => {
-        console.log("on est ds header")
-        console.log(info.info);
 
         const user = info.info;
 
         // get info
-        if (!info.isUserTypeClient) {
-            console.log("EMPLOYE");
+        if (info.isUserTypeClient) {
+            // Client
 
-            console.log(info.info);
+            getClientInfo();
+
+            if (user !== undefined) {
+                setUserInfo({
+                    nas: user.nas,
+                    prenom: user.prenom,
+                    nomFamille: user.nomFamille,
+                    numero: user.numero,
+                    rue: user.rue,
+                    ville: user.ville,
+                    province: user.province,
+                    pays: user.pays,
+                    codePostal: user.codePostal
+                });
+            } else {
+                console.log("is undefined.. do nothing")
+            }
+        } 
+        else if (info.isUserTypeClient == false) {
+            
             // get employe info
             getEmployeInfo();
-        }
+        
 
-        if (user !== undefined) {
-            setUserInfo({
-                nas: user.id,
-                prenom: user.prenom,
-                nomFamille: user.nomFamille,
-                numero: user.numero,
-                rue: user.rue,
-                ville: user.ville,
-                province: user.province,
-                pays: user.pays,
-                codePostal: user.codePostal
-            });
-        } else {
-            console.log("is undefined.. do nothing")
+            if (user !== undefined) {
+                setUserInfo({
+                    nas: user.id,
+                    prenom: user.prenom,
+                    nomFamille: user.nomFamille,
+                    numero: user.numero,
+                    rue: user.rue,
+                    ville: user.ville,
+                    province: user.province,
+                    pays: user.pays,
+                    codePostal: user.codePostal
+                });
+            } else {
+                console.log("is undefined.. do nothing")
+            }
         }
     }, []);
 
@@ -70,13 +88,35 @@ export const AppHeader=(info)=>{
                     province: reponse.data.province,
                     pays: reponse.data.pays,
                     codePostal: reponse.data.codePostal
-                })
+                });
 
                 // Determine si c'est un employe normal ou admin
                 setRoleUser(reponse.data.roleEmploye)
             });
         } catch (error) {
-            console.error(error);
+            console.log(error);
+        }
+    }
+
+    const getClientInfo = async() => {
+        try {
+            await connexionCompte.getInfoClient(info.info.nas).then((reponse) => {
+                console.log("PASSSSSSSS")
+
+                setUserInfo({
+                    nas: reponse.data.nas,
+                    prenom: reponse.data.prenom,
+                    nomFamille: reponse.data.nomFamille,
+                    numero: reponse.data.numero,
+                    rue: reponse.data.rue,
+                    ville: reponse.data.ville,
+                    province: reponse.data.province,
+                    pays: reponse.data.pays,
+                    codePostal: reponse.data.codePostal
+                })
+            });
+        } catch (error) {
+            console.log(error);
         }
     }
 

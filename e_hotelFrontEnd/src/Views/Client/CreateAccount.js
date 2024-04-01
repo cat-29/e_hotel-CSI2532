@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import ValidateFcts from "../../ValidationFcts/container";
 import fcts from "../../ApiFcts/Api";
 import { useNavigate } from "react-router-dom";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
 
 export const CreateAccountForm = ()=>{
     // State to store form data
@@ -119,6 +120,7 @@ export const CreateAccountForm = ()=>{
     return(
         // <div>I am the create account form</div>
         <>
+        <AppHeader/>
             <h2 className="text-center p-3">Créer un compte</h2>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
             <form noValidate onSubmit={handleSubmit}>

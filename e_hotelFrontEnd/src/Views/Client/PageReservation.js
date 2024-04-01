@@ -7,6 +7,7 @@ import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import fcts from "../../ApiFcts/Api";
 import connexionComptes from "../../services/connexion-compte";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
 
 // This function is getting called each time the page renders
 export const loaderAllRooms = ()=>{
@@ -170,7 +171,7 @@ export const PageReservation = () => {
    
     return (
         <>
-            <div className="m-3 fs-3">Bonjour {state.prenom} {state.nomFamille},</div>
+            <AppHeader info={state} isUserTypeClient={true}/>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Réserver des chambres</h5>
             {/* onStateChange passes Filters's component state to PageReservation component state */}
             <Filters onStateChange={handleFilters}/>  

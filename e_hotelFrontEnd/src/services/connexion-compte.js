@@ -106,6 +106,49 @@ class ConnexionCompteService {
         });
     }
 
+    async updateClientProfile(info) {
+        const infoN = {...info};
+        delete infoN["passwordConfirme"];
+        // Formate
+        const profileInfo = {};
+        profileInfo.nas = infoN.nas;
+        profileInfo.prenom = infoN.prenom;
+        profileInfo.nomFamille = infoN.nomFamille;
+        profileInfo.numero = infoN.numero;
+        profileInfo.rue = infoN.rue;
+        profileInfo.ville = infoN.ville;
+        profileInfo.province = infoN.province;
+        profileInfo.pays = infoN.pays;
+        profileInfo.codePostal = infoN.codePostal;
+
+        await fetch("http://localhost:8080/compte/client/updateProfile", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(profileInfo)
+        })        
+    }
+
+    async updateClientCompte(info) {
+
+        const infoN = {...info};
+        delete infoN["passwordConfirme"];
+
+        const compte = {};
+        compte.nas = infoN.nas;
+        compte.email = infoN.email;
+        compte.password = infoN.password;
+
+        await fetch("http://localhost:8080/compte/client/updateCompte", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(compte)
+        });
+    }
+
     async enregistreClient(infoClient) {
         await fetch("http://localhost:8080/employe/enregistreClient", {
             method: 'POST',
@@ -214,7 +257,7 @@ class ConnexionCompteService {
     }
 
     async getInfoCompteClient(nas) {
-        return http.get(`/compte/clientInfo/${nas}`);
+        return http.get(`/compte/compteClientInfo/${nas}`);
     }
 
     async getInfoCompteEmploye(nas) {
@@ -223,6 +266,10 @@ class ConnexionCompteService {
 
     async getInfoEmploye(nas) {
         return http.get(`/compte/employeInfo/${nas}`);
+    }
+
+    async getInfoClient(nas) {
+        return http.get(`/compte/clientInfo/${nas}`);
     }
 }
 

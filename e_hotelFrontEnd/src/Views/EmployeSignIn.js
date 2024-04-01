@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const EmployeSignIn=()=>{
 
@@ -58,6 +59,7 @@ export const EmployeSignIn=()=>{
 
     return(
         <>
+            <AppHeader/>
             <>
                 <h2 className="text-center p-3">Veuillez vous connecter</h2>
                 <form onSubmit={handleSubmit}>
