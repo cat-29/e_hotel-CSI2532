@@ -73,6 +73,26 @@ class ConnexionCompteService {
         });
     }
 
+    async enregistreDommage(dommage) {
+        await fetch("http://localhost:8080/chambre/addDommage", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dommage)
+        })
+    }
+
+    async enregistreSubiDommage(dommage) {
+        await fetch("http://localhost:8080/chambre/addSubiDommage", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dommage)
+        })
+    }
+
     async getAllNomChaines() {
         return http.get("/chaine/nom");
     }
@@ -142,7 +162,13 @@ class ConnexionCompteService {
         return http.get(`/chambre/${idHotel}/getAllRooms/dommages`);
     }
 
+    async getAllDommagesTypes() {
+        return http.get("/chambre/getAllRooms/dommageType");
+    }
 
+    async getAllChambresForIdHotel(idHotel) {
+        return http.get(`/chambre/${idHotel}/getAllRooms`);
+    }
 }
 
 export default new ConnexionCompteService();

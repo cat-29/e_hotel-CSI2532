@@ -25,4 +25,16 @@ public class SubiDommage {
 
     @Id
     private Integer idHotel;
+
+    public SubiDommage() {
+
+    }
+    
+    public SubiDommage(Integer idDommage, Integer numeroChambre, Integer idHotel) {
+        this.idDommage = idDommage;
+        this.numeroChambre = numeroChambre;
+        this.idHotel = idHotel;
+    }
 }
+
+   

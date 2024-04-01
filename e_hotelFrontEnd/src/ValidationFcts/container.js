@@ -51,6 +51,36 @@ const validateNumero = (numero,res)=>{
     return res;
 }
 
+const validateTypeDommage = (type,explication, res) => {
+    let feedback = "";
+    if (type.value == "Autre") {
+        console.log("autre a valider..");
+
+        if (explication == "") {
+            feedback = "Veuillez entrer un type de dommage";
+        } else if (explication.length <= 2) {
+            feedback = "La taille du type doit être plus que 2 charactères";
+        }
+    }
+    res.push(feedback);
+    return res;
+}
+
+const validateExplication = (explication, type, res) => {
+    let feedback = "";
+    if (type == "") {
+        console.log("autre a valider..");
+
+        if (explication == "") {
+            feedback = "Veuillez entrer un type de dommage";
+        } else if (explication.length <= 2) {
+            feedback = "La taille du type doit être plus que 2 charactères";
+        }
+    }
+    res.push(feedback);
+    return res;
+}
+
 // Function to validate Place: Street,city,province,country
 
 const validatePlace = (place,res)=>{
@@ -248,6 +278,21 @@ const validateAllLocationFields = (answer) => {
     return res;
 }
 
+const validateDommage = (answer) => {
+    console.log("the answer to be validated is",answer);
+    let res = [];
+    for (let key in answer){
+        if (key == "numeroChambre"){
+            res = validateNumero(answer[key],res);
+        }else if (key == "typeDommage"){
+            res = validateTypeDommage(answer[key], answer["explication"],res)
+        }else if (key == "explication"){
+            res = validateExplication(answer[key], answer["typeDommage"],res);
+        }
+    }
+    return res;
+}
+
 
 // Validation of filters dates
 
@@ -406,6 +451,10 @@ ValidateFcts.validateAllLocationFields = (answer) => {
 }
 ValidateFcts.validateFilters = (filters)=>{
     return validateFilters(filters);
+}
+
+ValidateFcts.validateDommage = (answer) => {
+    return validateDommage(answer);
 }
 
 ValidateFcts.validateDates = (checkin,checkout,res,flag) =>{

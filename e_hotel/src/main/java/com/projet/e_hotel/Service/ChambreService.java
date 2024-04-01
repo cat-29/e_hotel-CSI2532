@@ -72,6 +72,10 @@ public class ChambreService {
         return ChambreSubiDommageMapper.mapToListOfChambreSubiDommageDTO(listAllDommagesForIdHotel, listAllDommages);
     }
 
+    public List<Dommage> getAllDommageType() {
+        return dommageRepository.findAll();
+    }
+
     public Chambre getNumeroChambreForSpecifications(Integer hotelId, Date dateCheckIn, Date dateCheckOut,
             String capacite, String vue) {
 

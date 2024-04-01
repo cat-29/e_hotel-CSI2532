@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.e_hotel.Classes.Chambre;
+import com.projet.e_hotel.Classes.Dommage;
 import com.projet.e_hotel.Classes.Hotel;
+import com.projet.e_hotel.Classes.SubiDommage;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
@@ -22,10 +25,18 @@ import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.dto.ProvinceCountAvDTO;
 import com.projet.e_hotel.Classes.mapper.ChambreHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreMapper;
+import com.projet.e_hotel.Classes.mapper.ChambreSubiDommageMapper;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
+import com.projet.e_hotel.Repository.DommageRepository;
+import com.projet.e_hotel.Repository.SubiDommageRepository;
 import com.projet.e_hotel.Service.ChambreService;
 import com.projet.e_hotel.Service.HotelService;
+import com.projet.e_hotel.Service.SubiDommageService;
+
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 // @CrossOrigin(origins = "http://localhost:3000")
@@ -35,6 +46,8 @@ public class ChambreController {
     @Autowired
     private ChambreService chambreService;   
     private final HotelService hotelService;
+    @Autowired
+    private SubiDommageService subiDommageService;
 
     public ChambreController(HotelService hotelService) {
         this.hotelService = hotelService;
@@ -89,6 +102,48 @@ public class ChambreController {
     public List<ChambreSubiDommageDTO> getAllDommagesSubiForIdHotel(@PathVariable Integer idHotel) {
         return chambreService.getAllDommages(idHotel);
     }
+
+    @GetMapping("/getAllRooms/dommageType")
+    public List<String> getAllDommageType() {
+        return chambreService.getAllDommageType().stream().map(i -> i.getTypeDommage()).toList();
+    }
+    
+
+    @GetMapping("/{idHotel}/getAllRooms")
+    public List<ChambreDTO> getAllChambresForIdHotel(@PathVariable Integer idHotel) {
+        return chambreService.findAllRoomFromIdHotel(idHotel).stream().map(r -> ChambreMapper.mapToChambreDTO(r))
+                .toList();
+    }
+
+    @PostMapping("/addDommage")
+    public void saveDommage(@RequestBody ChambreSubiDommageDTO dommageDTO) {
+        
+        Dommage dommage = ChambreSubiDommageMapper.mapToDommage(dommageDTO);
+
+        // is the dommageType in base de donnee already
+        Boolean wasDommageFound = subiDommageService.isDommageInDatabaseAlready(dommage);
+
+        // If dommage type was not found, then save the new domage type
+        if (!wasDommageFound) {
+            // Save the user's new dommage type in database
+            subiDommageService.saveDommage(dommage);
+        }
+    }
+
+
+    @PostMapping("/addSubiDommage")
+    public void saveSubiDommage(@RequestBody ChambreSubiDommageDTO dommageDTO) {
+
+        // Make sure that it is not there already
+        // Get the dommage type id first
+        Dommage dommage = subiDommageService
+                .findByTypeDommage(ChambreSubiDommageMapper.mapToDommage(dommageDTO).getTypeDommage()).get();
+        Integer dommageId = dommage.getIdDommage();
+
+        // Save the dommage subi
+        subiDommageService.saveSubiDommage(ChambreSubiDommageMapper.mapToSubiDommage(dommageDTO, dommageId));
+    }
+    
     
     @GetMapping("/getAllRooms")
     public List<ChambreDTO> getAllChambres() {

@@ -38,6 +38,7 @@ import { AjoutChambreDommage } from "./Views/AjoutChambreDommage";
 import { ChambreSubiDommage } from "./Views/ChambreSubiDommage";
 import { Stats } from "./Views/global/Stats";
 import { loadCountAv } from "./Views/global/Stats";
+import { AjouteDommage } from "./Views/AjouteDommage";
 
 function App() {
   const router = createBrowserRouter(
@@ -77,6 +78,7 @@ function App() {
         <Route path="ajoutLocation" element={<EmployeAjouteLocation />} />
         <Route path="historiqueLocation" element={<EmployeTableLocation />} />
         <Route path="dommagesSubi" element={<ChambreSubiDommage/>}/>
+        <Route path="ajouteDommage" element={<AjouteDommage/>}/>
         <Route path="*" element={<NotFound />} />
       </Route>
     )

@@ -35,4 +35,16 @@ public class ChambreSubiDommageMapper {
 
         return listSubiDommageDTOs;
     }
+
+    public static SubiDommage mapToSubiDommage(ChambreSubiDommageDTO dommageDTO, Integer idDommage) {
+        return new SubiDommage(
+            idDommage,
+            dommageDTO.getNumeroChambre(),
+            dommageDTO.getIdHotel()
+        );
+    }
+
+    public static Dommage mapToDommage(ChambreSubiDommageDTO dommageDTO) {
+        return new Dommage(dommageDTO.getTypeDommage());
+    }
 }
