@@ -105,6 +105,25 @@ const getAvailabilities = async()=>{
     return count;
 }
 
+const getCapaciteHotels = async()=>{
+    let capacites = null;
+    try{
+        const response = await axios.get("http://localhost:8080/hotel/getCapaciteAllRooms");
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            capacites = response.data;
+        }else{
+            console.log("Sorry, something went wrong while fetching");
+        }
+
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return capacites;
+}
+
+
+
 
 
 
@@ -158,6 +177,10 @@ fcts.isRoomAvailable = async(data)=>{
 fcts.getAvailabilities = async()=>{
     const count = await getAvailabilities();
     return count;
+}
 
+fcts.getCapaciteHotels = async()=>{
+    const capacites = await getCapaciteHotels();
+    return capacites;
 }
 export default fcts;
