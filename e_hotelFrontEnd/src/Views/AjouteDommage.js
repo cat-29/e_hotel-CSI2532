@@ -161,6 +161,7 @@ export const AjouteDommage = () => {
             <div className="titre text-center">
                 <h1 className="mx-4 my-4">Ajouter un dommage</h1>                    
             </div>
+            
             <div className="align-middle mx-5 my-2 mx-auto" style={{height: '240px', maxWidth: '900px'}}>
                 <form noValidate className="mx-5 border h-100" onSubmit={handleSubmit}>
                     <div className=""> 

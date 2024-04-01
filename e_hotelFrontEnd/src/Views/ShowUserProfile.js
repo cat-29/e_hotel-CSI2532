@@ -111,7 +111,7 @@ export const ShowUserProfile = () => {
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "prenom" || name == "nomFamille") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+            const newValue = event.target.value.replace(/\d/, '');
             setFormData({ ...formData, [name]: newValue });
         } else if (name == "password") {
             // make sure the mot de passe confirmee box is visible
@@ -186,7 +186,7 @@ export const ShowUserProfile = () => {
     return (
         <>
             <div className="titre text-center">
-                <h1 className="mx-4 my-4">Profil</h1>                    
+                <h1 className="mx-4 my-4">Profile</h1>                    
             </div>
 
             <form noValidate onSubmit={handleSubmit} className="align-middle mx-5 my-2 mx-auto mb-5 border p-2" >
