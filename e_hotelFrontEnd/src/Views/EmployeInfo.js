@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const EmployeInfo = () => {
   const { state } = useLocation();
@@ -9,6 +10,7 @@ export const EmployeInfo = () => {
 
   return (
     <>
+      <AppHeader info={state.adminInfo} isUserTypeClient={false} />
       <form noValidate className="mx-4">
         <fieldset disabled={!modify}>
           <div className="d-grid gap-2 d-md-flex m-3">

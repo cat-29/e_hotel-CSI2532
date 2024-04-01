@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import adminService from "../services/adminService";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const HotelInfo = () => {
   const { state } = useLocation();
@@ -13,19 +14,23 @@ export const HotelInfo = () => {
   console.log("ds hotel info: ", state);
 
   const showChambreInfo = (chambreInfo) => {
-    navigate("/chambreInfo", { state: { chambreInfo: chambreInfo } });
+    navigate("/chambreInfo", {
+      state: { chambreInfo: chambreInfo, employeInfo: state.employeInfo },
+    });
   };
 
   const showEmployeInfo = (employeInfo) => {
-    navigate("/employeInfo", { state: { employeInfo: employeInfo } });
+    navigate("/employeInfo", {
+      state: { employeInfo: employeInfo, adminInfo: state.employeInfo },
+    });
   };
 
   const showAjoutChambre = () => {
-    navigate("/ajoutChambre");
+    navigate("/ajoutChambre", { state: { employeInfo: state.employeInfo } });
   };
 
   const showAjoutEmploye = () => {
-    navigate("/ajoutEmploye");
+    navigate("/ajoutEmploye", { state: { employeInfo: state.employeInfo } });
   };
 
   // When get hotel, get the chambres
@@ -56,6 +61,7 @@ export const HotelInfo = () => {
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>

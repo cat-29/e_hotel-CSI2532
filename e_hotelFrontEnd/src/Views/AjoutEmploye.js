@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const AjoutEmploye = () => {
   const { state } = useLocation();
@@ -6,6 +7,7 @@ export const AjoutEmploye = () => {
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <form noValidate className="mx-4">
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-md-2">

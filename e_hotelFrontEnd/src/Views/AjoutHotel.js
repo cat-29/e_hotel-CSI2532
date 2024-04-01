@@ -1,11 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const AjoutHotel = () => {
   const { state } = useLocation();
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <form noValidate className="mx-4">
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-5">

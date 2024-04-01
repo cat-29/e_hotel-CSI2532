@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const ChambreInfo = () => {
   const { state } = useLocation();
@@ -9,6 +10,7 @@ export const ChambreInfo = () => {
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>

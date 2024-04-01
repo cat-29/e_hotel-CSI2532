@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import adminService from "../services/adminService";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const ChaineInfo = () => {
   const { state } = useLocation();
@@ -12,11 +13,15 @@ export const ChaineInfo = () => {
   console.log("ds chaine info: ", state);
 
   const showHotelInfo = (hotelInfo) => {
-    navigate("/hotelInfo", { state: { hotelInfo: hotelInfo } });
+    navigate("/hotelInfo", {
+      state: { hotelInfo: hotelInfo, employeInfo: state.employeInfo },
+    });
   };
 
   const showAjoutHotel = () => {
-    navigate("/ajoutHotel");
+    navigate("/ajoutHotel", {
+      state: { employeInfo: state.employeInfo },
+    });
   };
 
   // When get chaine, get the hotels
@@ -35,6 +40,7 @@ export const ChaineInfo = () => {
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>

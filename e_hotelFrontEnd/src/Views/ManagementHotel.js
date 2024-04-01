@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import adminService from "../services/adminService";
 import { useEffect, useState } from "react";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const ManagementHotel = () => {
   const { state } = useLocation();
@@ -9,11 +10,13 @@ export const ManagementHotel = () => {
   const [chaine, setChaine] = useState([]);
 
   const showChaineInfo = (chaineInfo) => {
-    navigate("/chaineInfo", { state: { chaineInfo: chaineInfo } });
+    navigate("/chaineInfo", {
+      state: { chaineInfo: chaineInfo, employeInfo: state.employeInfo },
+    });
   };
 
   const showAjoutChaine = () => {
-    navigate("/ajoutChaine");
+    navigate("/ajoutChaine", { state: { employeInfo: state.employeInfo } });
   };
 
   //to get all chaine info
@@ -33,6 +36,7 @@ export const ManagementHotel = () => {
 
   return (
     <>
+      <AppHeader info={state.employeInfo} isUserTypeClient={false} />
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
         <h4 className="">Chaînes hôtelières</h4>
@@ -52,14 +56,14 @@ export const ManagementHotel = () => {
           return (
             <tbody>
               <tr>
-                <th className="text-center">{key + 1}</th>
-                <th>{val.nomChaine}</th>
-                <th className="text-center">{val.nbrHotel}</th>
-                <th>
+                <td className="text-center">{key + 1}</td>
+                <td>{val.nomChaine}</td>
+                <td className="text-center">{val.nbrHotel}</td>
+                <td>
                   {val.numero} {val.rue}, {val.ville}, {val.province} {val.pays}{" "}
                   {val.codePostal}
-                </th>
-                <th className="text-center">
+                </td>
+                <td className="text-center">
                   <button
                     type="button"
                     className="btn btn-secondary"
@@ -69,7 +73,7 @@ export const ManagementHotel = () => {
                   >
                     {">"}
                   </button>
-                </th>
+                </td>
               </tr>
             </tbody>
           );
