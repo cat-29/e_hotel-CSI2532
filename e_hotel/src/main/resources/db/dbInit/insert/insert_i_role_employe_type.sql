@@ -1,0 +1,6 @@
+INSERT INTO
+    role_employe_type
+VALUES ('SUPERVISEUR'),
+    ('GESTIONNAIRE'),
+    ('EMPLOYE')
+ON CONFLICT DO NOTHING;

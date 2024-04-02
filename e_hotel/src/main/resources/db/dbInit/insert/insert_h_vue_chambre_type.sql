@@ -1,0 +1,5 @@
+INSERT INTO
+    vue_chambre_type
+VALUES ('MER'),
+    ('MONTAGNE')
+ON CONFLICT DO NOTHING;
