@@ -40,20 +40,21 @@ export const AjoutChaine = () => {
     }
   };
 
-  useEffect(() => {
-    adminService
-      .saveChaine(formData)
-      .then(() => {
-        console.log("Chaine avec les infos du client on ete sauvegarde");
-      })
-      .catch((e) => {
-        console.log(
-          "une erreur c'est produite lors de la sauvegarde de la chaine. " + e
-        );
-      });
-    // L'employe sera redirigee vers la page qui s'occupe du paiement
-    //continueAvecPaiement();
-  }, []);
+  // useEffect(() => {
+  //   adminService
+  //     .saveChaine(formData)
+  //     .then(() => {
+  //       console.log(formData);
+  //       console.log("Chaine avec les infos du client on ete sauvegarde");
+  //     })
+  //     .catch((e) => {
+  //       console.log(
+  //         "une erreur c'est produite lors de la sauvegarde de la chaine. " + e
+  //       );
+  //     });
+  //   // L'employe sera redirigee vers la page qui s'occupe du paiement
+  //   //continueAvecPaiement();
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,6 +79,8 @@ export const AjoutChaine = () => {
       console.log("fields are ready to be submitted to backend");
       try {
         adminService.saveChaine(formData).then(() => {
+          console.log("saveChaine called");
+          console.log(formData);
           navigateToChaines();
         });
       } catch (error) {
@@ -87,7 +90,7 @@ export const AjoutChaine = () => {
   };
 
   const navigateToChaines = () => {
-    navigate("/managementHotel");
+    navigate("/managementHotel", { state: { employeInfo: state.employeInfo } });
   };
 
   return (

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "chaine_hoteliere")
-public class ChaineHoteliere {
+public class AjoutChaineHoteliere {
 
     @Id
     @Column(name = "nom_chaine")
@@ -37,4 +37,20 @@ public class ChaineHoteliere {
 
     @Column(name = "code_postal")
     private String codePostal;
+
+    public AjoutChaineHoteliere(String nomChaine, Integer nbrHotel, Integer numero, String rue, String ville,
+            String province, String pays, String codePostal) {
+        this.nomChaine = nomChaine;
+        this.nbrHotel = nbrHotel;
+        this.numero = numero;
+        this.rue = rue;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+    }
+
+    public AjoutChaineHoteliere() {
+    }
+
 }
