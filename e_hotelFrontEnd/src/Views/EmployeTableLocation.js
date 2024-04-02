@@ -14,11 +14,8 @@ export const EmployeTableLocation = () => {
 
     // Get all locations for user info
     useEffect(() => {
-        console.log("in employe table kocation")
-        console.log(state.employeInfo)
 
         connexionCompte.getAllLocationsFromIdHotelOfEmploye(state.employeInfo.idHotel).then((response) => {
-            console.log(response.data);
             setHistoriqueLocation({
                 location: response.data
             });
@@ -61,11 +58,10 @@ export const EmployeTableLocation = () => {
                     <tr className="text-center">
                         <th className="col">#</th>
                         <th className="col-3">Nom du client</th>
-                        {/* <th className="col">Date enregistrement client</th> */}
                         <th className="col"># Chambre réservé</th>
                         <th className="col-2">Date checkin</th>
                         <th className="col-2">Date checkout</th>
-                        <th className="col">Montant dû</th>
+                        <th className="col">Méthode de paiement</th>
                         <th className="col">Paiement complété</th>
                         <th className="col">Date Paiement Complété</th>
                     </tr>
@@ -80,7 +76,10 @@ export const EmployeTableLocation = () => {
                                 <td className="text-center">{val.numeroChambre}</td>
                                 <td>{formatDate(val.dateCheckin)}</td>
                                 <td>{formatDate(val.dateCheckout)}</td>
-                                <td className="text-center">${val.montantDu}.00</td>
+                                {(val.montantDu == 0) 
+                                    ?<td className="text-center">En ligne</td>
+                                    :<td className="text-center">En personne</td>
+                                }
                                 {val.isPaiementComplete ? <td className="text-center" style={{color: 'green'}}>Oui</td> : <td className="text-center" style={{color: 'red'}}>Non</td>}
                                 {val.datePaiementComplete !== null ? <td className="text-center">{formatDate(val.datePaiementComplete)}</td>
                                     : <td className="text-center">-</td>
