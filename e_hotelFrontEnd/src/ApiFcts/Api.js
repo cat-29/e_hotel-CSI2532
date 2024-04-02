@@ -5,6 +5,95 @@ import axios from "axios";
 
 const fcts = {};
 
+
+const getFilteredResultsOneElement = async(filters)=>{
+    for (let key in filters){
+        if (key == "checkin"){
+            let rooms = null;
+            try{
+                // console.log("before hitting the endpoint");
+                const response = await axios.get(`http://localhost:8080/chambre/getAvCheckin/${filters[key]}`);
+                if (response.status == 200){
+                    console.log("fetching completed successfully");
+                    rooms = response.data;
+                    // console.log("the rooms are here",rooms)
+                }else{
+                    console.log("Sorry, something went wrong while fetching");
+                }
+
+            }catch(error){
+                console.log("Error occured",error);
+            }
+            return rooms;
+        }else if (key == "checkout"){
+            let rooms = null;
+            try{
+                // console.log("before hitting the endpoint");
+                const response = await axios.get(`http://localhost:8080/chambre/getAvCheckout/${filters[key]}`);
+                if (response.status == 200){
+                    console.log("fetching completed successfully");
+                    rooms = response.data;
+                    // console.log("the rooms are here",rooms)
+                }else{
+                    console.log("Sorry, something went wrong while fetching");
+                }
+
+            }catch(error){
+                console.log("Error occured",error);
+            }
+            return rooms;
+
+        }
+
+    }
+
+}
+
+
+const getFilteredResultsTwoElementsCheckinCheckout = async(checkin,checkout)=>{
+    let rooms = null;
+    try{
+        // console.log("before hitting the endpoint");
+        const response = await axios.get(`http://localhost:8080/chambre/getAvCheckinAndCheckout/${checkin}/${checkout}`);
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            rooms = response.data;
+            // console.log("the rooms are here",rooms)
+        }else{
+            console.log("Sorry, something went wrong while fetching");
+        }
+
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return rooms;
+
+}
+
+
+const getFilteredResults = async(filters)=>{
+    // Case 1: filters has one element:
+    // console.log("length",Object.keys(filters).length);
+    if (Object.keys(filters).length == 1){
+        // console.log("I should be here");
+        const resOneElement = await getFilteredResultsOneElement(filters);
+        // console.log("filteredOneElement",resOneElement);
+        return resOneElement;
+    }else if (Object.keys(filters).length == 2){
+        // console.log("I should be here");
+        // const restw = await getFilteredResultsOneElement(filters);
+        // console.log("filteredOneElement",resOneElement);
+        // return resOneElement;
+        if (Object.keys(filters).includes("checkin") && Object.keys(filters).includes("checkout")){
+            // console.log("now both are specified");
+            const resTwoElementCheckinCheckout = await getFilteredResultsTwoElementsCheckinCheckout(filters["checkin"],filters["checkout"]);
+            return resTwoElementCheckinCheckout;
+        }
+    }
+
+
+}
+
 const createAccount = async(answerClient,answerAccount)=>{
     // Axios seems nicer
     // Further formating is needed (I will need two objects one for client and second for clientAccount) so two post requests
@@ -131,6 +220,12 @@ const getCapaciteHotels = async()=>{
 
 // Keys and values of the fcts object
 
+
+fcts.getFilteredResults = async (filters)=>{
+    const rooms = await getFilteredResults(filters);
+    return rooms;
+
+}
 
 fcts.createAccount = (answer)=>{
     // We just want to submit all fields except passwordConfirmed one since it's going to be a duplicate of what we already have in pwdfield

@@ -419,7 +419,7 @@ const validatePrices = (min, max, res, flag) => {
 // Method to validate filters
 
 const validateFilters = (filters) => {
-  console.log("the filters needing validation are", filters);
+  // console.log("the filters needing validation are", filters);
   let errors = [];
   let checkin = "";
   let checkout = "";
@@ -487,6 +487,41 @@ const isRoomAvailable = async (checkin, checkout, state) => {
   return res;
   // const res = await fcts.isRoomAvailable(data);
 };
+
+
+// Handling Filters section here
+const submitFilters = async (filters)=>{
+  let activeFilters = {};
+  for (let key in filters){
+    // console.log("key",filters[key]);
+    if (key == "checkin" || key == "checkout" || key == "capacite" || key=="prixMin" || key=="prixMax"){
+      if (filters[key] != ""){
+        activeFilters[key] = filters[key];
+      }
+    }else if(key == "vue"){
+      if (filters[key].length != 0){
+        activeFilters[key] = filters[key];
+      }
+    }else if (key == "etendre"){
+      if (filters[key] == true){
+        activeFilters[key] = filters[key];
+      }
+    }
+  }
+  // console.log("activeFilters",activeFilters);
+  const rooms = await fcts.getFilteredResults(activeFilters);
+  // console.log("the rooms here are",rooms);
+  return rooms;
+
+
+}
+
+ValidateFcts.submitFilters = async (filters)=>{
+  const res = await submitFilters(filters);
+  return res;
+}
+
+
 
 ValidateFcts.validateEmailPwd = (email, pwd) => {
   validateEmailPwd(email, pwd);

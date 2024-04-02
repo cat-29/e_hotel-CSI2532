@@ -6,7 +6,6 @@ import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 
 import { Button, Modal } from 'react-bootstrap';
 import fcts from "../../ApiFcts/Api";
-import connexionComptes from "../../services/connexion-compte";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 
 // This function is getting called each time the page renders
@@ -63,6 +62,8 @@ export const PageReservation = () => {
     const navigate = useNavigate();
     // console.log("roomsTotal",roomsTotal);
 
+    const [rooms,setRooms] = useState(roomsTotal);
+
     // Call back function that sets the state of PageReservation to the state of its child filters
 
     const handleFilters = (newState)=>{
@@ -86,8 +87,8 @@ export const PageReservation = () => {
     // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
     // filtres: checkin<checkout, priceMin<prixMax,chambreMin<chambreMax
 
-    const handleFilterSub=()=>{
-        //console.log("in handle filters submit");
+    const handleFilterSub=async()=>{
+        console.log("in handle filters submit");
         // console.log(filters);
         // BEFORE MAKING A GET REQUEST VALIDATE!
         // dates checkin < date checkout
@@ -113,20 +114,26 @@ export const PageReservation = () => {
 
         }else{
             console.log("fields are ready to be submitted to backend");
-            console.log("filters to be applied are",filters);
+            // console.log("filters to be applied are",filters);
 
             // Insert les appels au API pour les filtres ici
             
+            // Ca marche
             // get Chaine Hoteliere
-            getChambresFromChaines();
+            // getChambresFromChaines();
 
             // get Classement
-            getChambresFromClassement();
+            // getChambresFromClassement();
 
             // Get nombre de chambres
-            getChambresFromNombreDeChambres();
+            // getChambresFromNombreDeChambres();
+            // Ca marche
 
             // console.log("filters to be applied are",filters);
+            const rooms  = await ValidateFcts.submitFilters(filters);
+            // console.log("rooms in frontend",rooms);
+            setRooms(rooms);
+            // return rooms;
         }
     }
 
@@ -196,9 +203,10 @@ export const PageReservation = () => {
 
 
             {/* Rooms go here */}
-            {roomsTotal ?
+            {/* {console.log("rooms are noewww",rooms)} */}
+            {rooms ?
             <div className="d-flex flex-row p-3 gap-4 flex-wrap justify-content-center">
-                {roomsTotal.map((item,index)=>{
+                {rooms.map((item,index)=>{
                     return(
                         <div key={`card${index}`} className="text-center">
                             <div className="card border-3 border-dark" style={{width: "300px"}}>
