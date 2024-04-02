@@ -129,8 +129,8 @@ const validateEmail = (email,res)=>{
 
 const validateSamePwd = (arrPwd,res)=>{
     let feedback = "";
-    if (arrPwd[0].length < 5 || arrPwd[1].length >20){
-        feedback = "La taille du mot de passe doit être entre 5 et 20"
+    if (arrPwd[0].length < 8 || arrPwd[1].length >20){
+        feedback = "La taille du mot de passe doit être entre 8 et 20"
     }
     else if (arrPwd[0]!=arrPwd[1]){
         feedback = "Les deux mots de passe ne sont pas pareils";
