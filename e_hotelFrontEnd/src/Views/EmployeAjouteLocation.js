@@ -62,7 +62,7 @@ export const EmployeAjouteLocation = () => {
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "prenom" || name == "nomFamille") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+            const newValue = event.target.value.replace(/\d/, '');
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "dateCheckin" || name == "dateCheckout") {

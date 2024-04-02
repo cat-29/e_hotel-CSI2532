@@ -51,7 +51,7 @@ export const MethodePaiement = () => {
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "prenom") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+            const newValue = event.target.value.replace(/\d/, '');
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "cvc") {
@@ -171,7 +171,7 @@ export const MethodePaiement = () => {
                 <div className="d-grid gap-2 d-md-flex m-3">
                     <div  className="col-sm-3 col-md-2">
                         <label htmlFor="dateExpiration" className="form-label">Date d'expiration</label>
-                        <InputMask className="form-control border" mask='MN / YY' formatChars={{ 'M': '[0-1]', 'N': '[0-2]', 'Y': '[0-9]' }} maskChar={''} placeholder="MM / YY" value={formData.dateExpiration} onChange={handleInputChange} name="dateExpiration"></InputMask>
+                        <InputMask className="form-control border" mask='MM / YY' formatChars={{ 'M': '[0-9]', 'Y': '[0-9]' }} maskChar={''} placeholder="MM / YY" value={formData.dateExpiration} onChange={handleInputChange} name="dateExpiration"></InputMask>
                         {formDataError[2] != "" ?
                             <div style={{ color: "red" }}>
                                 {formDataError[2]}

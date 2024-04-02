@@ -1,8 +1,10 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import ValidateFcts from "../../ValidationFcts/container";
 import fcts from "../../ApiFcts/Api";
 import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import InputMask from 'react-input-mask';
+import connexionCompte from "../../services/connexion-compte";
 
 export const CreateAccountForm = ()=>{
     // State to store form data
@@ -24,6 +26,7 @@ export const CreateAccountForm = ()=>{
     // State that stores erros
 
     const [formDataError,setFormDataError] = useState([]);
+    const [userExistError, setUserExistsError] = useState('');
 
     const [submitted,setSubmitted] = useState(false);
 
@@ -36,15 +39,18 @@ export const CreateAccountForm = ()=>{
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        if (name == "nas" || name == "numero"){
+        if (name == "nas" || name == "codePostal") {
+            const newValue = event.target.value.replace(/ /g, '');
+            setFormData({ ...formData, [name]: newValue });
+        } else if (name == "numero"){
             // This desactivates all keyboards buttons except numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
         } 
-        // else if (name == "prenom"){
-        //     setDisableNas(true);
-        //     setFormData({ ...formData, [name]: value });
-        // }
+        else if (name == "prenom"){
+            const newValue = event.target.value.replace(/\d/, '');
+            setFormData({ ...formData, [name]: newValue });
+        }
         else {
             setFormData({ ...formData, [name]: value });
         }
@@ -87,28 +93,41 @@ export const CreateAccountForm = ()=>{
             console.log("there are still errors to fix");
         } else{
             console.log("fields are ready to be submitted to backend");
-            setSubmitted(true);
-            const createResponse = fcts.createAccount(formData);
-            // Look deeply into that, could be improved
+            
+            try {
+                connexionCompte.doesClientExist(formData.nas).then((response) => {
+                    if (!response.data) {
+                        // Client n'existe pas. Continue
+                        setSubmitted(true);
+                        const createResponse = fcts.createAccount(formData);
 
-            createResponse.then((response)=>{
-                console.log("the response was finally",response);
-                setSubmitted(false);
-                setFormData({
-                    nas: '',
-                    prenom: '',
-                    nomFamille:'',
-                    numero:'',
-                    rue:'',
-                    ville:'',
-                    province:'',
-                    pays:'',
-                    codePostal:'',
-                    email:'',
-                    pwd:'',
-                    pwdConfirmed:''
+                        createResponse.then((response)=>{
+                            console.log("the response was finally",response);
+                            setSubmitted(false);
+                            setFormData({
+                                nas: '',
+                                prenom: '',
+                                nomFamille:'',
+                                numero:'',
+                                rue:'',
+                                ville:'',
+                                province:'',
+                                pays:'',
+                                codePostal:'',
+                                email:'',
+                                pwd:'',
+                                pwdConfirmed:''
+                            });
+                        })
+                    } else {
+                        // Le client existe. On a un probleme. 
+                        setUserExistsError('Un client avec ces données existe déjà. Veuillez modifier vos données.')
+                        flag = true;
+                    }
                 });
-            })
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -117,6 +136,16 @@ export const CreateAccountForm = ()=>{
         navigate('/');
     }
 
+    const [isShow, setIsShown] = useState(false);
+
+    const hideNAS = () => {
+        setIsShown(false);
+    }
+
+    const showNAS = () => {
+        setIsShown(true);
+    }
+    
     return(
         // <div>I am the create account form</div>
         <>
@@ -124,16 +153,23 @@ export const CreateAccountForm = ()=>{
             <h2 className="text-center p-3">Créer un compte</h2>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
             <form noValidate onSubmit={handleSubmit}>
-                <div className={"m-3 w-50"}>
-                    <label htmlFor="nasUtilisateur" className="form-label">Numéro D'assurance Sociale</label>
-                    <input style={disableNas?{color:"black",backgroundColor:"black"}:{}} required type="text" disabled = {disableNas?true:false} className="form-control" id="nasUtilisateur" aria-describedby="nas" name='nas' value={formData.nas} onChange={handleInputChange}/>
-                    {formDataError[0] != "" ?
+                <div className="d-grid gap-2 d-md-flex m-3">                    
+                    <div>
+                        <label htmlFor="nasUtilisateur" className="form-label">Numéro D'assurance Sociale</label>
+                    {/* </div> */}
+                    {/* <div className="d-grid d-flex"> */}
+                        <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" id="nasUtilisateur" maskChar={''} value={formData.nas} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="nas"/>
+                        {formDataError[0] != "" ?
         
-                    <div style={{color:"red"}}>
-                        {formDataError[0]}
-                    </div> 
+                            <div style={{color:"red"}}>
+                                {formDataError[0]}
+                            </div> 
+                            
+                            :<></>}
+                    </div>
+
+                    {/* <input style={disableNas?{color:"black",backgroundColor:"black"}:{}} required type="text" disabled = {disableNas?true:false} className="form-control" id="nasUtilisateur" aria-describedby="nas" name='nas' value={formData.nas} onChange={handleInputChange}/> */}
                     
-                    :<></>}
                 </div>
 
                 <div className="d-grid gap-2 d-md-flex m-3">
@@ -215,7 +251,7 @@ export const CreateAccountForm = ()=>{
 
                     <div className="col-md-2">
                         <label htmlFor="codePostal" className="form-label">Code Postal</label>
-                        <input required type="text" className="form-control" id="codePostal" aria-describedby="codePostal" name='codePostal' value={formData.codePostal} onChange={handleInputChange}/>
+                        <InputMask className="form-control border" mask={'LDL DLD'} formatChars={{'L': '[A-Z]', 'D': '[0-9]'}} maskChar={''} value={formData.codePostal} onChange={handleInputChange} name="codePostal" />
                         {formDataError[8] != "" ?
                             <div style={{color:"red"}}>
                                 {formDataError[8]}
@@ -254,6 +290,14 @@ export const CreateAccountForm = ()=>{
                             </div> 
                         :<></>}
                     </div>
+                </div>
+
+                <div className="m-3">
+                    {userExistError != "" ?
+                        <div style={{color:"red"}}>
+                            {userExistError}
+                        </div> 
+                    :<></>}
                 </div>
 
 
