@@ -260,7 +260,6 @@ const validateAllModifProfile = (answer) => {
   let res = [];
   let items = [];
   for (let key in answer) {
-    // items.push(answer[key]);
     if (key == "nas") {
       res = validateNas(answer[key], res);
     } else if (key == "prenom" || key == "nomFamille") {
@@ -279,7 +278,6 @@ const validateAllModifProfile = (answer) => {
       res = validateSamePwd([answer[key], answer["passwordConfirme"]], res);
     }
   }
-  // console.log("at the end",items);
   return res;
 };
 

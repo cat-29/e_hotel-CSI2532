@@ -10,9 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 // @Getter
-// @Setter
+@Setter
 @Entity 
 @Table(name = "compte_client")
 public class CompteClient {
@@ -41,6 +42,12 @@ public class CompteClient {
     }
 
     public CompteClient(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public CompteClient(String idClient, String email, String password) {
+        this.idClient = idClient;
         this.email = email;
         this.password = password;
     }

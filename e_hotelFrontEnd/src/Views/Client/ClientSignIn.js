@@ -4,6 +4,7 @@ import { PageReservation } from './PageReservation';
 import fcts from '../../ApiFcts/Api';
 import ValidateFcts from '../../ValidationFcts/container';
 import { useNavigate } from 'react-router-dom';
+import { AppHeader } from '../../components/AppHeader/AppHeader';
 
 
 
@@ -31,6 +32,7 @@ export const ClientSignIn=()=>{
     },[retourClient]);
 
     const navigate = useNavigate();
+    const [formDataError,setFormDataError] = useState('');
 
         
     const handleSubmit = async(event)=>{
@@ -44,6 +46,7 @@ export const ClientSignIn=()=>{
                 client: response.data
             });            
         }).catch(e => {
+            setFormDataError('Les données entrées sont incorrect.');
             console.log(e);
         });   
     }    
@@ -79,6 +82,7 @@ export const ClientSignIn=()=>{
     }
     return(
         <>
+            <AppHeader/>
             {/* {console.log(appelPageReservation)} */}
                 {/* {appelPageReservation ? <PageReservation userInfo = {retourClient.client}/> : */}
                 <>
@@ -92,6 +96,11 @@ export const ClientSignIn=()=>{
                         <div className="m-3 w-50">
                             <label htmlFor="motDePasse" className="form-label">Mot de passe</label>
                             <input type="password" className="form-control border" id="motDePasse" name='motDePasse' value={formData.motDePasse} onChange={handleInputChange}/>
+                            {formDataError != "" ?
+                                <div style={{color:"red"}}>
+                                    {formDataError}
+                                </div> 
+                            :<></>}
                         </div>
 
                         

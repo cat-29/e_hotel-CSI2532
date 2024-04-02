@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import ValidateFcts from "../../ValidationFcts/container";
 import { useState } from "react";
 import fcts from "../../ApiFcts/Api";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
 
 
 export const MethodePaiementClient = ()=>{
@@ -12,7 +13,7 @@ export const MethodePaiementClient = ()=>{
 
     const {state} = useLocation();
     const paiementInfo = state.paiementInfo;
-    const userInfo = state.clientInfo;
+    const userInfo = state.clientInfo; // ici!
 
     // console.log("paiementInfo",paiementInfo);
     let [formDataError,setFormDataError] = useState([]);
@@ -90,7 +91,8 @@ export const MethodePaiementClient = ()=>{
 
     return(
         <>
-         <form noValidate className="mx-4" onSubmit={handleSubmit}>
+            <AppHeader info={userInfo} isUserTypeClient={true}/>
+            <form noValidate className="mx-4" onSubmit={handleSubmit}>
                 {/* Thinking about how to send price here */}
                 <div className="mx-3">
                     <h1 className="my-4">Méthode de paiement</h1>

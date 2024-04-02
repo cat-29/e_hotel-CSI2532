@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import InputMask from 'react-input-mask';
 import connexionCompte from "../services/connexion-compte";
 import ValidateFcts from "../ValidationFcts/container";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 
 export const ShowUserProfile = () => {
@@ -41,7 +42,6 @@ export const ShowUserProfile = () => {
     }, []);
 
     useEffect(() => {
-        console.log("info cinote a changeeeee")
 
         setFormData({
             nas: state.userInfo.nas,
@@ -62,7 +62,7 @@ export const ShowUserProfile = () => {
     }, [compteInfo])
 
     const getUserInfo = async() => {
-        console.log("user's nas: " + state.userInfo.nas);
+
         // Is the user type a client or employe,
         if (state.isClientUser) {
             console.log("dealing with a client");
@@ -72,6 +72,7 @@ export const ShowUserProfile = () => {
                 const response = await connexionCompte.getInfoCompteClient(state.userInfo.nas);
                 console.log("Compte client information!");
                 console.log(response.data);
+                setCompteInfo({email: response.data.email, password: response.data.pwd});
             } catch (error) {
                 console.error(error);
             }
@@ -111,7 +112,7 @@ export const ShowUserProfile = () => {
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "prenom" || name == "nomFamille") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+            const newValue = event.target.value.replace(/\d/, '');
             setFormData({ ...formData, [name]: newValue });
         } else if (name == "password") {
             // make sure the mot de passe confirmee box is visible
@@ -169,14 +170,27 @@ export const ShowUserProfile = () => {
 
             // sending to the backend to insert the changes in database
             try {
-                connexionCompte.updateEmployeProfile(formData, state.isClientUser).then(() => {
-                    connexionCompte.updateEmployeCompte(formData).then(() => {
-                        console.log("reussi!")
-                        
-                        // Retourne a la derniere page dans l'historique
-                        window.history.back();
+                if (state.isClientUser) {
+                    // Client
+                    connexionCompte.updateClientProfile(formData).then(() => {
+                        connexionCompte.updateClientCompte(formData).then(() => {
+                            console.log("reussi!")
+                            
+                            // Retourne a la derniere page dans l'historique
+                            window.history.back();
+                        })
                     })
-                })
+                } else {
+                    // Employe
+                    connexionCompte.updateEmployeProfile(formData, state.isClientUser).then(() => {
+                        connexionCompte.updateEmployeCompte(formData).then(() => {
+                            console.log("reussi!")
+                            
+                            // Retourne a la derniere page dans l'historique
+                            window.history.back();
+                        })
+                    })
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -185,8 +199,9 @@ export const ShowUserProfile = () => {
 
     return (
         <>
+            <AppHeader/>
             <div className="titre text-center">
-                <h1 className="mx-4 my-4">Profil</h1>                    
+                <h1 className="mx-4 my-4">Profile</h1>                    
             </div>
 
             <form noValidate onSubmit={handleSubmit} className="align-middle mx-5 my-2 mx-auto mb-5 border p-2" >

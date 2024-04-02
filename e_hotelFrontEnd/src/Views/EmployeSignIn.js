@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import connexionCompte from "../services/connexion-compte";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const EmployeSignIn=()=>{
 
@@ -30,19 +31,23 @@ export const EmployeSignIn=()=>{
 
     const navigate = useNavigate();
 
-        
+    const [formDataError,setFormDataError] = useState('');
+
     const handleSubmit = async(event)=>{
         event.preventDefault();
         const answer = employe;
         console.log("Alo houston",answer);
 
-        connexionCompte.getCompteEmploye(answer).then((response) => {
+        try {
+            const reponse = await connexionCompte.getCompteEmploye(answer); 
             setEmployeInfo({
-                employe: response.data
-            });            
-        }).catch(e => {
-            console.log(e);
-        });   
+                employe: reponse.data
+            });    
+            setFormDataError('');
+        }catch (error) {
+            setFormDataError('Les données entrées sont incorrect.');
+            console.error(error);
+        }
     }    
 
     const handleInputChange = (event)=>{
@@ -54,6 +59,7 @@ export const EmployeSignIn=()=>{
 
     return(
         <>
+            <AppHeader/>
             <>
                 <h2 className="text-center p-3">Veuillez vous connecter</h2>
                 <form onSubmit={handleSubmit}>
@@ -65,6 +71,11 @@ export const EmployeSignIn=()=>{
                     <div className="m-3 w-50">
                         <label htmlFor="motDePasse" className="form-label">Mot de passse</label>
                         <input type="password" className="form-control border" id="motDePasse" name='motDePasse' value={employe.motDePasse} onChange={handleInputChange}/>
+                        {formDataError != "" ?
+                            <div style={{color:"red"}}>
+                                {formDataError}
+                            </div> 
+                        :<></>}
                     </div>
 
                     

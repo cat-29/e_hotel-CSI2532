@@ -47,14 +47,19 @@ public class ConnectionCompteController {
         return compteEmployeService.findCompteEmploye(nas);
     }
 
+    @GetMapping("/compteClientInfo/{nas}")
+    public CompteClient getClientCompteInfo(@PathVariable String nas) {
+        return compteClientService.findCompteEmploye(nas);
+    }
+
     @GetMapping("/employeInfo/{nas}")
     public Employe getEmployeInfo(@PathVariable String nas) {
         return compteEmployeService.findEmploye(nas);
     }
 
     @GetMapping("/clientInfo/{nas}")
-    public CompteClient getClientCompteInfo(@PathVariable String nas) {
-        return compteClientService.findCompteClient(nas);
+    public Client getClientInfo(@PathVariable String nas) {
+        return compteClientService.findClient(nas);
     }
     
     @PostMapping("/employe/updateProfile")
@@ -62,9 +67,19 @@ public class ConnectionCompteController {
         return compteEmployeService.updateProfileEmploye(UpdateProfileMapper.mapToEmploye(dto));
     }
 
+    @PostMapping("/client/updateProfile")
+    public Client updateProfileClient(@RequestBody UpdateProfileDTO dto) {
+        return compteClientService.updateProfileClient(UpdateProfileMapper.mapToClient(dto));
+    }
+    
     @PostMapping("/employe/updateCompte")
     public CompteEmploye updateCompteEmploye(@RequestBody UpdateProfileDTO dto) {        
         return compteEmployeService.updateCompte(UpdateProfileMapper.mapToCompteEmploye(dto));
+    }
+
+    @PostMapping("/client/updateCompte")
+    public CompteClient updateCompteClient(@RequestBody UpdateProfileDTO dto) {        
+        return compteClientService.updateCompte(UpdateProfileMapper.mapToCompteClient(dto));
     }
     
 

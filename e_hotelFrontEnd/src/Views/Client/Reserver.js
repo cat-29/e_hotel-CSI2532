@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button, Modal } from 'react-bootstrap';
 import fcts from '../../ApiFcts/Api';
+import { AppHeader } from '../../components/AppHeader/AppHeader';
 
 export const Reserver = () => {
     const {state} = useLocation();
@@ -12,7 +13,7 @@ export const Reserver = () => {
     // General booking info
     const booking = state.bookingInfo; 
     // containing user details
-    const userInfo = state.client;
+    const userInfo = state.client; // ici!
 
     const [dates, setDates] = useState({
         checkin: '',
@@ -146,6 +147,7 @@ export const Reserver = () => {
 
     return (
         <>
+            <AppHeader info={userInfo} isUserTypeClient={true}/>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Réserver</h5>
             <div className="m-3">
                 <div className='w-50 p-3'>

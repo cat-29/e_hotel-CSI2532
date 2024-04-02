@@ -1,5 +1,6 @@
 import { useLocation,useNavigate } from "react-router-dom";
 import { renderStars } from "./PageReservation";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
 
 export const DetailChambre = ()=>{
     const {state} = useLocation();
@@ -33,6 +34,7 @@ export const DetailChambre = ()=>{
     // console.log("Dans la page de details: ",state);
     return(
         <>
+            <AppHeader info={state} isUserTypeClient={true}/>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Détails de la chambre</h5>
             <div style={{lineHeight:"2rem"}} className="container-fluid mx-auto text-center d-flex flex-column justify-content-center">
 

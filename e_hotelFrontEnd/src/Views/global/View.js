@@ -1,11 +1,13 @@
 
 // import "../main.css";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
 import "./View.css";
 
 
 export const View=()=>{
     return (
-      // trying with container-fluid d-flex flex-row px-0
+      <>
+        <AppHeader/>
         <div className="wrapper">
 
           {/* <div className="col-md-7 p-3 bg-primary wrapper"></div>
@@ -27,5 +29,6 @@ export const View=()=>{
             </div>
 
         </div>     
+      </>
     )
 }

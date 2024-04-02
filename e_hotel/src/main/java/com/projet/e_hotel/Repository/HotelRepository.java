@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.projet.e_hotel.Classes.Hotel;
-import java.util.List;
 
 
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
@@ -25,4 +23,8 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     List<Hotel> findAllByNbrChambreBetween(Integer chambreMin, Integer chambreMax);
     
     List<Hotel> findHotelsByNomChaine(String nomChaine);
+
+    // Pour la vue 2
+    @Query(value=" select * from capacite_chambres_tous_hotels" ,nativeQuery=true)
+    List<Object[]> getCapaciteAllRooms();
 }
