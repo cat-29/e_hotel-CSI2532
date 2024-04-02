@@ -45,7 +45,7 @@ export const EmployeSignIn=()=>{
             });    
             setFormDataError('');
         }catch (error) {
-            setFormDataError('Les données entrées sont incorrect.');
+            setFormDataError('Les données entrées sont incorrectes.');
             console.error(error);
         }
     }    

@@ -165,7 +165,7 @@ export const AjouteDommage = () => {
             <div className="align-middle mx-5 my-2 mx-auto" style={{height: '240px', maxWidth: '900px'}}>
                 <form noValidate className="mx-5 border h-100" onSubmit={handleSubmit}>
                     <div className=""> 
-                        <div className="d-grid gap-2 d-md-flex justify-content-between m-3">
+                        <div className="d-grid gap-5 d-md-flex justify-content-between m-3">
                             <div>
                                 <label htmlFor="numeroChambre" className="form-label me-2">Numéro de chambre</label>
                                 <select name="numeroChambre" id="numeroChambre" className="border dropdown" onClick={handleInputChange}>
@@ -183,7 +183,7 @@ export const AjouteDommage = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="typeDommage" className="form-label me-2">Nouveau type de dommage</label>
+                                <label htmlFor="typeDommage" className="form-label me-2">Type de dommage</label>
                                 <select name="typeDommage" id="typeDommage" className="border dropdown" onClick={handleInputChange}>
                                     {dommages.dommage.map((val, key) => {
                                         return (
@@ -207,7 +207,7 @@ export const AjouteDommage = () => {
                         {isShow ? 
                         <>
                             <div className="col-5">
-                                <label htmlFor="explication" className="form-label">Type de dommage</label>
+                                <label htmlFor="explication" className="form-label">Nouveau type de dommage</label>
                                 <input type="text" className="form-control border" name="explication" value={formData.explication} onChange={handleInputChange}/>
                                 {formDataError[2] != "" ?
                                 <div style={{color:"red"}}>
