@@ -11,8 +11,10 @@ import com.projet.e_hotel.Classes.ClientReserve;
 import com.projet.e_hotel.Classes.Dommage;
 import com.projet.e_hotel.Classes.LoueChambre;
 import com.projet.e_hotel.Classes.SubiDommage;
+import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
 import com.projet.e_hotel.Classes.dto.ChambreSubiDommageDTO;
+import com.projet.e_hotel.Classes.mapper.ChambreHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreSubiDommageMapper;
 import com.projet.e_hotel.Classes.dto.ProvinceCountAvDTO;
 import com.projet.e_hotel.Classes.mapper.sqlMapping.ChambrePkMapper;
@@ -300,4 +302,32 @@ public class ChambreService {
         return rawResultFormatted   ;
 
     }
+
+    // Getting all available rooms with date checkin specified
+    public List<ChambreHotelDTO> getAllRoomsAvCheckin(Date checkin,Date minCheckout){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckin(checkin,minCheckout);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+    // Getting all available rooms with date checkout specified
+    public List<ChambreHotelDTO> getAllRoomsAvCheckout(Date checkout,Date minCheckin){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckout(checkout,minCheckin);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+    // Both checkin and checkout are now specified
+    public List<ChambreHotelDTO> getAllRoomsAvCheckinAndCheckout(Date checkin,Date checkout){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckinAndCheckout(checkin,checkout);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+
+    }
+
+
+
 }
