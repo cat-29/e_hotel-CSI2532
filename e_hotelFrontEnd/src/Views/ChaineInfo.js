@@ -12,6 +12,7 @@ export const ChaineInfo = () => {
   const [hotel, setHotel] = useState([]);
   const [modify, setModify] = useState(false);
   const [formDataError, setFormDataError] = useState([]);
+  console.log("ds chaine info: ", state);
 
   const [formData, setFormData] = useState({
     nomChaine: "",
@@ -39,14 +40,12 @@ export const ChaineInfo = () => {
     console.log(formData);
   }, []);
 
-  console.log("ds chaine info: ", state);
-
-  const showHotelInfo = (hotelInfo) => {
+  const showHotelInfo = (hotelInfo, chaineInfo) => {
     navigate("/hotelInfo", {
       state: {
         hotelInfo: hotelInfo,
-        employeInfo: state.employeInfo,
         chaineInfo: state.chaineInfo,
+        employeInfo: state.employeInfo,
       },
     });
   };

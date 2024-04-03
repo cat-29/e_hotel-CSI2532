@@ -92,6 +92,31 @@ class AdminService {
       body: JSON.stringify(chaineInfo),
     });
   }
+
+  async updateHotel(info) {
+    const infoN = { ...info };
+    // Formate
+    const hotelInfo = {};
+    hotelInfo.id = infoN.id;
+    hotelInfo.nomChaine = infoN.nomChaine;
+    hotelInfo.nom = infoN.nom;
+    hotelInfo.rating = infoN.rating;
+    hotelInfo.nbrChambre = infoN.nbrChambre;
+    hotelInfo.numero = infoN.numero;
+    hotelInfo.rue = infoN.rue;
+    hotelInfo.ville = infoN.ville;
+    hotelInfo.province = infoN.province;
+    hotelInfo.pays = infoN.pays;
+    hotelInfo.codePostal = infoN.codePostal;
+
+    await fetch("http://localhost:8080/chaine/updateHotel", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hotelInfo),
+    });
+  }
 }
 
 export default new AdminService();

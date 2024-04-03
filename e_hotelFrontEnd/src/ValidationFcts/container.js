@@ -391,6 +391,31 @@ const validateAllHotelFields = (answer) => {
   return res;
 };
 
+const validateAllModifHotelFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "nomChaine" || key == "nom") {
+      res = validateNom(answer[key], res);
+    } else if (
+      key == "numero" ||
+      key == "nbrChambre" ||
+      key == "id" ||
+      key == "rating"
+    ) {
+      res = validateNumero(answer[key], res);
+    } else if (key == "rue" || key == "ville" || key == "pays") {
+      res = validatePlace(answer[key], res);
+    } else if (key == "province") {
+      res = validateProvince(answer[key], res);
+    } else if (key == "codePostal") {
+      res = validateZip(answer[key], res);
+    }
+  }
+  return res;
+};
+
 const validateAllChambreFields = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
@@ -645,6 +670,10 @@ ValidateFcts.validateAllModifChaineFields = (answer) => {
 
 ValidateFcts.validateAllHotelFields = (answer) => {
   return validateAllHotelFields(answer);
+};
+
+ValidateFcts.validateAllModifHotelFields = (answer) => {
+  return validateAllModifHotelFields(answer);
 };
 
 ValidateFcts.validateAllChambreFields = (answer) => {
