@@ -138,12 +138,13 @@ export const ChaineInfo = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
+      <div className="text-center">
       <div className="d-grid gap-2 d-md-flex m-3">
         <button className="btn btn-secondary" onClick={navigateToChaines}>
           Retour
         </button>
       </div>
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
       <h2 className="text-center p-3">Information chaîne hôtelière</h2>
@@ -307,6 +308,22 @@ export const ChaineInfo = () => {
           </div>
         </fieldset>
       </form>
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button
+          type="submit"
+          className="btn btn-secondary"
+          onClick={() => {
+            setModify(true);
+          }}
+        >
+          Modifier
+        </button>
+        <button type="submit" className="btn btn-secondary">
+          Supprimer
+        </button>
+      </div>
+      <div className="text-center">
+
       {!modify ? (
         <div className="d-grid gap-2 d-md-flex m-3">
           <button
@@ -339,7 +356,7 @@ export const ChaineInfo = () => {
         <></>
       )}
 
-      <div className="titre text-center">
+      <div className="text-center">
         <h4 className="">Hôtels</h4>
       </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto">
@@ -380,6 +397,7 @@ export const ChaineInfo = () => {
           );
         })}
       </table>
+      </div>
       <div className="d-grid gap-2 d-md-flex m-3">
         <button
           type="button"
@@ -390,6 +408,7 @@ export const ChaineInfo = () => {
         >
           Ajouter un hôtel
         </button>
+      </div>
       </div>
     </>
   );

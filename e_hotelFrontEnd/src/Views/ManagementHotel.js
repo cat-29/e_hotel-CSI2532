@@ -43,7 +43,7 @@ export const ManagementHotel = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
         <h4 className="">Chaînes hôtelières</h4>
       </div>

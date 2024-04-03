@@ -78,7 +78,7 @@ export const CreateAccountForm = ()=>{
         // Set error state to what you found
 
         setFormDataError(validationResult);
-
+        setUserExistsError('');
         // flag used to track whether we submit to backend or we wait for user to fix its errors
 
         let flag = false;
@@ -118,7 +118,10 @@ export const CreateAccountForm = ()=>{
                                 pwd:'',
                                 pwdConfirmed:''
                             });
-                        })
+                        });
+                        
+                        // navigate back to previous page
+                        window.history.back();
                     } else {
                         // Le client existe. On a un probleme. 
                         setUserExistsError('Un client avec ces données existe déjà. Veuillez modifier vos données.')
@@ -301,9 +304,9 @@ export const CreateAccountForm = ()=>{
                 </div>
 
 
-                <div className="d-grid gap-2 d-md-flex m-3">
-                    <button type="submit" className='btn btn-primary'>{submitted ? 'soumission...':'Créer un compte'}</button>
-                    <button type='button' onClick={backHomePage} className='btn btn-secondary'>Annuler</button>
+                <div className="d-grid gap-2 d-md-flex m-3 mb-5">
+                    <button type="submit" className='btn btn-secondary'>{submitted ? 'soumission...':'Créer un compte'}</button>
+                    <button type='button' onClick={backHomePage} className='btn btn-primary'>Annuler</button>
                 </div>
             </form>
         </>  

@@ -8,27 +8,24 @@ export const View=()=>{
     return (
       <>
         <AppHeader/>
-        <div className="wrapper">
-
-          {/* <div className="col-md-7 p-3 bg-primary wrapper"></div>
-          <div className="col-md-5 p-3 bg-secondary"></div> */}
-
-          
-            <div className="questionTitre">
-              Veuillez sélectionner ci-dessous:
+        {/* Pour l'image */}
+        <div className="col-6 wrapper">
+            <div className="image-container">
             </div>
-
-            {/* This line was just to test */}
-
-            {/* <div className="p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">TESTT</div> */}
-
-            <div className="directBtns">
-              <a className="btn btn-primary btnCustom" href="/client">Client</a>
-              <a className="btn btn-primary btnCustom" href="/employe">Employé</a>
-              <a className="btn btn-primary btnCustom" href="/stats">Statistiques</a>
-            </div>
-
-        </div>     
+        </div>
+        <div className="col-sm-12 col-md-6 col-lg-5 my-auto titre">
+          <div className="d-grid d-flex buttonGrid">
+              <h1 className="pt-5" style={{color: 'white'}}>Veuillez vous connecter</h1>           
+              <div className="directBtns">
+                <a className="btn btn-light rounded-5" href="/client">Client</a>
+                <a className="btn btn-light rounded-5" href="/employe">Employé</a>
+                <div className="stats">
+                  <h6 className="text-center">Voir les statistiques</h6>
+                  <a className="btn btn-light rounded-5" href="/stats">Statistiques</a>
+                </div>             
+              </div>
+            </div>          
+        </div>
       </>
     )
 }

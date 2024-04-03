@@ -61,7 +61,7 @@ export const ChambreSubiDommage = () => {
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             {/* Bouton pour le retour a la page d'historique de reservation */}
-            <div className="titre text-center">
+            <div className="text-center">
                 <h1 className="mx-4 mt-4">Liste des dommages enregistrés</h1>                    
             </div>
             <div className="mx-5 d-flex my-1 justify-content-between">
@@ -76,7 +76,7 @@ export const ChambreSubiDommage = () => {
             </div>
 
             {/* Table qui affiche tout les dommages */}
-            <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+            <table className="table align-middle table-bordered mx-5 my-2 w-auto mb-5">
                 <thead>
                     <tr className="text-center">
                         <th className="col">#</th>

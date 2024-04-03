@@ -92,7 +92,7 @@ export const HotelInfo = () => {
         </button>
       </div>
 
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
       <h2 className="text-center p-3">Information hôtel</h2>
@@ -241,7 +241,7 @@ export const HotelInfo = () => {
           Supprimer
         </button>
       </div>
-      <div className="titre text-center">
+      <div className="text-center">
         <h4 className="">Employés</h4>
       </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto">
@@ -296,7 +296,7 @@ export const HotelInfo = () => {
         </button>
       </div>
       <br />
-      <div className="titre text-center">
+      <div className="text-center">
         <h4 className="">Chambres</h4>
       </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto">

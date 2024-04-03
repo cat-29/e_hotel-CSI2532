@@ -160,9 +160,11 @@ export const Reserver = () => {
                     <input type="date" className="form-control border" name='checkout' min={dates.checkin} onChange={handleInputChange}/>
                 </div>
 
-                <button style={{width:'50px'}} className="btn btn-primary" onClick={()=>checkDatesAndCalculatePrice()}>Ok</button>
+                <div className="ps-3">
+                    <button style={{width:'50px'}} className="btn btn-secondary" onClick={()=>checkDatesAndCalculatePrice()}>Ok</button>
+                </div>
                 {shownPrice ? 
-                    <div>
+                    <div className='ps-3 pt-3 pb-5'>
                         <b>Prix Total:</b> {`${price} $`}
                         <p>Désirez vous payer maintenant ?</p>
                             <div className='form-check'>

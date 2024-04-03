@@ -84,7 +84,7 @@ export const AjoutChambre = () => {
         </button>
       </div>
 
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
       <h2 className="text-center p-3">Ajout Chambre</h2>

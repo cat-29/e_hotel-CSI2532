@@ -119,15 +119,15 @@ export const ReservationActive = () => {
     return ( 
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
-            <div className="titre text-center">
+            <div className="text-center">
                 <h1 className="mx-4 my-4">Historique des réservations</h1>                    
             </div>
 
             <div className="mx-5 d-flex justify-content-between">
-                <button type="button" className="btn btn-info me-3" onClick={showHistoriqueLocation}>Voir l'historique des locations</button>
+                <button type="button" className="btn btn-info rounded-5 me-3" onClick={showHistoriqueLocation}>Voir l'historique des locations</button>
                 <div>
-                    <button type="button" className="btn btn-primary me-3" onClick={dommagesSubi}>Dommages subi</button>
-                    <button type="button" className="btn btn-secondary" onClick={ajoutLocation}>Ajout d'une location
+                    <button type="button" className="btn btn-primary rounded-5 me-3" onClick={dommagesSubi}>Dommages subi</button>
+                    <button type="button" className="btn btn-secondary rounded-5" onClick={ajoutLocation}>Ajout d'une location
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
                             <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
@@ -136,7 +136,7 @@ export const ReservationActive = () => {
                 </div>             
             </div>
             
-            <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+            <table className="table align-middle table-bordered mx-5 my-2 mb-5 w-auto">
                 <thead>
                     <tr className="text-center">
                         <th className="col">#</th>
@@ -164,7 +164,7 @@ export const ReservationActive = () => {
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                         </svg>
                                     </td>
-                                    : <td className="text-center"><button className="btn btn-secondary" onClick={() => {
+                                    : <td className="text-center"><button className="btn btn-secondary rounded-5" onClick={() => {
                                         checkIfPaiementComplete((val))
                                         
                                     }}>CheckIn</button></td>

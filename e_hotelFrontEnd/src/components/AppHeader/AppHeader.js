@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./AppHeader.css";
 import { useNavigate } from "react-router-dom";
 import connexionCompte from "../../services/connexion-compte";
-
+// import 'google_fonts'; 
 export const AppHeader=(info)=>{
 
     const [userInfo, setUserInfo] = useState({
@@ -16,7 +16,7 @@ export const AppHeader=(info)=>{
         pays: '',
         codePostal: ''
     });
-
+     
     const navigate = useNavigate();
     const [roleUser, setRoleUser] = useState('');
 
@@ -125,10 +125,28 @@ export const AppHeader=(info)=>{
         navigate("/showUserProfile", {state: {userInfo: userInfo, isClientUser: info.isUserTypeClient}});
     }
 
+    const navigateBackToMainPage = () => {
+        // navigates the user back to the main page
+        navigate('/');
+    }
+
     return(
         <div className="header">
             <div className="d-flex justify-content-between">
-                <div className="title">Bienvenue à Hotelio</div>
+
+                <div className="d-flex align-items-center">
+                    <div className="great-vibes-regular ms-2 me-3" style={{cursor:'pointer'}} onClick={navigateBackToMainPage}>Hotelio</div>
+                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+                    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"></link>
+
+                    <div className="dancing-script ms-3 ms-md-3">La détente vous attend.</div>
+                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+                    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet"></link>
+                </div>
+
+                {/* <div className="title">Bienvenue à Hotelio</div> */}
         
                 <div className="d-flex align-content-center align-items-center">
                     { info.info !== undefined ?
