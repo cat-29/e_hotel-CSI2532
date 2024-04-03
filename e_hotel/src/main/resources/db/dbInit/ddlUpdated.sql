@@ -177,7 +177,7 @@ BEGIN
 	    id_hotel = NEW.id_hotel;
 	RETURN NEW;
 END;
-$$
+$$;
 	-- TRIGGER 1
 -- Quand une chambre d'hotel est ajoutee, incremente le nombre de chambre 
 
@@ -199,7 +199,7 @@ BEGIN
 	    id_hotel = OLD.id_hotel;
 	RETURN NEW;
 END;
-$$
+$$;
 	-- TRIGGER 2
 -- Quand une chambre d'hotel est supprimee, decremente le nombre de chambre 
 
@@ -233,7 +233,7 @@ BEGIN
 	    nom_chaine = OLD.nom_chaine;
 	RETURN NEW;
 END;
-$$
+$$;
 	-- TRIGGER 3
 -- Quand on modifie le nom de la chaine, on la modifie aussi dans hotel 
 
@@ -244,6 +244,7 @@ EXECUTE PROCEDURE modifie_nom_chaine_dans_hotel ();
 
 -- Cree des views
 
+-- Vue 1: Nombre de chambres disponibles par province
 create view chambre_disponibles as
 -- et puis on calcule le nombre de chambre dispo en groupant par la province
 select province, count((numero_chambre, id_hotel)) as total_chambre_dispo
@@ -292,6 +293,7 @@ from (
 group by
     province;
 
+-- Vue 2: capacite de toutes les chambres de tous les hôtels
 create view capacite_chambres_tous_hotels as
 select distinct
     nom,
@@ -299,6 +301,22 @@ select distinct
 from hotel
     natural join chambre
 order by nom, capacite_chambre;
+
+-- Vue 3: Vue montrant les détails de tous les chambres et leurs hôtels respectifs
+create view chambreXhotel as (
+select * from chambre natural join hotel);
+
+-- Vue 4: Vue montrant le nombre total de chambres (disponibles et non) par hôtel. 
+create view tot_chambres_per_hotel as 
+select id_hotel,count(numero_chambre) as tot_chambres from chambreXHotel group by id_hotel;
+
+-- Vue 5: Vue montrant les détails des chambres, des hôtels et une colonne pour le nombre total 
+-- de chambre dans chaque hôtel
+
+create view chambreXhotelTotalChambre as select * from chambreXHotel natural join tot_chambres_per_hotel;
+
+-- Vue 6: Vue montrant les commodtes dans chaque chambre;
+create view chambreXcommodite as select * from contient_commodite natural join commodite;
 
 -- Cree une table pour inserer les logs quand on supprime une reservation
 CREATE TABLE IF NOT EXISTS log_client_reserve (
@@ -347,7 +365,7 @@ BEGIN
 	    and numero_chambre = OLD.numero_chambre;
 	RETURN OLD;
 END;
-$$
+$$;
 -- TRIGGER 
 
 CREATE TRIGGER add_logs_before_deleting_chambre BEFORE DELETE ON chambre FOR EACH ROW

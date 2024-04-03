@@ -75,7 +75,7 @@ const getFilteredResults = async(filters)=>{
     let rooms = null;
     try{
         // console.log("before hitting the endpoint,  "+ filters);
-        const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chaine"]}/${filters["classement"]}/${filters["chambreMin"]}/${filters["chambreMax"]}`);
+        const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chaine"]}/${filters["classement"]}/${filters["chambreMin"]}/${filters["chambreMax"]}/${filters["etendre"]}`);
         if (response.status == 200){
             console.log("fetching completed successfully");
             rooms = response.data;
@@ -87,9 +87,25 @@ const getFilteredResults = async(filters)=>{
         console.log("Error occured",error);
     }
     return rooms;
+}
 
+const getAllCommoditees = async(hotelId,numero_chambre)=>{
+    let comms = null;
+    try{
+        // console.log("before hitting the endpoint");
+        const response = await axios.get(`http://localhost:8080/chambre/getAllCommoditees/${hotelId}/${numero_chambre}`);
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            comms = response.data;
+            // console.log("the rooms are here",rooms)
+        }else{
+            console.log("Sorry, something went wrong while fetching");
+        }
 
-
+    }catch(error){
+        console.log("Error occured",error);
+    }
+    return comms;
 
 }
 
@@ -219,6 +235,11 @@ const getCapaciteHotels = async()=>{
 
 // Keys and values of the fcts object
 
+fcts.getAllCommoditees = async (hotelId,numero_chambre)=>{
+    const comms = await getAllCommoditees(hotelId,numero_chambre);
+    return comms;
+
+}
 
 fcts.getFilteredResults = async (filters)=>{
     const rooms = await getFilteredResults(filters);
