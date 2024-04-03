@@ -332,4 +332,50 @@ public class ChambreService {
         return chambreRepository.save(chambre);
     }
 
+    // Tous les filtres sont appliques, checkin et checkout compris
+    public List<ChambreHotelDTO> getAllRoomsCheckinAndCheckout(Date checkin,Date checkout, String capacite,String vue, Double prixMin,
+    Double prixMax, String chaine,Integer classement, Integer chambreMin,Integer chambreMax){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsCheckinAndCheckout(checkin,checkout,capacite,vue,prixMin,
+        prixMax,chaine,classement,chambreMin,chambreMax);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+    // Tous les filtres specifies except checkin
+    public List<ChambreHotelDTO> getAllRoomsCheckoutOnly(Date checkin,Date checkout, String capacite,String vue, Double prixMin,
+    Double prixMax, String chaine,Integer classement, Integer chambreMin,Integer chambreMax){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsCheckoutOnly(checkin,checkout,capacite,vue,prixMin,
+        prixMax,chaine,classement,chambreMin,chambreMax);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+
+    // Tous les filtres specifies except checkout
+    public List<ChambreHotelDTO> getAllRoomsCheckinOnly(Date checkin,Date checkout, String capacite,String vue, Double prixMin,
+    Double prixMax, String chaine,Integer classement, Integer chambreMin,Integer chambreMax){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsCheckinOnly(checkin,checkout,capacite,vue,prixMin,
+        prixMax,chaine,classement,chambreMin,chambreMax);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+
+    // Checkin et checkout pas specifies
+    public List<ChambreHotelDTO> getAllRoomsNoDates(String capacite,String vue, Double prixMin,
+    Double prixMax, String chaine,Integer classement, Integer chambreMin,Integer chambreMax){
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsNoDates(capacite,vue,prixMin,
+        prixMax,chaine,classement,chambreMin,chambreMax);
+        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
+        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+        return rawResultFormatted;
+    }
+
+
+
+
+
 }

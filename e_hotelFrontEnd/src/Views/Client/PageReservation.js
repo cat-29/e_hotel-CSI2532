@@ -31,20 +31,33 @@ export const renderStars = (item)=>{
 // La premiere page que l utilisateur voie quand il log in
 export const PageReservation = () => {
 
+    const todayCheckin = new Date();
+
+    todayCheckin.setDate(todayCheckin.getDate()+1);
+
+    // Init the checkout to 3 days after tomorrow
+
+    const todayCheckout = new Date();
+    // const nextDay = (new Date()+3).toISOString().slice(0,10);
+    todayCheckout.setDate(todayCheckout.getDate() + 4);
+
+    const vCheckin = todayCheckin.toISOString().slice(0,10);
+    const vCheckout = todayCheckout.toISOString().slice(0,10);
+
     // Les filtres seront recu ici de la part du component Filters
 
     const [filters, setComponentFilters] = useState({
-        checkin: '',
-        checkout:'',
-        capacite:'',
+        checkin: vCheckin,
+        checkout:vCheckout,
+        capacite:'SIMPLE',
         etendre:false,
-        vue:[],
-        prixMin:'',
-        prixMax:'',
-        chaines:[],
-        classement:[],
-        chambreMin:'',
-        chambreMax:''
+        vue:'MER',
+        prixMin:'0',
+        prixMax:'10000',
+        chaine:'Hotels Bellevue',
+        classement:'3',
+        chambreMin:'1',
+        chambreMax:'1000'
     });
 
     // Avoir les details de client, state est un object client
@@ -133,39 +146,39 @@ export const PageReservation = () => {
             const rooms  = await ValidateFcts.submitFilters(filters);
             // console.log("rooms in frontend",rooms);
             setRooms(rooms);
-            // return rooms;
+            return rooms;
         }
     }
 
-  const getChambresFromChaines = async () => {
-    try {
-        const data = await ValidateFcts.getAllChambresFromChaineHoteliere(filters.chaines);
-        console.log("Chaine hoteliere: ");
-        console.log(data.data);
-    } catch (error) {
-        console.error(error);
-    }
-  }
+//   const getChambresFromChaines = async () => {
+//     try {
+//         const data = await ValidateFcts.getAllChambresFromChaineHoteliere(filters.chaines);
+//         console.log("Chaine hoteliere: ");
+//         console.log(data.data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+//   }
 
-  const getChambresFromClassement = async () => {
-    try {
-        const data = await ValidateFcts.getAllChambresFromClassement(filters.classement);
-        console.log("Classement des chambres: ");
-        console.log(data.data);
-    } catch (error) {
-        console.error(error);
-    }
-  }
+//   const getChambresFromClassement = async () => {
+//     try {
+//         const data = await ValidateFcts.getAllChambresFromClassement(filters.classement);
+//         console.log("Classement des chambres: ");
+//         console.log(data.data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+//   }
 
-  const getChambresFromNombreDeChambres = async () => {
-    try {
-        const data = await ValidateFcts.getChambresFromNombreDeChambres(filters.chambreMin, filters.chambreMax);
-        console.log("Filtres du nombre de chambre min et max: ");
-        console.log(data.data);
-    } catch (error) {
-        console.error(error);
-    }
-  }
+//   const getChambresFromNombreDeChambres = async () => {
+//     try {
+//         const data = await ValidateFcts.getChambresFromNombreDeChambres(filters.chambreMin, filters.chambreMax);
+//         console.log("Filtres du nombre de chambre min et max: ");
+//         console.log(data.data);
+//     } catch (error) {
+//         console.error(error);
+//     }
+//   }
 
 
     // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
