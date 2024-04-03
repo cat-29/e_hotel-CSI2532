@@ -77,6 +77,13 @@ export const AjoutChambre = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
+
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button className="btn btn-secondary" onClick={navigateToChambres}>
+          Retour
+        </button>
+      </div>
+
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>

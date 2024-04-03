@@ -1,6 +1,5 @@
 package com.projet.e_hotel.Classes;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -53,8 +52,23 @@ public class Employe {
 
     }
 
+    public Employe(String id, String prenom, String nomFamille, Integer numero, String rue, String ville,
+            String province, String pays, String codePostal, String roleEmploye, Integer idHotel) {
+        this.id = id;
+        this.prenom = prenom;
+        this.nomFamille = nomFamille;
+        this.numero = numero;
+        this.rue = rue;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+        this.roleEmploye = roleEmploye;
+        this.idHotel = idHotel;
+    }
 
-    public Employe(String id, String prenom, String nomFamille, Integer numero, String rue, String ville, String province, String pays, String codePostal) {
+    public Employe(String id, String prenom, String nomFamille, Integer numero, String rue, String ville,
+            String province, String pays, String codePostal) {
         this.id = id;
         this.prenom = prenom;
         this.nomFamille = nomFamille;
@@ -65,5 +79,5 @@ public class Employe {
         this.pays = pays;
         this.codePostal = codePostal;
     }
-    
+
 }

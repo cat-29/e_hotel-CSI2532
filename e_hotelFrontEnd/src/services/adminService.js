@@ -59,6 +59,18 @@ class AdminService {
     });
   }
 
+  async saveEmploye(newEmploye) {
+    await fetch("http://localhost:8080/chaine/ajoutEmploye", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newEmploye),
+    }).catch((e) => {
+      console.log("LOLOL");
+    });
+  }
+
   async updateChaine(info) {
     const infoN = { ...info };
     // Formate

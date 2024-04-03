@@ -43,7 +43,11 @@ export const ChaineInfo = () => {
 
   const showHotelInfo = (hotelInfo) => {
     navigate("/hotelInfo", {
-      state: { hotelInfo: hotelInfo, employeInfo: state.employeInfo },
+      state: {
+        hotelInfo: hotelInfo,
+        employeInfo: state.employeInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 

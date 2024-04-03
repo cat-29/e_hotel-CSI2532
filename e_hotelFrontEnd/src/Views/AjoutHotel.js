@@ -4,7 +4,6 @@ import ValidateFcts from "../ValidationFcts/container";
 import InputMask from "react-input-mask";
 import adminService from "../services/adminService";
 import { AppHeader } from "../components/AppHeader/AppHeader";
-import { ChaineInfo } from "./ChaineInfo";
 
 export const AjoutHotel = () => {
   const { state } = useLocation();

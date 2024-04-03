@@ -109,6 +109,14 @@ public class ChaineHoteliereController {
         chambreService.saveNewChambre(ChambreMapper.mapToChambre(oDto, idHotel));
     }
 
+    @PostMapping("/ajoutEmploye")
+    public void saveNewEmploye(@RequestBody EmployeDTO oDto) throws ParseException {
+        // get chaineHoteliere by nomChaine
+        // Hotel hotel = hotelService.findByIdHotel(oDto.getIdHotel());
+        Integer idHotel = oDto.getIdHotel();
+        employeService.saveNewEmploye(EmployeMapper.mapToEmploye(oDto, idHotel));
+    }
+
     @PostMapping("/updateChaine")
     public ChaineHoteliere updateChaine(@RequestBody ChaineHoteliereDTO dto) {
         return chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));

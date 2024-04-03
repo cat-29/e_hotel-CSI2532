@@ -12,6 +12,7 @@ export const HotelInfo = () => {
   const [modify, setModify] = useState(false);
 
   console.log("ds hotel info: ", state);
+  console.log("ds hotel info: ", state.chaineInfo);
 
   const showChambreInfo = (chambreInfo) => {
     navigate("/chambreInfo", {
@@ -32,7 +33,9 @@ export const HotelInfo = () => {
   };
 
   const showAjoutEmploye = () => {
-    navigate("/ajoutEmploye", { state: { employeInfo: state.employeInfo } });
+    navigate("/ajoutEmploye", {
+      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+    });
   };
 
   const showBoolean = (val) => {
@@ -73,9 +76,22 @@ export const HotelInfo = () => {
       });
   }, []);
 
+  const navigateToChaines = () => {
+    navigate("/chaineInfo", {
+      state: { employeInfo: state.employeInfo, chaineInfo: state.chaineInfo },
+    });
+  };
+
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
+
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button className="btn btn-secondary" onClick={navigateToChaines}>
+          Retour
+        </button>
+      </div>
+
       <div className="titre text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
