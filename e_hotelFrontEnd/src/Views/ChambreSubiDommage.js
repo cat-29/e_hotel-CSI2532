@@ -90,7 +90,8 @@ export const ChambreSubiDommage = () => {
                     return (
                         <tbody>
                             <tr>
-                                <th className="col text-center">{key}</th>
+                                <th className="col text-center">{key+1}</th>
+                                
                                 <td className="col text-center">{val.numeroChambre}</td>
                                 <td className="col">{val.typeDommage}</td>
                             </tr>

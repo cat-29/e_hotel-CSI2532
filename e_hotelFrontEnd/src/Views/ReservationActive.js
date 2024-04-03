@@ -153,7 +153,7 @@ export const ReservationActive = () => {
                     return (
                         <tbody>
                             <tr>
-                                <th className="text-center">{key}</th>
+                                <th className="text-center">{key+1}</th>
                                 <td>{val.prenom} {val.nomFamille}</td>
                                 {}
                                 <td>{formatDate(val.dateCheckin)}</td>

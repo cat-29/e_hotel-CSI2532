@@ -48,14 +48,25 @@ export const ManagementHotel = () => {
         <h4 className="">Chaînes hôtelières</h4>
       </div>
 
-      <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+      <div className="d-grid gap-2 d-md-flex mt-2 mb-1 ms-5">
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            showAjoutChaine();
+          }}
+        >
+          Ajouter une chaîne
+        </button>
+      </div>
+      <table className="table align-middle table-bordered mx-5 my-2 w-auto mb-5">
         <thead>
           <tr className="text-center">
             <th className="col">#</th>
             <th className="col-4">Nom de chaîne hôtelière</th>
             <th>Nombre d'hôtel</th>
             <th>Adresse</th>
-            <th>Modifier</th>
+            <th></th>
           </tr>
         </thead>
         {chaine.map((val, key) => {
@@ -86,17 +97,6 @@ export const ManagementHotel = () => {
         })}
       </table>
       {console.log("ds management hotel: ", state)}
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            showAjoutChaine();
-          }}
-        >
-          Ajouter une chaîne
-        </button>
-      </div>
     </>
   );
 };

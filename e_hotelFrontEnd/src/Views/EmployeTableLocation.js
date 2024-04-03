@@ -71,7 +71,7 @@ export const EmployeTableLocation = () => {
                     return (
                         <tbody>
                             <tr>
-                                <th className="text-center">{key}</th>
+                                <th className="text-center">{key+1}</th>
                                 <td>{val.prenom} {val.nomFamille}</td>
                                 <td className="text-center">{val.numeroChambre}</td>
                                 <td>{formatDate(val.dateCheckin)}</td>
