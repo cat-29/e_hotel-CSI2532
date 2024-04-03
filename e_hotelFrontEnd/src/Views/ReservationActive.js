@@ -120,7 +120,11 @@ export const ReservationActive = () => {
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             <div className="text-center">
-                <h1 className="mx-4 my-4">Historique des réservations</h1>                    
+                <h1 className="mx-4 my-4">Employé</h1>
+            </div>
+      
+            <div className="text-center">
+                <h4 className="">Historique des réservations</h4>                    
             </div>
 
             <div className="mx-5 d-flex justify-content-between">

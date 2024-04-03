@@ -62,7 +62,11 @@ export const ChambreSubiDommage = () => {
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
             {/* Bouton pour le retour a la page d'historique de reservation */}
             <div className="text-center">
-                <h1 className="mx-4 mt-4">Liste des dommages enregistrés</h1>                    
+                <h1 className="mx-4 my-4">Employé</h1>
+            </div>
+      
+            <div className="text-center">
+                <h4 className="">Liste des dommages enregistrés</h4>                    
             </div>
             <div className="mx-5 d-flex my-1 justify-content-between">
                 <button type="button" className="btn btn-secondary" onClick={showReservationActive}>

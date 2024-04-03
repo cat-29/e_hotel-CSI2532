@@ -101,7 +101,6 @@ export const AppHeader=(info)=>{
     const getClientInfo = async() => {
         try {
             await connexionCompte.getInfoClient(info.info.nas).then((reponse) => {
-                console.log("PASSSSSSSS")
 
                 setUserInfo({
                     nas: reponse.data.nas,

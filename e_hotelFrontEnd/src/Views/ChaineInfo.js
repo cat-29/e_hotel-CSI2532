@@ -137,264 +137,266 @@ export const ChaineInfo = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
-      <div className="text-center">
-        <div className="d-grid gap-2 d-md-flex m-3">
-          <button className="btn btn-secondary" onClick={navigateToChaines}>
-            Retour
-          </button>
-        </div>
-        <div className="text-center">
-          <h1 className="mx-4 my-4">Administration</h1>
-        </div>
-        <h2 className="text-center p-3">Information chaîne hôtelière</h2>
-
-        <form noValidate className="mx-4" onSubmit={handleSubmit}>
-          <fieldset disabled={!modify}>
-            <div className="d-grid gap-2 d-md-flex m-3">
-              <div className="col-5">
-                <label htmlFor="nomChaine" className="form-label">
-                  Nom de Chaîne Hôtelière
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control border"
-                  id="nomChaine"
-                  name="nomChaine"
-                  value={formData.nomChaine}
-                  disabled
-                />
-                {formDataError[0] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[0]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="nbrHotel" className="form-label">
-                  Nombre d'hôtels
-                </label>
-                <input
-                  required
-                  value={formData.nbrHotel}
-                  type="text"
-                  className="form-control border"
-                  id="nbrHotel"
-                  name="nbrHotel"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="d-grid gap-2 d-md-flex m-3">
-              <div className="col-md-1">
-                <label htmlFor="numero" className="form-label">
-                  Numéro
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control border"
-                  id="numero"
-                  name="numero"
-                  value={formData.numero}
-                  onChange={handleInputChange}
-                />
-                {formDataError[2] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[2]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className="col-5">
-                <label htmlFor="rue" className="form-label">
-                  Rue
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control border"
-                  id="rue"
-                  name="rue"
-                  value={formData.rue}
-                  onChange={handleInputChange}
-                />
-                {formDataError[3] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[3]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className="col-md-3">
-                <label htmlFor="ville" className="form-label">
-                  Ville
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control border"
-                  id="ville"
-                  name="ville"
-                  value={formData.ville}
-                  onChange={handleInputChange}
-                />
-                {formDataError[4] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[4]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
-
-            <div className="d-grid gap-2 d-md-flex m-3">
-              <div className="col-md-1">
-                <label htmlFor="province" className="form-label">
-                  Province
-                </label>
-                <InputMask
-                  className="form-control border"
-                  mask={"LL"}
-                  formatChars={{ L: "[A-Z]" }}
-                  maskChar={""}
-                  value={formData.province}
-                  onChange={handleInputChange}
-                  name="province"
-                />
-                {formDataError[5] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[5]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div>
-                <label htmlFor="pays" className="form-label">
-                  Pays
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control border"
-                  id="pays"
-                  name="pays"
-                  value={formData.pays}
-                  onChange={handleInputChange}
-                />
-                {formDataError[6] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[6]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-              <div className="col-md-2">
-                <label htmlFor="codePostal" className="form-label">
-                  Code Postal
-                </label>
-                <InputMask
-                  className="form-control border"
-                  mask={"LDL DLD"}
-                  formatChars={{ L: "[A-Z]", D: "[0-9]" }}
-                  maskChar={""}
-                  value={formData.codePostal}
-                  onChange={handleInputChange}
-                  name="codePostal"
-                />
-                {formDataError[7] != "" ? (
-                  <div style={{ color: "red" }}>{formDataError[7]}</div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
-          </fieldset>
-        </form>
-
-        <div className="text-center">
-          {!modify ? (
-            <div className="d-grid gap-2 d-md-flex m-3">
-              <button
-                type="submit"
-                className="btn btn-secondary"
-                onClick={() => {
-                  hidePageInfo();
-                }}
-              >
-                Modifier
-              </button>
-              <button type="submit" className="btn btn-secondary">
-                Supprimer
-              </button>
-            </div>
-          ) : (
-            <></>
-          )}
-          {modify ? (
-            <div className="d-grid gap-2 d-md-flex m-3">
-              <button
-                type="submit"
-                className="btn btn-secondary"
-                onClick={handleSubmit}
-              >
-                Soumettre
-              </button>
-            </div>
-          ) : (
-            <></>
-          )}
-
-          <div className="text-center">
-            <h4 className="">Hôtels</h4>
-          </div>
-          <table className="table align-middle table-bordered mx-5 my-2 w-auto">
-            <thead>
-              <tr className="text-center">
-                <th>#</th>
-                <th>Nom d'hôtel</th>
-                <th>Nombre d'étoiles</th>
-                <th>Nombre de chambres</th>
-                <th>Adresse</th>
-              </tr>
-            </thead>
-            {hotel.map((val, key) => {
-              return (
-                <tbody>
-                  <tr>
-                    <td className="text-center">{key + 1}</td>
-                    <td>{val.nom}</td>
-                    <td className="text-center">{val.rating}</td>
-                    <td className="text-center">{val.nbrChambre}</td>
-                    <td>
-                      {val.numero} {val.rue}, {val.ville}, {val.province}{" "}
-                      {val.pays} {val.codePostal}
-                    </td>
-                    <td className="text-center">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={() => {
-                          showHotelInfo(val);
-                        }}
-                      >
-                        {">"}
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
-        </div>
-        <div className="d-grid gap-2 d-md-flex m-3">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              showAjoutHotel();
-            }}
-          >
-            Ajouter un hôtel
-          </button>
-        </div>
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button className="ms-4 btn btn-secondary" onClick={navigateToChaines}>
+          Retour
+        </button>
       </div>
+      <div className="text-center">
+        <h1 className="mx-4 my-4">Administration</h1>
+      </div>
+      <h4 className="text-center p-3 pb-1">Information chaîne hôtelière</h4>
+
+      <form noValidate className="align-middle mx-5 my-2 mb-3 border p-2" onSubmit={handleSubmit}>
+        {!modify ? (
+          <div className="d-grid gap-2 d-md-flex mt-3">
+            <button
+              type="submit"
+              className="btn btn-secondary ms-3"
+              onClick={() => {
+                hidePageInfo();
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen me-1" viewBox="0 0 15 18">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+              </svg>
+              Modifier
+            </button>
+            <button type="submit" className="btn btn-dark">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3 me-1" viewBox="0 0 15 18">
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+              </svg>
+              Supprimer
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <fieldset disabled={!modify}>
+          <div className="d-grid gap-2 d-md-flex m-3">
+            <div className="col-5">
+              <label htmlFor="nomChaine" className="form-label">
+                Nom de Chaîne Hôtelière
+              </label>
+              <input
+                required
+                type="text"
+                className="form-control border"
+                id="nomChaine"
+                name="nomChaine"
+                value={formData.nomChaine}
+                disabled
+              />
+              {formDataError[0] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[0]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="col-md-2">
+              <label htmlFor="nbrHotel" className="form-label">
+                Nombre d'hôtels
+              </label>
+              <input
+                required
+                value={formData.nbrHotel}
+                type="text"
+                className="form-control border"
+                id="nbrHotel"
+                name="nbrHotel"
+                disabled
+              />
+            </div>
+          </div>
+
+          <div className="d-grid gap-2 d-md-flex m-3">
+            <div className="col-md-1">
+              <label htmlFor="numero" className="form-label">
+                Numéro
+              </label>
+              <input
+                required
+                type="text"
+                className="form-control border"
+                id="numero"
+                name="numero"
+                value={formData.numero}
+                onChange={handleInputChange}
+              />
+              {formDataError[2] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[2]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="col-5">
+              <label htmlFor="rue" className="form-label">
+                Rue
+              </label>
+              <input
+                required
+                type="text"
+                className="form-control border"
+                id="rue"
+                name="rue"
+                value={formData.rue}
+                onChange={handleInputChange}
+              />
+              {formDataError[3] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[3]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="ville" className="form-label">
+                Ville
+              </label>
+              <input
+                required
+                type="text"
+                className="form-control border"
+                id="ville"
+                name="ville"
+                value={formData.ville}
+                onChange={handleInputChange}
+              />
+              {formDataError[4] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[4]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+
+          <div className="d-grid gap-2 d-md-flex m-3">
+            <div className="col-md-1">
+              <label htmlFor="province" className="form-label">
+                Province
+              </label>
+              <InputMask
+                className="form-control border"
+                mask={"LL"}
+                formatChars={{ L: "[A-Z]" }}
+                maskChar={""}
+                value={formData.province}
+                onChange={handleInputChange}
+                name="province"
+              />
+              {formDataError[5] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[5]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div>
+              <label htmlFor="pays" className="form-label">
+                Pays
+              </label>
+              <input
+                required
+                type="text"
+                className="form-control border"
+                id="pays"
+                name="pays"
+                value={formData.pays}
+                onChange={handleInputChange}
+              />
+              {formDataError[6] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[6]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="col-md-2">
+              <label htmlFor="codePostal" className="form-label">
+                Code Postal
+              </label>
+              <InputMask
+                className="form-control border"
+                mask={"LDL DLD"}
+                formatChars={{ L: "[A-Z]", D: "[0-9]" }}
+                maskChar={""}
+                value={formData.codePostal}
+                onChange={handleInputChange}
+                name="codePostal"
+              />
+              {formDataError[7] != "" ? (
+                <div style={{ color: "red" }}>{formDataError[7]}</div>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </fieldset>
+        {modify ? (
+          <div className="d-grid d-md-flex">
+            <button
+              type="submit"
+              className="btn btn-dark ms-3"
+              onClick={handleSubmit}
+            >
+              Soumettre
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+      </form>
+      <div className="text-center">
+        <h4 className="p-4 pb-1">Hôtels</h4>
+      </div>
+      <div className="d-grid gap-2 d-md-flex mx-4">
+        <button
+          type="button"
+          className="btn btn-secondary ms-4"
+          onClick={() => {
+            showAjoutHotel();
+          }}
+        >
+          Ajouter un hôtel
+        </button>
+      </div>
+      <table className="text-center table align-middle table-bordered mx-5 my-2 w-auto mb-5">
+        <thead>
+          <tr className="text-center">
+            <th className="col">#</th>
+            <th className="col-3">Nom d'hôtel</th>
+            <th className="col">Nombre d'étoiles</th>
+            <th className="col">Nombre de chambres</th>
+            <th className="col-4">Adresse</th>
+            <th></th>
+          </tr>
+        </thead>
+        {hotel.map((val, key) => {
+          return (
+            <tbody>
+              <tr>
+                <td className="col text-center">{key + 1}</td>
+                <td>{val.nom}</td>
+                <td className="col text-center">{val.rating}</td>
+                <td className="col text-center">{val.nbrChambre}</td>
+                <td className="col">
+                  {val.numero} {val.rue}, {val.ville}, {val.province}{" "}
+                  {val.pays} {val.codePostal}
+                </td>
+                <td className="col text-center">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      showHotelInfo(val);
+                    }}
+                  >
+                    {">"}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          );
+        })}
+      </table>
     </>
   );
 };

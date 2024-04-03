@@ -89,12 +89,15 @@ export const AjoutHotel = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button className="btn btn-secondary" onClick={navigateToHotels}>
+      <div className="d-grid gap-2 d-md-flex m-3 ms-4">
+        <button className="btn btn-secondary ms-3" onClick={navigateToHotels}>
           Retour
         </button>
       </div>
-      <form noValidate className="mx-4" onSubmit={handleSubmit}>
+      <div className="text-center">
+        <h4 className="">Ajout d'un hôtel</h4>
+      </div>
+      <form noValidate className="align-middle mx-5 my-2 mb-5 border p-2" onSubmit={handleSubmit}>
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-5">
             <label htmlFor="nom" className="form-label">
@@ -255,16 +258,18 @@ export const AjoutHotel = () => {
             )}
           </div>
         </div>
+
+        <div className="d-grid gap-2 d-md-flex">
+          <button
+            type="submit"
+            className="btn btn-dark ms-3"
+            onClick={handleSubmit}
+          >
+            Soumettre
+          </button>
+        </div>
       </form>
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button
-          type="submit"
-          className="btn btn-secondary"
-          onClick={handleSubmit}
-        >
-          Soumettre
-        </button>
-      </div>
+      
     </>
   );
 };

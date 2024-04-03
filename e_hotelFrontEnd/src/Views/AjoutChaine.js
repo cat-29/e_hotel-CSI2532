@@ -81,13 +81,16 @@ export const AjoutChaine = () => {
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
 
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button className="btn btn-secondary" onClick={navigateToChaines}>
+      <div className="d-grid gap-2 d-md-flex mx-4 my-3">
+        <button className="btn btn-secondary ms-4" onClick={navigateToChaines}>
           Retour
         </button>
       </div>
+      <div className="text-center">
+        <h4 className="">Ajout d'une chaîne hôtelière</h4>
+      </div>
 
-      <form noValidate className="mx-4" onSubmit={handleSubmit}>
+      <form noValidate className="align-middle mx-5 my-2 mb-5 border p-2" onSubmit={handleSubmit}>
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-5">
             <label htmlFor="nomChaine" className="form-label">
@@ -229,16 +232,17 @@ export const AjoutChaine = () => {
             )}
           </div>
         </div>
+        <div className="d-grid gap-2 d-md-flex ms-2">
+          <button
+            type="submit"
+            className="btn btn-dark ms-2"
+            onClick={handleSubmit}
+          >
+            Soumettre
+          </button>
+        </div>
       </form>
-      <div className="d-grid gap-2 d-md-flex m-3">
-        <button
-          type="submit"
-          className="btn btn-secondary"
-          onClick={handleSubmit}
-        >
-          Soumettre
-        </button>
-      </div>
+      
       {console.log("ds ajout chaine: ", state)}
     </>
   );
