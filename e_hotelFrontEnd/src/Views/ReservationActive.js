@@ -21,12 +21,84 @@ export const ReservationActive = () => {
             console.log(e);
         });
     },[]);
-
-    const checkIfPaiementComplete = (userInfo) => {
+    
+    const checkIfPaiementComplete = (userInfo) => {        
         if (!userInfo.isPaiementComplete) {
             console.log("paiement pas complete", state.employeInfo.id);
             navigate('/methodePaiement', {state: {userInfo: userInfo, employeInfo: state.employeInfo}})
+        } else {
+            userInfo.isUserCheckedInLocation = true;
+            // Now, we need to save that the user is checkin in the database
+            sending(userInfo);
         }
+    }
+    const [newLocation, setNewLocation] = useState({
+        codePostal: '',
+        dateCheckin: '',
+        dateCheckout: '',
+        datePaiementComplete: '',
+        idClient: '',
+        idEmploye: '',
+        idHotel: '',
+        isPaiementComplete: true,
+        isUserCheckedInLocation: '',
+        montantDu: '',
+        nomFamille: '',
+        numero: '',
+        numeroChambre: '',
+        pays: '',
+        prenom: '',
+        prix: '',
+        province: '',
+        rue: '',
+        ville: ''
+    });
+
+    const sending = async (userInfo) => {
+
+        const checkinN = new Date(userInfo.dateCheckin);
+        const checkoutN = new Date(userInfo.dateCheckout);
+
+        setNewLocation ({
+            codePostal: userInfo.codePostal,
+            dateCheckin: checkinN.toISOString().slice(0,10),
+            dateCheckout: checkoutN.toISOString().slice(0,10),
+            datePaiementComplete: new Date(),
+            idClient: userInfo.idClient,
+            idEmploye: state.employeInfo.id,
+            idHotel: userInfo.idHotel,
+            isPaiementComplete: true,
+            isUserCheckedInLocation: true,
+            montantDu: 0.00,
+            nomFamille: userInfo.nomFamille,
+            numero: userInfo.numero,
+            numeroChambre: userInfo.numeroChambre,
+            pays: userInfo.pays,
+            prenom: userInfo.prenom,
+            prix: userInfo.montantDu,
+            province: userInfo.province,
+            rue: userInfo.rue,
+            ville: userInfo.ville
+        });
+    }
+
+    useEffect(() => {
+        // In case the client prepaid, we just need to update his location info in the database
+        console.log("after new location: ");
+        console.log(newLocation);
+
+        // Create the location in the database
+        if (newLocation.nomFamille != '') {
+            createLocation();
+        }
+    }, [newLocation]);
+
+    const createLocation = async() => {
+        try {
+            await connexionCompte.saveMethodePaiementForClientLoueChambre(newLocation);
+        } catch (error) {
+            console.error(error);
+        } 
     }
 
     const showHistoriqueLocation = () => {
@@ -44,7 +116,6 @@ export const ReservationActive = () => {
     const formatDate = (date) => {
         return new Date(date).toISOString().substring(0, 10);
     }
-
     return ( 
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
@@ -93,7 +164,10 @@ export const ReservationActive = () => {
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                         </svg>
                                     </td>
-                                    : <td className="text-center"><button className="btn btn-secondary" onClick={() => {checkIfPaiementComplete((val))}}>CheckIn</button></td>
+                                    : <td className="text-center"><button className="btn btn-secondary" onClick={() => {
+                                        checkIfPaiementComplete((val))
+                                        
+                                    }}>CheckIn</button></td>
                                 }
                                 <td className="text-center">{val.numeroChambre}</td>
                                 {val.isPaiementComplete ? <td className="text-center" style={{color: 'green'}}>Oui</td> : <td className="text-center" style={{color: 'red'}}>Non</td>}
