@@ -20,9 +20,6 @@ todayCheckout.setDate(todayCheckout.getDate() + 4);
 const vCheckin = todayCheckin.toISOString().slice(0,10);
 const vCheckout = todayCheckout.toISOString().slice(0,10);
 
-// console.log("todayCheckinHere is   ",vCheckin);
-// console.log("next day checkout here is    ",vCheckout);
-
 export const Filters = ({onStateChange})=>{
     const [filters, setFilters] = useState({
         checkin: vCheckin,
@@ -32,8 +29,8 @@ export const Filters = ({onStateChange})=>{
         vue:'MER',
         prixMin:'0',
         prixMax:'10000',
-        chaine:'Hotels Bellevue',
-        classement:'3',
+        chaine:[], // 'Hotels Bellevue',
+        classement:[], //'3',
         chambreMin:'1',
         chambreMax:'1000'
     });
@@ -101,23 +98,24 @@ export const Filters = ({onStateChange})=>{
                 setFilters({...filters,[nameV]:vueArray});     
             }
         }
-        // else if(name == 'chaines' || name == 'classement'){
-        //     console.log('chaine ou classement');
-        //     console.log(value);
+        else if(name == 'chaine'|| name == 'classement'){
+            console.log('chaine ou classement');
+            console.log(value);
     
-        //     let included = filters[name].includes(value);
-        //     if (!included){
-        //         setFilters((prev)=>(
-        //             {...filters,[name]:[...prev[name],value]}
-        //         ));
-        //     }else {
-        //         let chainesArray = [...filters[name]];
-        //         let index = chainesArray.indexOf(value);
-        //         chainesArray.splice(index,1);
-        //         setFilters({...filters,[name]:chainesArray});
-        //     }
+            let included = filters[name].includes(value);
+            console.log("is included? " + included);
+            if (!included){
+                setFilters((prev)=>(
+                    {...filters,[name]:[...prev[name],value]}
+                ));
+            }else {
+                let chainesArray = [...filters[name]];
+                let index = chainesArray.indexOf(value);
+                chainesArray.splice(index,1);
+                setFilters({...filters,[name]:chainesArray});
+            }
 
-        // }
+        }
         else{
             if(name == 'prixMin' || name== 'prixMax' || name=='chambreMin' || name=='chambreMax'){
                 let newValue = value.replace(/,/,'');
@@ -127,8 +125,6 @@ export const Filters = ({onStateChange})=>{
                 });
             }
             else{
-                // console.log("the name is",name);
-                // console.log("the value", value);
                 setFilters({
                 ...filters,
                 [name]: value
@@ -223,7 +219,7 @@ export const Filters = ({onStateChange})=>{
                         <div className="text-start">
                             {nomchaines.map((item,index)=>(
                                 <div key={index} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='chaine' checked={filters.chaine == item} onChange={handleInputChange} id={`chaine${index}`} value={item}/>
+                                    <input className="form-check-input" type="checkbox" name='chaine' onChange={handleInputChange} id={`chaine${index}`} value={item}/>
                                     <label className="form-check-label" htmlFor={`chaine${index}`}>{item}</label>
                                 </div>
                             ))}
@@ -237,23 +233,23 @@ export const Filters = ({onStateChange})=>{
                         <label className='p-2 m-1 fw-bold'>Classement</label>
                             <div className='d-md-flex flex-wrap gap-2'>
                                 <div key={0} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '1'} onChange={handleInputChange} id={'oneStar'} value={'1'}/>
+                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'oneStar'} value={'1'}/>
                                     <label className="form-check-label" htmlFor={'oneStar'}>⭐</label>
                                 </div>
                                 <div key={1} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '2'} onChange={handleInputChange} id={'twoStar'} value={'2'}/>
+                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'twoStar'} value={'2'}/>
                                     <label className="form-check-label" htmlFor={'twoStar'}>⭐⭐</label>
                                 </div>
                                 <div key={2} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '3'} onChange={handleInputChange} id={'threeStar'} value={'3'}/>
+                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'threeStar'} value={'3'}/>
                                     <label className="form-check-label" htmlFor={'threeStar'}>⭐⭐⭐</label>
                                 </div>
                                 <div key={3} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '4'} onChange={handleInputChange} id={'fourStar'} value={'4'}/>
+                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'fourStar'} value={'4'}/>
                                     <label className="form-check-label" htmlFor={'fourStar'}>⭐⭐⭐⭐</label>
                                 </div>
                                 <div key={4} className='form-check'>
-                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '5'} onChange={handleInputChange} id={'fiveStar'} value={'5'}/>
+                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'fiveStar'} value={'5'}/>
                                     <label className="form-check-label" htmlFor={'fiveStar'}>⭐⭐⭐⭐⭐</label>
                                 </div>
                             </div>

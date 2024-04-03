@@ -7,6 +7,7 @@ import { useLocation,useLoaderData, useNavigate } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import fcts from "../../ApiFcts/Api";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
+import connexionCompte from "../../services/connexion-compte";
 
 // This function is getting called each time the page renders
 export const loaderAllRooms = ()=>{
@@ -54,8 +55,8 @@ export const PageReservation = () => {
         vue:'MER',
         prixMin:'0',
         prixMax:'10000',
-        chaine:'Hotels Bellevue',
-        classement:'3',
+        chaine:[],
+        classement:[],
         chambreMin:'1',
         chambreMax:'1000'
     });
@@ -87,6 +88,7 @@ export const PageReservation = () => {
     // To control error modal
     const [show,setShow] = useState(false);
 
+    const [isChambreDispo, setIsChambreDispo] = useState(true);
 
     // Controling modal behavior (toggle between two states)
 
@@ -94,7 +96,6 @@ export const PageReservation = () => {
         setShow((prev)=>!prev);
     }
 
-    
 
 
     // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
@@ -106,7 +107,7 @@ export const PageReservation = () => {
         // BEFORE MAKING A GET REQUEST VALIDATE!
         // dates checkin < date checkout
         // price min < price max
-        // chambre min < chambre max
+        // chambre min < chambre max       
         const errors = ValidateFcts.validateFilters(filters);
         // console.log("well those erros are",errors);
         setFilterError(errors);
@@ -129,60 +130,28 @@ export const PageReservation = () => {
             console.log("fields are ready to be submitted to backend");
             // console.log("filters to be applied are",filters);
 
-            // Insert les appels au API pour les filtres ici
-            
-            // Ca marche
-            // get Chaine Hoteliere
-            // getChambresFromChaines();
+            // Si la liste de la chaine est nulle, alors on insere toutes les chaines par defaut
+        
+            // set le boolean de retour a true, pour qu'on ne vois pas l'erreur 
+            setIsChambreDispo(true);
 
-            // get Classement
-            // getChambresFromClassement();
 
-            // Get nombre de chambres
-            // getChambresFromNombreDeChambres();
-            // Ca marche
+            console.log(filters)
 
-            // console.log("filters to be applied are",filters);
             const rooms  = await ValidateFcts.submitFilters(filters);
             // console.log("rooms in frontend",rooms);
             setRooms(rooms);
+            
+            if (rooms.length == 0) {
+                // Affiche un message pour laisser l'usager savoir qu'aucune chambre n'est disponible
+                setIsChambreDispo(false);
+            } 
             return rooms;
         }
     }
 
-//   const getChambresFromChaines = async () => {
-//     try {
-//         const data = await ValidateFcts.getAllChambresFromChaineHoteliere(filters.chaines);
-//         console.log("Chaine hoteliere: ");
-//         console.log(data.data);
-//     } catch (error) {
-//         console.error(error);
-//     }
-//   }
-
-//   const getChambresFromClassement = async () => {
-//     try {
-//         const data = await ValidateFcts.getAllChambresFromClassement(filters.classement);
-//         console.log("Classement des chambres: ");
-//         console.log(data.data);
-//     } catch (error) {
-//         console.error(error);
-//     }
-//   }
-
-//   const getChambresFromNombreDeChambres = async () => {
-//     try {
-//         const data = await ValidateFcts.getChambresFromNombreDeChambres(filters.chambreMin, filters.chambreMax);
-//         console.log("Filtres du nombre de chambre min et max: ");
-//         console.log(data.data);
-//     } catch (error) {
-//         console.error(error);
-//     }
-//   }
-
 
     // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
-
     const voirDetail = (chambre)=>{
         // console.log("on doit ici changer vers la chambre de details de la chambre");
         navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {client:state, chambre:chambre,nas:state.nas}});
@@ -198,6 +167,7 @@ export const PageReservation = () => {
             <button onClick={handleFilterSub} type='button' className='btn bg-info w-25 mx-auto m-2' data-bs-toggle="modal" data-bs-target="modalErr">Filtrer</button>
             {/* Showing modal in case of errors */}
 
+            {!isChambreDispo ? <div className="col-5 mx-auto border-black border-1 text-center m-3"><h5>Aucune chambre trouvée.</h5><h5>Veuillez changer vos filtres.</h5></div> : <></>}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title key={'title'}>Des erreurs détectées</Modal.Title>
