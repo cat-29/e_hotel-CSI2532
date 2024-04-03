@@ -210,7 +210,7 @@ export const EmployeAjouteLocation = () => {
     return(
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
-            <h2 className="text-center p-3">Ajout d'une location</h2>
+            <h1 className="text-center mx-4 my-4">Ajout d'une location</h1>
             <p className="p-3 ">* Veuillez vous assurer de compléter tous les champs</p>
             <form noValidate className="mx-4" onSubmit={handleSubmit}>
                 <div className="d-grid gap-2 d-md-flex m-3">
@@ -386,7 +386,7 @@ export const EmployeAjouteLocation = () => {
                 {/* 1. Add Hotel textbox where it is disabled and set as the hotel name the employe works at */}
                 {/* 2. when create location, return 1st chambreNumber that is not used during the dates suggested */}
                 {/* 3. Add the payment section on Suivant and add the handleSubmit on the button */}
-                <div className="d-grid gap-2 d-md-flex m-3">
+                <div className="d-grid gap-2 d-md-flex m-3 mb-5">
                     {/* <button type="submit" className='btn btn-primary'>Créesr un compte</button> */}
                     <button type='submit' onClick={handleSubmit} className='btn btn-secondary'>Suivant</button>
                 </div>

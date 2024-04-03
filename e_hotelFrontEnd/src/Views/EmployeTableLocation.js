@@ -39,7 +39,7 @@ export const EmployeTableLocation = () => {
     return (
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
-            <div className="titre text-center">
+            <div className="text-center">
                 <h1 className="mx-4 my-4">Historique des locations</h1>                    
             </div>
 
@@ -53,7 +53,7 @@ export const EmployeTableLocation = () => {
                 </button>                
             </div>
 
-            <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+            <table className="table align-middle table-bordered mx-5 my-2 mb-5 w-auto">
                 <thead>
                     <tr className="text-center">
                         <th className="col">#</th>

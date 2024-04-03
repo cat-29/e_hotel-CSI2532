@@ -80,7 +80,7 @@ export const EmployeSignIn=()=>{
 
                     
                     <div className="d-grid gap-2 d-md-flex m-3">
-                        <button type="submit" className='btn btn-primary'>Connecter</button>
+                        <button type="submit" className='btn btn-secondary'>Connecter</button>
                     </div>
 
                 </form>

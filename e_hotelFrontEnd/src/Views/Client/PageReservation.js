@@ -218,7 +218,7 @@ export const PageReservation = () => {
                                         <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
                                         <div id="prix">{`${item.prix} $ / nuit`}</div>
                                         <div id="rating">{renderStars(item.rating)}</div>
-                                        <a className="btn btn-primary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
+                                        <a className="btn btn-secondary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
                                 </div>
                             </div>
                         </div>

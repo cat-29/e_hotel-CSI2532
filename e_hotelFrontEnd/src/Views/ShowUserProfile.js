@@ -197,14 +197,18 @@ export const ShowUserProfile = () => {
         }
     }
 
+    const navigateBack = () => {
+        window.history.back();
+    }
+
     return (
         <>
             <AppHeader/>
-            <div className="titre text-center">
-                <h1 className="mx-4 my-4">Profile</h1>                    
+            <div className="text-center">
+                <h1 className="mx-4 my-4">Profil</h1>                    
             </div>
 
-            <form noValidate onSubmit={handleSubmit} className="align-middle mx-5 my-2 mx-auto mb-5 border p-2" >
+            <form noValidate onSubmit={handleSubmit} className="align-middle mx-5 my-2 mx-auto mb-3 border p-2" id="formUserProfil" >
                 {/* Bouton pour modifier le profil */}
                 <div className="text-end">
                     {disableProfil ?
@@ -370,7 +374,18 @@ export const ShowUserProfile = () => {
                     </div>
                     : <></>
                 }
+
+                
             </form>
+
+            <div className="text-center">
+                <button type="button" className="btn btn-secondary mb-5" onClick={navigateBack}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 19 19">
+                        <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                        <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>Retour</button>                   
+            </div>
+            
+            
         </>
     )
 }

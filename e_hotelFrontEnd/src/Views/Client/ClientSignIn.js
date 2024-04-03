@@ -105,8 +105,8 @@ export const ClientSignIn=()=>{
 
                         
                         <div className="d-grid gap-2 d-md-flex m-3">
-                            <button type="submit" className='btn btn-primary'>Connecter</button>
-                            <button type='button' onClick={goToCreateAccountForm} className='btn btn-secondary'>Créer un compte</button>
+                            <button type="submit" className='btn btn-secondary'>Connecter</button>
+                            <button type='button' onClick={goToCreateAccountForm} className='btn btn-primary'>Créer un compte</button>
                         </div>
 
                     </form>

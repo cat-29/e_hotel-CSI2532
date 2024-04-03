@@ -48,7 +48,7 @@ export const DetailChambre = ()=>{
                 <div id="vue"><b>Vue:</b> {chambre.vueChambre}</div>
                 <div id="nbreChambreTot"><b>Nombre de chambres de l'hôtel:</b> {chambre.nbrChambre}</div>
                 <div id="Addresse"><b>Addresse:</b> {`${chambre.numero} ${chambre.rue}, ${chambre.ville}, ${chambre.province}, ${chambre.codePostal}, ${chambre.pays} `}</div> 
-                <a className="btn btn-primary p-1 m-2 mx-auto" onClick={()=>reserve(chambre.numeroChambre,chambre.nom,userNas,chambre.prix,chambre.idHotel)}>Réserver</a>
+                <a className="btn btn-secondary p-1 m-2 mx-auto" onClick={()=>reserve(chambre.numeroChambre,chambre.nom,userNas,chambre.prix,chambre.idHotel)}>Réserver</a>
             </div>
         </>
     )

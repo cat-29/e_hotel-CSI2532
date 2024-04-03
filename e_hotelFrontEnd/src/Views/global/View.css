@@ -18,7 +18,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
 }
 
 .wrapper::after { 
@@ -37,17 +37,58 @@
     background-repeat: no-repeat;
 }
 
+.cedarville-cursive-regular {
+    font-family: "Cedarville Cursive", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.great-vibes-regular {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: xxx-large;
+}
+
+.dancing-script {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+}
+  
+.titre {
+    max-width: 100%;
+    max-height: 100%;
+    height: 475px;
+    background-color: #000000c5;
+    align-self: center;
+}
+
+.titre::after{
+    height: 100%;
+    width: 100%;
+}
+
+.buttonGrid {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
 
 .directBtns{
     display: flex;
-    height: 30rem;
-    gap: 4rem;
+    height: 20rem;
+    gap: 2rem;
     /* margin: 0 auto; */
     /* border: 4px solid red; */
     /* padding: 4rem; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
 
 
 }
@@ -55,16 +96,11 @@
 a,.btnCustom{
     list-style: none;
     font-size: 1.5rem !important;
-    padding: 1rem !important;
-    width: 13rem;
+    padding: 0.8rem !important;
+    width: 13rem; 
 }
 
-.questionTitre{
-    font-size: 1.5rem;
-    background: #979292 ;
-    padding: 1rem;
-}
-
-.backgroundColumn{
-
+.bg-secondary {
+    border: 1px solid black;
+    background-color: white;
 }

@@ -124,7 +124,7 @@ export const Filters = ({onStateChange})=>{
     return(
         <>
         <div className="container-fluid d-flex flex-row px-0">
-            <div id="leftFilters" className="col-md-8 bg-secondary p-3">
+            <div id="leftFilters" className="col-md-8 bg-primary p-3">
                 {/* Filtres obligatoires */}
                 <div id='pricipauxFiltres' className=' text-center gap-5 ms-1 d-md-flex flex-wrap'>
                     <div id='checkin' className="">
@@ -195,7 +195,7 @@ export const Filters = ({onStateChange})=>{
             </div>
            
 
-            <div id='rightFilters' className="container-fluid text-center flex-wrap col-md-4 bg-primary">
+            <div id='rightFilters' className="container-fluid text-center flex-wrap col-md-4 bg-success">
                     <div id='chaine'>
                         <div className="text-center">
                             <label className='p-2 m-1 fw-bold text-center'>Chaîne Hôtelière</label>

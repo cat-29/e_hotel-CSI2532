@@ -11,7 +11,7 @@ export const ChambreInfo = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
       <h2 className="text-center p-3">Information chaîne hôtelière</h2>

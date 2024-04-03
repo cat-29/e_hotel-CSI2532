@@ -158,7 +158,7 @@ export const AjouteDommage = () => {
     return (
         <>
             <AppHeader info={state.employeInfo} isUserTypeClient={false}/>
-            <div className="titre text-center">
+            <div className="text-center">
                 <h1 className="mx-4 my-4">Ajouter un dommage</h1>                    
             </div>
             
