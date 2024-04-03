@@ -122,6 +122,22 @@ public class ChaineHoteliereController {
         return chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));
     }
 
+    @PostMapping("/updateHotel")
+    public Hotel updateHotel(@RequestBody HotelDTO dto) {
+        return hotelService.updateHotel(HotelMapper.mapToHotel(dto));
+    }
+
+    // @PostMapping("/updateEmploye")
+    // public ChaineHoteliere updateChambre(@RequestBody ChaineHoteliereDTO dto) {
+    // return
+    // chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));
+    // }
+
+    // @PostMapping("/updateChambre")
+    // public ChaineHoteliere updateEmploye(@RequestBody ChaineHoteliereDTO dto) {
+    // return
+    // chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));
+    // }
     // @GetMapping("/hotel/{idHotel}")
     // public String getChaineHoteliere(@RequestParam String idHotel) {
 

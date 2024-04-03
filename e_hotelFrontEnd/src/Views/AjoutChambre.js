@@ -70,7 +70,11 @@ export const AjoutChambre = () => {
 
   const navigateToChambres = () => {
     navigate("/hotelInfo", {
-      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+      state: {
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 

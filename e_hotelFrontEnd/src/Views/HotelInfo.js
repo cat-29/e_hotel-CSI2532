@@ -46,29 +46,46 @@ export const HotelInfo = () => {
   }, []);
 
   console.log("ds hotel info: ", state);
-  console.log("ds hotel info: ", state.chaineInfo);
 
   const showChambreInfo = (chambreInfo) => {
     navigate("/chambreInfo", {
-      state: { chambreInfo: chambreInfo, employeInfo: state.employeInfo },
+      state: {
+        chambreInfo: chambreInfo,
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 
   const showEmployeInfo = (employeInfo) => {
     navigate("/employeInfo", {
-      state: { employeInfo: employeInfo, adminInfo: state.employeInfo },
+      state: {
+        employeInfo: employeInfo,
+        adminInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 
   const showAjoutChambre = () => {
     navigate("/ajoutChambre", {
-      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+      state: {
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 
   const showAjoutEmploye = () => {
     navigate("/ajoutEmploye", {
-      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+      state: {
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 
@@ -165,7 +182,7 @@ export const HotelInfo = () => {
         await adminService.updateHotel(formData).then(() => {
           console.log("saveHotel called");
           console.log(formData);
-          //navigateToHotels();
+          navigateToHotels();
         });
       } catch (error) {
         console.error(error);
@@ -401,7 +418,7 @@ export const HotelInfo = () => {
         <div className="text-center">
           <h4 className="">Employés</h4>
         </div>
-        <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+        <table className="table align-middle table-bordered mx-5 my-2 w-auto mb-5">
           <thead>
             <tr className="text-center">
               <th>#</th>
@@ -456,7 +473,7 @@ export const HotelInfo = () => {
         <div className="text-center">
           <h4 className="">Chambres</h4>
         </div>
-        <table className="table align-middle table-bordered mx-5 my-2 w-auto">
+        <table className="table align-middle table-bordered mx-5 my-2 w-auto mb-5">
           <thead>
             <tr className="text-center">
               <th>#</th>

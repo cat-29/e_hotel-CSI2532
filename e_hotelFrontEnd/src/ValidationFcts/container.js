@@ -430,6 +430,20 @@ const validateAllChambreFields = (answer) => {
   return res;
 };
 
+const validateAllModifChambreFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "numero_chambre" || key == "id_hotel") {
+      res = validateNumero(answer[key], res);
+    } else if (key == "prix") {
+      res = validatePrice(answer[key], res);
+    }
+  }
+  return res;
+};
+
 const validateAllEmployeFields = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
@@ -628,24 +642,24 @@ const isRoomAvailable = async (checkin, checkout, state) => {
 };
 
 // Handling Filters section here
-const submitFilters = async (filters)=>{
-  for (let key in filters){
-      if (key == 'prixMin' && filters[key] == ""){
-        filters[key] = '0';
-      } else if (key == 'prixMax' && filters[key] == ""){
-        filters[key] = '10000'
-      }else if(key == 'chambreMin' && filters[key] == ""){
-        filters[key] = '1';
-      }else if(key == 'chambreMax' && filters[key] == ""){
-        filters[key] = '1000'
-      }else if (key == 'checkin' && filters[key] == ""){
-        filters[key] = 'NAN'
-      }else if (key == 'checkout' && filters[key] == ""){
-        filters[key] = 'NAN'
-      }
+const submitFilters = async (filters) => {
+  for (let key in filters) {
+    if (key == "prixMin" && filters[key] == "") {
+      filters[key] = "0";
+    } else if (key == "prixMax" && filters[key] == "") {
+      filters[key] = "10000";
+    } else if (key == "chambreMin" && filters[key] == "") {
+      filters[key] = "1";
+    } else if (key == "chambreMax" && filters[key] == "") {
+      filters[key] = "1000";
+    } else if (key == "checkin" && filters[key] == "") {
+      filters[key] = "NAN";
+    } else if (key == "checkout" && filters[key] == "") {
+      filters[key] = "NAN";
+    }
   }
   // console.log("activeFilters before sending a get request",filters);
-  
+
   const rooms = await fcts.getFilteredResults(filters);
   // console.log("the rooms here are",rooms);
   return rooms;
@@ -692,6 +706,10 @@ ValidateFcts.validateAllModifHotelFields = (answer) => {
 
 ValidateFcts.validateAllChambreFields = (answer) => {
   return validateAllChambreFields(answer);
+};
+
+ValidateFcts.validateAllModifChambreFields = (answer) => {
+  return validateAllModifChambreFields(answer);
 };
 
 ValidateFcts.validateAllEmployeFields = (answer) => {

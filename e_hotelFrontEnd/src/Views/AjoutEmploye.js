@@ -78,7 +78,11 @@ export const AjoutEmploye = () => {
 
   const navigateToChambres = () => {
     navigate("/hotelInfo", {
-      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+      state: {
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
     });
   };
 
@@ -124,8 +128,8 @@ export const AjoutEmploye = () => {
               value={formData.prenom}
               onChange={handleInputChange}
             />
-            {formDataError[3] != "" ? (
-              <div style={{ color: "red" }}>{formDataError[3]}</div>
+            {formDataError[1] != "" ? (
+              <div style={{ color: "red" }}>{formDataError[1]}</div>
             ) : (
               <></>
             )}
@@ -143,8 +147,8 @@ export const AjoutEmploye = () => {
               value={formData.nomFamille}
               onChange={handleInputChange}
             />
-            {formDataError[4] != "" ? (
-              <div style={{ color: "red" }}>{formDataError[4]}</div>
+            {formDataError[2] != "" ? (
+              <div style={{ color: "red" }}>{formDataError[2]}</div>
             ) : (
               <></>
             )}
@@ -181,8 +185,8 @@ export const AjoutEmploye = () => {
               value={formData.numero}
               onChange={handleInputChange}
             />
-            {formDataError[5] != "" ? (
-              <div style={{ color: "red" }}>{formDataError[5]}</div>
+            {formDataError[3] != "" ? (
+              <div style={{ color: "red" }}>{formDataError[3]}</div>
             ) : (
               <></>
             )}
@@ -240,8 +244,8 @@ export const AjoutEmploye = () => {
               onChange={handleInputChange}
               name="province"
             />
-            {formDataError[4] != "" ? (
-              <div style={{ color: "red" }}>{formDataError[4]}</div>
+            {formDataError[6] != "" ? (
+              <div style={{ color: "red" }}>{formDataError[6]}</div>
             ) : (
               <></>
             )}

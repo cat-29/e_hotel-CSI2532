@@ -92,12 +92,27 @@ public class HotelService {
     }
 
     // Pour la vue 2
-    public List<HotelCapaciteDto> getCapaciteAllRooms(){
+    public List<HotelCapaciteDto> getCapaciteAllRooms() {
         List<Object[]> rawResult = this.hotelRepository.getCapaciteAllRooms();
         List<HotelCapaciteDto> rawResultFormatted = HotelCapaciteMapper.mapToHotelCapaciteDtoObject(rawResult);
-       
 
         return rawResultFormatted;
     }
 
+    public Hotel updateHotel(Hotel hotel) {
+        Hotel existingHotel = hotelRepository.findById(hotel.getId()).get();
+        existingHotel.setId(hotel.getId());
+        existingHotel.setNomChaine(hotel.getNomChaine());
+        existingHotel.setNom(hotel.getNom());
+        existingHotel.setRating(hotel.getRating());
+        existingHotel.setNbrChambre(hotel.getNbrChambre());
+        existingHotel.setNumero(hotel.getNumero());
+        existingHotel.setRue(hotel.getRue());
+        existingHotel.setVille(hotel.getVille());
+        existingHotel.setProvince(hotel.getProvince());
+        existingHotel.setPays(hotel.getPays());
+        existingHotel.setCodePostal(hotel.getCodePostal());
+
+        return hotelRepository.save(existingHotel);
+    }
 }

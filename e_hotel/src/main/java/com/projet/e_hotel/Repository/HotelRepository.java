@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.projet.e_hotel.Classes.Hotel;
 
+@Repository
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Optional<Hotel> findById(Integer idHotel);
 
@@ -24,6 +26,8 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     List<Hotel> findHotelsByNomChaine(String nomChaine);
 
     Hotel findByNomChaine(String nomChaine);
+
+    // Hotel findByIdHotel(Integer id);
 
     // Pour la vue 2
     @Query(value = " select * from capacite_chambres_tous_hotels", nativeQuery = true)

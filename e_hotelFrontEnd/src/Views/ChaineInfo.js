@@ -40,7 +40,7 @@ export const ChaineInfo = () => {
     console.log(formData);
   }, []);
 
-  const showHotelInfo = (hotelInfo, chaineInfo) => {
+  const showHotelInfo = (hotelInfo) => {
     navigate("/hotelInfo", {
       state: {
         hotelInfo: hotelInfo,

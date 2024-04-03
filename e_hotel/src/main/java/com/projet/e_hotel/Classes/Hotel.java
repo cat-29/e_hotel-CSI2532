@@ -65,7 +65,28 @@ public class Hotel {
         this.codePostal = codePostal;
     }
 
+    public Hotel(Integer id, String nomChaine, String nom, Integer rating, Integer nbrChambre, Integer numero,
+            String rue,
+            String ville, String province, String pays, String codePostal) {
+        this.id = id;
+        this.nomChaine = nomChaine;
+        this.nom = nom;
+        this.rating = rating;
+        this.nbrChambre = nbrChambre;
+        this.numero = numero;
+        this.rue = rue;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+    }
+
     public Hotel() {
+    }
+
+    public Hotel orElseThrow() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }
 
 }
