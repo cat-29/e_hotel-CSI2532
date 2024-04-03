@@ -89,11 +89,11 @@ export const AjouteDommage = () => {
                 setIsShown(false);
             }
         } 
-        else if (name == "explication") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
-            setFormData({ ...formData, [name]: newValue });
+        // else if (name == "explication") {
+        //     const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+        //     setFormData({ ...formData, [name]: newValue });
 
-        }
+        // }
         else {
             setFormData({ ...formData, [name]: value });
         }

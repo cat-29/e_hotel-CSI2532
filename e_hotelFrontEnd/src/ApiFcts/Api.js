@@ -2,6 +2,7 @@
 // please use the functions here or use an existing one. That way we can easily debug errors by having them all 
 // in one central place
 import axios from "axios";
+import connexionCompte from "../services/connexion-compte";
 
 const fcts = {};
 
@@ -70,16 +71,64 @@ const getFilteredResultsTwoElementsCheckinCheckout = async(checkin,checkout)=>{
 
 }
 
+const getFilteredResultsWithNotChaine = async(filters) => {
+    let rooms = null;
+        // et la chaine et le classement sont vide
+        try{
+            const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/noChaine/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["classement"]}/${filters["chambreMin"]}/${filters["chambreMax"]}/${filters["etendre"]}`);
+            if (response.status == 200){
+                console.log("fetching completed successfully");
+                rooms = response.data;
+            }else{
+                console.log("Sorry, something went wrong while fetching");
+            }
+        }catch(error){
+            console.log("Error occured",error);
+        }
+    return rooms;
+}
+
+const getFilteredResultsWithNoChaineAndNoRating = async(filters) => {
+    let rooms = null;
+        // et la chaine et le classement sont vide
+        try{
+            const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/noChaineAndRatin/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chambreMin"]}/${filters["chambreMax"]}/${filters["etendre"]}`);
+            if (response.status == 200){
+                console.log("fetching completed successfully");
+                rooms = response.data;
+            }else{
+                console.log("Sorry, something went wrong while fetching");
+            }
+        }catch(error){
+            console.log("Error occured",error);
+        }
+    return rooms;
+}
+
+const getFilteredResultsWithNoRating = async(filters) => {
+    let rooms = null;
+        // et la chaine et le classement sont vide
+        try{
+            const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/noRating/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chaine"]}/${filters["chambreMin"]}/${filters["chambreMax"]}/${filters["etendre"]}`);
+            if (response.status == 200){
+                console.log("fetching completed successfully");
+                rooms = response.data;
+            }else{
+                console.log("Sorry, something went wrong while fetching");
+            }
+        }catch(error){
+            console.log("Error occured",error);
+        }
+    return rooms;
+}
 
 const getFilteredResults = async(filters)=>{
     let rooms = null;
     try{
-        // console.log("before hitting the endpoint,  "+ filters);
         const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chaine"]}/${filters["classement"]}/${filters["chambreMin"]}/${filters["chambreMax"]}/${filters["etendre"]}`);
         if (response.status == 200){
             console.log("fetching completed successfully");
             rooms = response.data;
-            // console.log("the rooms are here",rooms)
         }else{
             console.log("Sorry, something went wrong while fetching");
         }
@@ -242,8 +291,22 @@ fcts.getAllCommoditees = async (hotelId,numero_chambre)=>{
 }
 
 fcts.getFilteredResults = async (filters)=>{
+if (filters.chaine.length == 0 && filters.classement.length == 0) {
+    const rooms = await getFilteredResultsWithNoChaineAndNoRating(filters);
+    return rooms;
+} else if (filters.chaine.length == 0) {
+    // juste chaines qui est null
+    const rooms = await getFilteredResultsWithNotChaine(filters);
+    return rooms;
+} else if (filters.classement.length == 0) {
+    // juste classement qui est null
+    const rooms = await getFilteredResultsWithNoRating(filters);
+    return rooms;
+} else {
+    // ni un, ni l'autre sont nuls
     const rooms = await getFilteredResults(filters);
     return rooms;
+}
 
 }
 
