@@ -39,4 +39,19 @@ public class EmployeMapper {
                 idHotel);
     }
 
+    public static Employe mapToEmploye(EmployeDTO employeDTO) {
+        return new Employe(
+                employeDTO.getId(),
+                employeDTO.getPrenom(),
+                employeDTO.getNomFamille(),
+                employeDTO.getNumero(),
+                employeDTO.getRue(),
+                employeDTO.getVille(),
+                employeDTO.getProvince(),
+                employeDTO.getPays(),
+                employeDTO.getCodePostal(),
+                employeDTO.getRoleEmploye(),
+                employeDTO.getIdHotel());
+    }
+
 }

@@ -18,16 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("/compte")
 public class ConnectionCompteController {
-    
+
     private final CompteClientService compteClientService;
     private final CompteEmployeService compteEmployeService;
-    
-    public ConnectionCompteController (CompteClientService compteClientService, CompteEmployeService compteEmployeService) {
+
+    public ConnectionCompteController(CompteClientService compteClientService,
+            CompteEmployeService compteEmployeService) {
         this.compteClientService = compteClientService;
         this.compteEmployeService = compteEmployeService;
     }
@@ -61,7 +60,7 @@ public class ConnectionCompteController {
     public Client getClientInfo(@PathVariable String nas) {
         return compteClientService.findClient(nas);
     }
-    
+
     @PostMapping("/employe/updateProfile")
     public Employe updateProfileEmploye(@RequestBody UpdateProfileDTO dto) {
         return compteEmployeService.updateProfileEmploye(UpdateProfileMapper.mapToEmploye(dto));
@@ -71,17 +70,15 @@ public class ConnectionCompteController {
     public Client updateProfileClient(@RequestBody UpdateProfileDTO dto) {
         return compteClientService.updateProfileClient(UpdateProfileMapper.mapToClient(dto));
     }
-    
+
     @PostMapping("/employe/updateCompte")
-    public CompteEmploye updateCompteEmploye(@RequestBody UpdateProfileDTO dto) {        
+    public CompteEmploye updateCompteEmploye(@RequestBody UpdateProfileDTO dto) {
         return compteEmployeService.updateCompte(UpdateProfileMapper.mapToCompteEmploye(dto));
     }
 
     @PostMapping("/client/updateCompte")
-    public CompteClient updateCompteClient(@RequestBody UpdateProfileDTO dto) {        
+    public CompteClient updateCompteClient(@RequestBody UpdateProfileDTO dto) {
         return compteClientService.updateCompte(UpdateProfileMapper.mapToCompteClient(dto));
     }
-    
 
-    
 }

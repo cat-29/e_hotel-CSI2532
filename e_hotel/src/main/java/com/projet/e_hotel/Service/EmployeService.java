@@ -21,4 +21,22 @@ public class EmployeService {
     public Employe saveNewEmploye(Employe employe) {
         return employeRepository.save(employe);
     }
+
+    public Employe updateEmploye(Employe employe) {
+        Employe existingEmploye = employeRepository.findById(employe.getId())
+                .orElseThrow(() -> new RuntimeException("Entity not found with id: " + employe.getId()));
+        ;
+        // existingEmploye.setId(employe.getId());
+        existingEmploye.setPrenom(employe.getPrenom());
+        existingEmploye.setNomFamille(employe.getNomFamille());
+        existingEmploye.setNumero(employe.getNumero());
+        existingEmploye.setRue(employe.getRue());
+        existingEmploye.setVille(employe.getVille());
+        existingEmploye.setProvince(employe.getProvince());
+        existingEmploye.setPays(employe.getPays());
+        existingEmploye.setCodePostal(employe.getCodePostal());
+        existingEmploye.setRoleEmploye(employe.getRoleEmploye());
+        existingEmploye.setIdHotel(employe.getIdHotel());
+        return employeRepository.save(existingEmploye);
+    }
 }

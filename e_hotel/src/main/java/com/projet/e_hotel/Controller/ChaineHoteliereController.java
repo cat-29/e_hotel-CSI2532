@@ -3,6 +3,7 @@ package com.projet.e_hotel.Controller;
 import com.projet.e_hotel.Classes.AjoutChaineHoteliere;
 import com.projet.e_hotel.Classes.ChaineHoteliere;
 import com.projet.e_hotel.Classes.Chambre;
+import com.projet.e_hotel.Classes.Employe;
 import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.AjoutChaineHoteliereDTO;
 import com.projet.e_hotel.Classes.dto.AjoutHotelDTO;
@@ -133,10 +134,11 @@ public class ChaineHoteliereController {
         return chambreService.updateChambre(ChambreMapper.mapToChambre(dto));
     }
 
-    // public ChaineHoteliere updateEmploye(@RequestBody ChaineHoteliereDTO dto) {
-    // return
-    // chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));
-    // }
+    @PostMapping("/updateEmploye")
+    public EmployeDTO updateEmploye(@RequestBody EmployeDTO dto) {
+        return EmployeMapper.mapToEmployeDTO(employeService.updateEmploye(EmployeMapper.mapToEmploye(dto)));
+    }
+
     // @GetMapping("/hotel/{idHotel}")
     // public String getChaineHoteliere(@RequestParam String idHotel) {
 
