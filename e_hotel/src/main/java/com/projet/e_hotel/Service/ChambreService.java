@@ -66,11 +66,11 @@ public class ChambreService {
 
             // Insere tout les dommages dans la liste
             for (int j = 0; j < dommages.size(); j++) {
-                
+
                 listAllDommages.add(dommages.get(j));
             }
         }
-        
+
         return ChambreSubiDommageMapper.mapToListOfChambreSubiDommageDTO(listAllDommagesForIdHotel, listAllDommages);
     }
 
@@ -294,40 +294,42 @@ public class ChambreService {
     }
 
     // Getting all available rooms / province
-    public List<ProvinceCountAvDTO> getCountRoomAvailable(){
+    public List<ProvinceCountAvDTO> getCountRoomAvailable() {
         List<Object[]> rawResult = this.chambreRepository.getCountRoomAvailable();
         List<ProvinceCountAvDTO> rawResultFormatted = rawResult.stream()
-        .map(item -> ProvinceCountAvMapper.mapToProvinceCountDtoObject(item)).toList();
+                .map(item -> ProvinceCountAvMapper.mapToProvinceCountDtoObject(item)).toList();
 
-        return rawResultFormatted   ;
+        return rawResultFormatted;
 
     }
 
     // Getting all available rooms with date checkin specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckin(Date checkin,Date minCheckout){
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckin(checkin,minCheckout);
+    public List<ChambreHotelDTO> getAllRoomsAvCheckin(Date checkin, Date minCheckout) {
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckin(checkin, minCheckout);
         List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
         return rawResultFormatted;
     }
 
     // Getting all available rooms with date checkout specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckout(Date checkout,Date minCheckin){
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckout(checkout,minCheckin);
+    public List<ChambreHotelDTO> getAllRoomsAvCheckout(Date checkout, Date minCheckin) {
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckout(checkout, minCheckin);
         List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
         return rawResultFormatted;
     }
 
     // Both checkin and checkout are now specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckinAndCheckout(Date checkin,Date checkout){
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckinAndCheckout(checkin,checkout);
+    public List<ChambreHotelDTO> getAllRoomsAvCheckinAndCheckout(Date checkin, Date checkout) {
+        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckinAndCheckout(checkin, checkout);
         List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-        .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
+                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
         return rawResultFormatted;
 
     }
 
-
+    public Chambre saveNewChambre(Chambre chambre) {
+        return chambreRepository.save(chambre);
+    }
 
 }

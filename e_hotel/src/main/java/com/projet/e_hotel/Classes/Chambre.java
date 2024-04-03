@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "chambre")
 @IdClass(ChambrePK.class)
 public class Chambre {
-    
+
     @Id
     private Integer numeroChambre;
 
@@ -35,4 +35,17 @@ public class Chambre {
 
     @Column(name = "capacite_a_etendre")
     private Boolean capaciteAEtendre;
+
+    public Chambre(Integer numeroChambre, Integer idHotel, Double prix, String capaciteChambre, String vueChambre,
+            Boolean capaciteAEtendre) {
+        this.numeroChambre = numeroChambre;
+        this.idHotel = idHotel;
+        this.prix = prix;
+        this.capaciteChambre = capaciteChambre;
+        this.vueChambre = vueChambre;
+        this.capaciteAEtendre = capaciteAEtendre;
+    }
+
+    public Chambre() {
+    }
 }

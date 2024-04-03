@@ -2,6 +2,7 @@ package com.projet.e_hotel.Controller;
 
 import com.projet.e_hotel.Classes.AjoutChaineHoteliere;
 import com.projet.e_hotel.Classes.ChaineHoteliere;
+import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.AjoutChaineHoteliereDTO;
 import com.projet.e_hotel.Classes.dto.AjoutHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChaineHoteliereDTO;
@@ -98,6 +99,14 @@ public class ChaineHoteliereController {
         String nomChaine = chaineHoteliere.getNomChaine();
         // String nomChaine = oDto.getNomChaine();
         ajoutHotelService.saveNewHotel(AjoutHotelMapper.mapToAjoutHotel(oDto, nomChaine));
+    }
+
+    @PostMapping("/ajoutChambre")
+    public void saveNewChambre(@RequestBody ChambreDTO oDto) throws ParseException {
+        // get chaineHoteliere by nomChaine
+        // Hotel hotel = hotelService.findByIdHotel(oDto.getIdHotel());
+        Integer idHotel = oDto.getIdHotel();
+        chambreService.saveNewChambre(ChambreMapper.mapToChambre(oDto, idHotel));
     }
 
     @PostMapping("/updateChaine")

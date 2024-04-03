@@ -165,6 +165,18 @@ const validateCVC = (cvc, res) => {
   return res;
 };
 
+//Function to validate Price
+
+const validatePrice = (price, res) => {
+  let feedback = "";
+  let regexp = /^[0-9]+$/;
+  if (regexp.test(price) == false) {
+    feedback = "Le numéro ne doit avoir que des chiffres";
+  }
+  res.push(feedback);
+  return res;
+};
+
 // Validate all fields
 
 const validatePaiementFields = (answer) => {
@@ -379,6 +391,20 @@ const validateAllHotelFields = (answer) => {
   return res;
 };
 
+const validateAllChambreFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "numero_chambre" || key == "id_hotel") {
+      res = validateNumero(answer[key], res);
+    } else if (key == "prix") {
+      res = validatePrice(answer[key], res);
+    }
+  }
+  return res;
+};
+
 const validateDommage = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
@@ -533,22 +559,27 @@ const isRoomAvailable = async (checkin, checkout, state) => {
   // const res = await fcts.isRoomAvailable(data);
 };
 
-
 // Handling Filters section here
-const submitFilters = async (filters)=>{
+const submitFilters = async (filters) => {
   let activeFilters = {};
-  for (let key in filters){
+  for (let key in filters) {
     // console.log("key",filters[key]);
-    if (key == "checkin" || key == "checkout" || key == "capacite" || key=="prixMin" || key=="prixMax"){
-      if (filters[key] != ""){
+    if (
+      key == "checkin" ||
+      key == "checkout" ||
+      key == "capacite" ||
+      key == "prixMin" ||
+      key == "prixMax"
+    ) {
+      if (filters[key] != "") {
         activeFilters[key] = filters[key];
       }
-    }else if(key == "vue"){
-      if (filters[key].length != 0){
+    } else if (key == "vue") {
+      if (filters[key].length != 0) {
         activeFilters[key] = filters[key];
       }
-    }else if (key == "etendre"){
-      if (filters[key] == true){
+    } else if (key == "etendre") {
+      if (filters[key] == true) {
         activeFilters[key] = filters[key];
       }
     }
@@ -557,16 +588,12 @@ const submitFilters = async (filters)=>{
   const rooms = await fcts.getFilteredResults(activeFilters);
   // console.log("the rooms here are",rooms);
   return rooms;
+};
 
-
-}
-
-ValidateFcts.submitFilters = async (filters)=>{
+ValidateFcts.submitFilters = async (filters) => {
   const res = await submitFilters(filters);
   return res;
-}
-
-
+};
 
 ValidateFcts.validateEmailPwd = (email, pwd) => {
   validateEmailPwd(email, pwd);
@@ -596,6 +623,10 @@ ValidateFcts.validateAllModifChaineFields = (answer) => {
 
 ValidateFcts.validateAllHotelFields = (answer) => {
   return validateAllHotelFields(answer);
+};
+
+ValidateFcts.validateAllChambreFields = (answer) => {
+  return validateAllChambreFields(answer);
 };
 
 ValidateFcts.validateFilters = (filters) => {
