@@ -140,7 +140,7 @@ export const ChaineInfo = () => {
           Retour
         </button>
       </div>
-      <div className="titre text-center">
+      <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
       </div>
       <h2 className="text-center p-3">Information chaîne hôtelière</h2>
@@ -352,7 +352,7 @@ export const ChaineInfo = () => {
         <></>
       )}
 
-      <div className="titre text-center">
+      <div className="text-center">
         <h4 className="">Hôtels</h4>
       </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto">

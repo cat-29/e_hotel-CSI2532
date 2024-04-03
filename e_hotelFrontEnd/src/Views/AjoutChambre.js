@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader/AppHeader";
 import { useEffect, useState } from "react";
 import ValidateFcts from "../ValidationFcts/container";
