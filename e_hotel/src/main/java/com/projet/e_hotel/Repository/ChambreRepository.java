@@ -171,58 +171,54 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
 
 
-        @Query(value = "With ErrReserve as (\r\n" + // ici validation client_reserve
-        "\t(Select numero_chambre,id_hotel \r\n" + // cas 1: il y a quelqu'un qui a booke exactement la ou on a,
-        "from client_reserve where \r\n" + // ou a l interieur de la plage
-        "(client_reserve.date_checkin >= :checkin \r\n" + //
-        "AND client_reserve.date_checkout <= :checkout ))\r\n" + //
-        "UNION (Select numero_chambre,id_hotel \r\n" + // cas 2: il y a quelqu'un qui a une date de checkin avant
-                                                       // nous(ou meme),
-        "from client_reserve where \r\n" + // mais qui sort apres que l on rentre (ou egal)
-        "(client_reserve.date_checkin <= :checkin) \r\n" + //
-        "AND (client_reserve.date_checkout >= :checkin) AND (client_reserve.date_checkout <= :checkout))\r\n" + //
-        "UNION (Select numero_chambre,id_hotel \r\n" + // cas3: un client qui entre apres nous (ou egale),
-        "from client_reserve where\r\n" + // mais avant notre checkout et son checkout est apres notre checkout. (ou
-                                          // egale)
-        "((client_reserve.date_checkin >= :checkin)\r\n" + //
-        "AND (client_reserve.date_checkout >= :checkout ) AND (client_reserve.date_checkin <= :checkout))\r\n" + //
-        "UNION (Select numero_chambre,id_hotel \r\n" + // cas4: un client qui a une grosse plage de reservations et
-                                                       // on est a l interieur de cette plage
-        "from client_reserve where \r\n" + //
-        "(:checkin >= client_reserve.date_checkin) AND (:checkout <= client_reserve.date_checkout)))),\r\n" + //
-        "ErrLoue as (\r\n" + // ici commence la validation avec loue_chambre
-        "\t(Select numero_chambre,id_hotel \r\n" + //
-        "from loue_chambre where \r\n" + //
-        "(loue_chambre.date_checkin >= :checkin \r\n" + //
-        "AND loue_chambre.date_checkout <= :checkout ))\r\n" + //
-        "UNION (Select numero_chambre,id_hotel \r\n" + //
-        "from loue_chambre where \r\n" + //
-        "(loue_chambre.date_checkin <= :checkin ) \r\n" + //
-        "AND (loue_chambre.date_checkout >= :checkin)AND (loue_chambre.date_checkout <= :checkout))\r\n" + //
-        "UNION (Select numero_chambre,id_hotel \r\n" + //
-        "from loue_chambre where\r\n" + //
-        "((loue_chambre.date_checkin >= :checkin)\r\n" + //
-        "AND (loue_chambre.date_checkout >= :checkout )AND (loue_chambre.date_checkin <= :checkout))\r\n" + //
-        "UNION ( Select numero_chambre,id_hotel \r\n" + //
-        "from loue_chambre where \r\n" + //
-        "(:checkin >= loue_chambre.date_checkin) AND (:checkout <= loue_chambre.date_checkout))))\r\n" + //
-        "(select * from chambreXhotel where (numero_chambre,id_hotel) in (\r\n" + //
-                "\t(select numero_chambre,id_hotel from chambreXhotel except \r\n" + //
-                "\t(select * from ErrReserve) UNION (select * from ErrLoue))\r\n" + //
-                ")) intersect\r\n"+//
-        "(select * from chambreXHotel where capacite_chambre = :capacite) \r\n" + //
-                "\tintersect \r\n" + //
-        "(select * from chambreXHotel where vue_chambre = :vue) \r\n" + //
-                "\tintersect \r\n" + //
-        "(select * from chambreXHotel where prix BETWEEN :prixMin and :prixMax) \r\n" + //
-                "\tintersect\r\n" + //
-        "(select * from chambreXHotel where nom_chaine = :chaine) \r\n" + //
-                "\tintersect \r\n" + //
-        "(select * from chambreXHotel where num_etoile = :classement)\r\n" + //
-                "\tintersect \r\n" + //
-        "(select * from chambreXHotel where (numero_chambre,id_hotel) \r\n" + //
-                " in \r\n" + //
-        " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax )) intersect (select * from chambreXHotel where capacite_a_etendre = :etendre)", nativeQuery = true)
+        @Query(value = "With ErrReserve as (\r\n" + //
+                                "\t(Select numero_chambre,id_hotel \r\n" + //
+                                "\t\tfrom client_reserve where (client_reserve.date_checkin >= :checkin \r\n" + //
+                                "\tAND client_reserve.date_checkout <= :checkout ))\r\n" + //
+                                "     \tUNION \r\n" + //
+                                "\t(Select numero_chambre, id_hotel \r\n" + //
+                                "\tfrom client_reserve where (client_reserve.date_checkin <= :checkin) \r\n" + //
+                                "AND (client_reserve.date_checkout >= :checkin) AND (client_reserve.date_checkout <= :checkout))\r\n" + //
+                                "      \tUNION \r\n" + //
+                                "\t(Select numero_chambre,id_hotel from client_reserve where ((client_reserve.date_checkin >= :checkin) \r\n" + //
+                                "\t AND (client_reserve.date_checkout >= :checkout ) AND (client_reserve.date_checkin <= :checkout))\r\n" + //
+                                "      \tUNION \r\n" + //
+                                "\t(Select numero_chambre,id_hotel from client_reserve where(:checkin >= client_reserve.date_checkin)\r\n" + //
+                                "AND (:checkout <= client_reserve.date_checkout)))),\r\n" + //
+                                "ErrLoue as (\r\n" + //
+                                "\t(Select numero_chambre,id_hotel from loue_chambre where\r\n" + //
+                                "\t (loue_chambre.date_checkin >= :checkin AND loue_chambre.date_checkout <= :checkout ))\r\n" + //
+                                "        UNION\r\n" + //
+                                "\t(Select numero_chambre,id_hotel from loue_chambre where (loue_chambre.date_checkin <= :checkin )\r\n" + //
+                                "\t AND (loue_chambre.date_checkout >= :checkin)AND (loue_chambre.date_checkout <= :checkout))\r\n" + //
+                                "      \tUNION \r\n" + //
+                                "\t(Select numero_chambre,id_hotel from loue_chambre where((loue_chambre.date_checkin >= :checkin) \r\n" + //
+                                "\tAND (loue_chambre.date_checkout >= :checkout )AND (loue_chambre.date_checkin <= :checkout)))\r\n" + //
+                                "        UNION \r\n" + //
+                                "\t(Select numero_chambre,id_hotel from loue_chambre where (:checkin >= loue_chambre.date_checkin) \r\n" + //
+                                "AND (:checkout <= loue_chambre.date_checkout)))\r\n" + //
+                                "\t \r\n" + //
+                                "(select * from chambreXhotel where (numero_chambre,id_hotel) in (\r\n" + //
+                                "\tselect numero_chambre,id_hotel from chambreXhotel except\r\n" + //
+                                "\t((select * from ErrReserve) UNION (select * from ErrLoue)))\r\n" + //
+                                "\t\tintersect\r\n" + //
+                                "\t(select * from chambreXHotel where capacite_chambre = :capacite) \r\n" + //
+                                "   \t\tintersect \r\n" + //
+                                "\t(select * from chambreXHotel where vue_chambre = :vue) \r\n" + //
+                                "   \t\tintersect \r\n" + //
+                                "\t(select * from chambreXHotel where prix BETWEEN :prixMin and :prixMax)\r\n" + //
+                                "   \t\tintersect\r\n" + //
+                                "\t(select * from chambreXHotel where nom_chaine = :chaine)\r\n" + //
+                                "   \t\tintersect\r\n" + //
+                                "\t(select * from chambreXHotel where num_etoile = :classement)\r\n" + //
+                                "   \t\tintersect\r\n" + //
+                                "\t(select * from chambreXHotel where (numero_chambre,id_hotel) in\r\n" + //
+                                "       (select numero_chambre,id_hotel from chambrexhoteltotalchambre \r\n" + //
+                                "\t\twhere tot_chambres BETWEEN :chambreMin AND :chambreMax ) \r\n" + //
+                                "\t \tintersect \r\n" + //
+                                "\t(select * from chambreXHotel where capacite_a_etendre = :etendre)))\r\n" + //
+                                "\r\n" + //
+                                "", nativeQuery = true)
         // Get all rooms available for checkin, checkout specified along with other params
         List<Object[]> getAllRoomsCheckinAndCheckout(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
         @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
