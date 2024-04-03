@@ -452,6 +452,28 @@ const validateAllEmployeFields = (answer) => {
   return res;
 };
 
+const validateAllModifEmployeFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "prenom" || key == "nomFamille") {
+      res = validateNom(answer[key], res);
+    } else if (key == "numero") {
+      res = validateNumero(answer[key], res);
+    } else if (key == "id") {
+      res = validateNas(answer[key], res);
+    } else if (key == "rue" || key == "ville" || key == "pays") {
+      res = validatePlace(answer[key], res);
+    } else if (key == "province") {
+      res = validateProvince(answer[key], res);
+    } else if (key == "codePostal") {
+      res = validateZip(answer[key], res);
+    }
+  }
+  return res;
+};
+
 const validateDommage = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
@@ -682,6 +704,10 @@ ValidateFcts.validateAllChambreFields = (answer) => {
 
 ValidateFcts.validateAllEmployeFields = (answer) => {
   return validateAllEmployeFields(answer);
+};
+
+ValidateFcts.validateAllModifEmployeFields = (answer) => {
+  return validateAllModifEmployeFields(answer);
 };
 
 ValidateFcts.validateFilters = (filters) => {
