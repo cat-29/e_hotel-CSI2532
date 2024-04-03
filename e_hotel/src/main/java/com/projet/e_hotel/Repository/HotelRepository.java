@@ -8,23 +8,24 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.projet.e_hotel.Classes.Hotel;
 
-
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Optional<Hotel> findById(Integer idHotel);
 
     List<Hotel> findAllByNomChaine(String nomChaine);
 
     List<Hotel> findAllByRating(Integer rating);
-    
+
     List<Hotel> findAllByNbrChambreGreaterThanEqual(Integer nbrChambre);
 
     List<Hotel> findAllByNbrChambreLessThanEqual(Integer nbrChambre);
 
     List<Hotel> findAllByNbrChambreBetween(Integer chambreMin, Integer chambreMax);
-    
+
     List<Hotel> findHotelsByNomChaine(String nomChaine);
 
+    Hotel findByNomChaine(String nomChaine);
+
     // Pour la vue 2
-    @Query(value=" select * from capacite_chambres_tous_hotels" ,nativeQuery=true)
+    @Query(value = " select * from capacite_chambres_tous_hotels", nativeQuery = true)
     List<Object[]> getCapaciteAllRooms();
 }

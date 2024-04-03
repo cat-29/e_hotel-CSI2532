@@ -8,6 +8,7 @@ export const ManagementHotel = () => {
   const navigate = useNavigate();
 
   const [chaine, setChaine] = useState([]);
+  const [totalHotels, setTotalHotels] = useState([]);
 
   const showChaineInfo = (chaineInfo) => {
     navigate("/chaineInfo", {
@@ -18,6 +19,11 @@ export const ManagementHotel = () => {
   const showAjoutChaine = () => {
     navigate("/ajoutChaine", { state: { employeInfo: state.employeInfo } });
   };
+
+  // chaine.map((nbrHotel) => {
+  //   setTotalHotels(totalHotels + chaine.nbrHotel);
+  // });
+  // console.log("sum of hotels: ", totalHotels);
 
   //to get all chaine info
   useEffect(() => {

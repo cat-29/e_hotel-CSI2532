@@ -334,6 +334,51 @@ const validateAllChaineFields = (answer) => {
   return res;
 };
 
+const validateAllModifChaineFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "nomChaine") {
+      res = validateNom(answer[key], res);
+    } else if (key == "numero" || key == "nbrHotel") {
+      res = validateNumero(answer[key], res);
+    } else if (key == "rue" || key == "ville" || key == "pays") {
+      res = validatePlace(answer[key], res);
+    } else if (key == "province") {
+      res = validateProvince(answer[key], res);
+    } else if (key == "codePostal") {
+      res = validateZip(answer[key], res);
+    }
+  }
+  return res;
+};
+
+const validateAllHotelFields = (answer) => {
+  console.log("the answer to be validated is", answer);
+  let res = [];
+  let items = [];
+  for (let key in answer) {
+    if (key == "nomChaine" || key == "nom") {
+      res = validateNom(answer[key], res);
+    } else if (
+      key == "numero" ||
+      key == "nbrChambre" ||
+      key == "id" ||
+      key == "rating"
+    ) {
+      res = validateNumero(answer[key], res);
+    } else if (key == "rue" || key == "ville" || key == "pays") {
+      res = validatePlace(answer[key], res);
+    } else if (key == "province") {
+      res = validateProvince(answer[key], res);
+    } else if (key == "codePostal") {
+      res = validateZip(answer[key], res);
+    }
+  }
+  return res;
+};
+
 const validateDommage = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
@@ -508,6 +553,14 @@ ValidateFcts.validateAllLocationFields = (answer) => {
 
 ValidateFcts.validateAllChaineFields = (answer) => {
   return validateAllChaineFields(answer);
+};
+
+ValidateFcts.validateAllModifChaineFields = (answer) => {
+  return validateAllModifChaineFields(answer);
+};
+
+ValidateFcts.validateAllHotelFields = (answer) => {
+  return validateAllHotelFields(answer);
 };
 
 ValidateFcts.validateFilters = (filters) => {

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS email_chaine_hoteliere (
 
 -- Hotel
 CREATE TABLE IF NOT EXISTS hotel (
-    id_hotel INTEGER NOT NULL DEFAULT nextval('hotel_id_seq'), nom_chaine VARCHAR(255), nom VARCHAR(255) check (length(nom) > 2), num_etoile INTEGER check (num_etoile BETWEEN 1 AND 5), nbr_chambre INTEGER check (nbr_chambre > 0), numero INTEGER check (numero > 0), rue VARCHAR(255) check (length(rue) > 2), ville VARCHAR(255) check (length(ville) > 2), province CHAR(2) check (length(province) = 2), code_postal CHAR(6) Unique check (
+    id_hotel INTEGER NOT NULL DEFAULT nextval('hotel_id_seq'), nom_chaine VARCHAR(255), nom VARCHAR(255) check (length(nom) > 2), num_etoile INTEGER check (num_etoile BETWEEN 1 AND 5), nbr_chambre INTEGER check (nbr_chambre >= 0), numero INTEGER check (numero > 0), rue VARCHAR(255) check (length(rue) > 2), ville VARCHAR(255) check (length(ville) > 2), province CHAR(2) check (length(province) = 2), code_postal CHAR(6) Unique check (
         code_postal ~ '^([A-Z][0-9]){3}$'
     ), pays VARCHAR(255) check (length(pays) > 2), PRIMARY KEY (id_hotel), FOREIGN KEY (nom_chaine) REFERENCES chaine_hoteliere (nom_chaine)
 );
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS vue_chambre_type (
 
 CREATE TABLE IF NOT EXISTS role_employe_type (
     type VARCHAR(255) NOT NULL, PRIMARY KEY (type)
-)
+);
 -- Chambre
 CREATE TABLE IF NOT EXISTS chambre (
     numero_chambre INTEGER NOT NULL, id_hotel INTEGER, prix decimal(8, 2) not null check (
@@ -147,7 +147,8 @@ CREATE TABLE IF NOT EXISTS compte_employe (
     id_compte SERIAL, id_employe CHAR(9), email VARCHAR(255) check (
         email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), password VARCHAR(255) check (length(password) >= 8), UNIQUE (id_employe), UNIQUE (email, password), PRIMARY KEY (id_compte), FOREIGN KEY (id_employe) REFERENCES employe (nas)
-)
+);
+
 -- COMPTE EMPLOYE & ADMIN
 -- Ajoute des index
 -- Ajout d'un index pour le email du client lorsqu'on enregistre un client

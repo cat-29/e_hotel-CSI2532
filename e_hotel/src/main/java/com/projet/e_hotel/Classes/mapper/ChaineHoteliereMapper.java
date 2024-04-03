@@ -16,4 +16,16 @@ public class ChaineHoteliereMapper {
                 chaineHoteliere.getPays(),
                 chaineHoteliere.getCodePostal());
     }
+
+    public static ChaineHoteliere mapToChaineHoteliere(ChaineHoteliereDTO dto) {
+        return new ChaineHoteliere(
+                dto.getNomChaine(),
+                dto.getNbrHotel(),
+                dto.getNumero(),
+                dto.getRue(),
+                dto.getVille(),
+                dto.getProvince(),
+                dto.getPays(),
+                dto.getCodePostal());
+    }
 }
