@@ -26,11 +26,25 @@ export const HotelInfo = () => {
   };
 
   const showAjoutChambre = () => {
-    navigate("/ajoutChambre", { state: { employeInfo: state.employeInfo } });
+    navigate("/ajoutChambre", {
+      state: { employeInfo: state.employeInfo, hotelInfo: state.hotelInfo },
+    });
   };
 
   const showAjoutEmploye = () => {
     navigate("/ajoutEmploye", { state: { employeInfo: state.employeInfo } });
+  };
+
+  const showBoolean = (val) => {
+    if (val == true) {
+      {
+        return "Oui";
+      }
+    } else {
+      {
+        return "Non";
+      }
+    }
   };
 
   // When get hotel, get the chambres
@@ -228,17 +242,17 @@ export const HotelInfo = () => {
           return (
             <tbody>
               <tr>
-                <th className="text-center">{key + 1}</th>
-                <th className="text-center">{val.id}</th>
-                <th className="text-center">
+                <td className="text-center">{key + 1}</td>
+                <td className="text-center">{val.id}</td>
+                <td className="text-center">
                   {val.prenom} {val.nomFamille}
-                </th>
-                <th className="text-center">
+                </td>
+                <td className="text-center">
                   {val.numero} {val.rue}, {val.ville}, {val.province} {val.pays}{" "}
                   {val.codePostal}
-                </th>
-                <th className="text-center">{val.roleEmploye}</th>
-                <th className="text-center">
+                </td>
+                <td className="text-center">{val.roleEmploye}</td>
+                <td className="text-center">
                   <button
                     type="button"
                     className="btn btn-secondary"
@@ -248,7 +262,7 @@ export const HotelInfo = () => {
                   >
                     {">"}
                   </button>
-                </th>
+                </td>
               </tr>
             </tbody>
           );
@@ -284,13 +298,15 @@ export const HotelInfo = () => {
           return (
             <tbody>
               <tr>
-                <th className="text-center">{key + 1}</th>
-                <th className="text-center">{val.numeroChambre}</th>
-                <th className="text-center">{val.prix}</th>
-                <th className="text-center">{val.capaciteChambre}</th>
-                <th className="text-center">{val.vueChambre}</th>
-                <th className="text-center">{val.capaciteAEtendre}</th>
-                <th className="text-center">
+                <td className="text-center">{key + 1}</td>
+                <td className="text-center">{val.numeroChambre}</td>
+                <td className="text-center">{val.prix}</td>
+                <td className="text-center">{val.capaciteChambre}</td>
+                <td className="text-center">{val.vueChambre}</td>
+                <td className="text-center">
+                  {showBoolean(val.capaciteAEtendre)}
+                </td>
+                <td className="text-center">
                   <button
                     type="button"
                     className="btn btn-secondary"
@@ -300,7 +316,7 @@ export const HotelInfo = () => {
                   >
                     {">"}
                   </button>
-                </th>
+                </td>
               </tr>
             </tbody>
           );

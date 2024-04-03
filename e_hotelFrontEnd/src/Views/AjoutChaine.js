@@ -40,22 +40,6 @@ export const AjoutChaine = () => {
     }
   };
 
-  // useEffect(() => {
-  //   adminService
-  //     .saveChaine(formData)
-  //     .then(() => {
-  //       console.log(formData);
-  //       console.log("Chaine avec les infos du client on ete sauvegarde");
-  //     })
-  //     .catch((e) => {
-  //       console.log(
-  //         "une erreur c'est produite lors de la sauvegarde de la chaine. " + e
-  //       );
-  //     });
-  //   // L'employe sera redirigee vers la page qui s'occupe du paiement
-  //   //continueAvecPaiement();
-  // }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
@@ -96,6 +80,13 @@ export const AjoutChaine = () => {
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
+
+      <div className="d-grid gap-2 d-md-flex m-3">
+        <button className="btn btn-secondary" onClick={navigateToChaines}>
+          Retour
+        </button>
+      </div>
+
       <form noValidate className="mx-4" onSubmit={handleSubmit}>
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-5">
@@ -240,7 +231,6 @@ export const AjoutChaine = () => {
         </div>
       </form>
       <div className="d-grid gap-2 d-md-flex m-3">
-        {/* <button type="submit" className='btn btn-primary'>Créesr un compte</button> */}
         <button
           type="submit"
           className="btn btn-secondary"

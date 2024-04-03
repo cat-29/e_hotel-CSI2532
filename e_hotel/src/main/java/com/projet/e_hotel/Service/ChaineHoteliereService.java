@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.ChaineHoteliere;
-import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Repository.ChaineHoteliereRepository;
-import com.projet.e_hotel.Repository.HotelRepository;
 
 @Service
 public class ChaineHoteliereService {
@@ -17,6 +15,25 @@ public class ChaineHoteliereService {
 
     public List<ChaineHoteliere> getAllChaineHoteliere() {
         return chaineHoteliereRepository.findAll();
+    }
+
+    public ChaineHoteliere findByNomChaine(String nomChaine) {
+        return chaineHoteliereRepository.findByNomChaine(nomChaine);
+    }
+
+    public ChaineHoteliere updateChaine(ChaineHoteliere chaineHoteliere) {
+        // Find chaine info, if exists
+        ChaineHoteliere exisitingChaine = chaineHoteliereRepository.findByNomChaine(chaineHoteliere.getNomChaine());
+        exisitingChaine.setNomChaine(chaineHoteliere.getNomChaine());
+        exisitingChaine.setNbrHotel(chaineHoteliere.getNbrHotel());
+        exisitingChaine.setNumero(chaineHoteliere.getNumero());
+        exisitingChaine.setRue(chaineHoteliere.getRue());
+        exisitingChaine.setVille(chaineHoteliere.getVille());
+        exisitingChaine.setProvince(chaineHoteliere.getProvince());
+        exisitingChaine.setPays(chaineHoteliere.getPays());
+        exisitingChaine.setCodePostal(chaineHoteliere.getCodePostal());
+        // Update the compte employe information
+        return chaineHoteliereRepository.save(exisitingChaine);
     }
 
 }

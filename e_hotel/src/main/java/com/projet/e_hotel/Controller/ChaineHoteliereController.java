@@ -1,17 +1,22 @@
 package com.projet.e_hotel.Controller;
 
 import com.projet.e_hotel.Classes.AjoutChaineHoteliere;
+import com.projet.e_hotel.Classes.ChaineHoteliere;
+import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.AjoutChaineHoteliereDTO;
+import com.projet.e_hotel.Classes.dto.AjoutHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChaineHoteliereDTO;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.EmployeDTO;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.mapper.AjoutChaineHoteliereMapper;
+import com.projet.e_hotel.Classes.mapper.AjoutHotelMapper;
 import com.projet.e_hotel.Classes.mapper.ChaineHoteliereMapper;
 import com.projet.e_hotel.Classes.mapper.ChambreMapper;
 import com.projet.e_hotel.Classes.mapper.EmployeMapper;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
 import com.projet.e_hotel.Service.AjoutChaineHoteliereService;
+import com.projet.e_hotel.Service.AjoutHotelService;
 import com.projet.e_hotel.Service.ChaineHoteliereService;
 import com.projet.e_hotel.Service.ChambreService;
 import com.projet.e_hotel.Service.EmployeService;
@@ -22,8 +27,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.validation.method.ParameterErrors;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +49,8 @@ public class ChaineHoteliereController {
     private EmployeService employeService;
     @Autowired
     private AjoutChaineHoteliereService ajoutChaineHoteliereService;
+    @Autowired
+    private AjoutHotelService ajoutHotelService;
 
     @GetMapping("/hotel")
     public String admin(Model model) {
@@ -85,6 +90,28 @@ public class ChaineHoteliereController {
         AjoutChaineHoteliere ajoutChaineHoteliere = AjoutChaineHoteliereMapper.mapToAjoutChaineHoteliere(oDto);
         ajoutChaineHoteliereService.saveNewChaine(ajoutChaineHoteliere);
 
+    }
+
+    @PostMapping("/ajoutHotel")
+    public void saveNewHotel(@RequestBody AjoutHotelDTO oDto) throws ParseException {
+        // get chaineHoteliere by nomChaine
+        ChaineHoteliere chaineHoteliere = chaineHoteliereService.findByNomChaine(oDto.getNomChaine());
+        String nomChaine = chaineHoteliere.getNomChaine();
+        // String nomChaine = oDto.getNomChaine();
+        ajoutHotelService.saveNewHotel(AjoutHotelMapper.mapToAjoutHotel(oDto, nomChaine));
+    }
+
+    @PostMapping("/ajoutChambre")
+    public void saveNewChambre(@RequestBody ChambreDTO oDto) throws ParseException {
+        // get chaineHoteliere by nomChaine
+        // Hotel hotel = hotelService.findByIdHotel(oDto.getIdHotel());
+        Integer idHotel = oDto.getIdHotel();
+        chambreService.saveNewChambre(ChambreMapper.mapToChambre(oDto, idHotel));
+    }
+
+    @PostMapping("/updateChaine")
+    public ChaineHoteliere updateChaine(@RequestBody ChaineHoteliereDTO dto) {
+        return chaineHoteliereService.updateChaine(ChaineHoteliereMapper.mapToChaineHoteliere(dto));
     }
 
     // @GetMapping("/hotel/{idHotel}")
