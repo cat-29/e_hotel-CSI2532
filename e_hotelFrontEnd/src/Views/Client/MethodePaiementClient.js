@@ -82,7 +82,7 @@ export const MethodePaiementClient = ()=>{
             const data = {...paiementInfo};
             data.isPaiementComplete = true;
             data.datePaiementComplete = new Date().toISOString().slice(0,10);
-            // console.log("sur le point d envoyer",data);
+            console.log("sur le point d envoyer",data);
             const res = await fcts.ajouterReservationDB(data);
             setPending(false);
             navigate('/reservationChambre',{state:userInfo});

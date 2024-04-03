@@ -31,15 +31,15 @@ public interface ClientReserveRepository extends JpaRepository<ClientReserve,Cli
     @Modifying
     @Transactional
     @Query(value="INSERT INTO client_reserve VALUES \r\n" + //
-                "(:idClient,:numeroChambre,:idHotel,:dateCheckin,:dateCheckout,:prix,:isPaiementComplete,:datePaiementComplete);\r\n"
+                "(:idClient,:numeroChambre,:idHotel,:dateCheckin,:dateCheckout,:prix,:datePaiementComplete,:isPaiementComplete);\r\n"
                 ,nativeQuery = true)
     void saveBooking(
         @Param("idClient") String idClient,
         @Param("numeroChambre") Integer numeroChambre,
         @Param("idHotel") Integer idHotel,@Param("dateCheckin") Date dateCheckin,
         @Param("dateCheckout") Date dateCheckout,@Param("prix") Double prix,
-        @Param("isPaiementComplete") Boolean isPaiementComplete,
-        @Param("datePaiementComplete") Date datePaiementComplete);
+        @Param("datePaiementComplete") Date datePaiementComplete,
+        @Param("isPaiementComplete") Boolean isPaiementComplete);
 
     // "select id_client,numero_chambre,id_hotel,date_checkin,date_checkout from client_reserve where id_client = :idClient and numero_chambre = :numeroChambre\r\n" + //
     // "and id_hotel = :idHotel and date_checkin = :dateCheckin and date_checkout = :dateCheckout"

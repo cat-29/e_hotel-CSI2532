@@ -17,6 +17,6 @@ public class ClientReserveChambreDto {
     private String dateCheckin;
     private String dateCheckout;
     private Double prix;
-    private Boolean isPaiementComplete;
     private String datePaiementComplete;
+    private Boolean isPaiementComplete;
 }

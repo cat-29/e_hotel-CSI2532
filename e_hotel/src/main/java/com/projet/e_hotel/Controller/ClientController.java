@@ -52,7 +52,7 @@ public class ClientController {
     // Add an online booking
     @PostMapping("/addReservation")
     public void addReservation(@RequestBody ClientReserveChambreDto reservationDto) throws ParseException{
-        // System.out.println(reservation);
+        System.out.println(reservationDto.getDatePaiementComplete());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date checkinFormatted = sdf.parse(reservationDto.getDateCheckin());
         Date checkoutFormatted = sdf.parse(reservationDto.getDateCheckout());
@@ -64,6 +64,6 @@ public class ClientController {
 
         clientReserveService.saveBooking(reservationDto.getIdClient(),reservationDto.getNumeroChambre(),
             reservationDto.getIdHotel(),checkinFormatted,checkoutFormatted,
-            reservationDto.getPrix(),reservationDto.getIsPaiementComplete(),datePaiementComplete);
+            reservationDto.getPrix(),datePaiementComplete,reservationDto.getIsPaiementComplete());
     }   
 }
