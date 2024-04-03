@@ -293,6 +293,77 @@ public class ChambreController {
         return result;
     }
 
+    // Tous filtres appliques
+    // {checkin}/{checkout}/{capacite}/{vue}/{prixMin}/{prixMax}/{chaines}/{classement}/{chambreMin}/{chambreMax}
+    @GetMapping("/getRoomsFilters/{checkin}/{checkout}/{capacite}/{vue}/{prixMin}/{prixMax}/{chaine}/{classement}/{chambreMin}/{chambreMax}")
+    public List<ChambreHotelDTO> getAllRoomsSpecifications(@PathVariable String checkin,@PathVariable String checkout,@PathVariable String capacite,
+     @PathVariable String vue,@PathVariable String prixMin,@PathVariable String prixMax,@PathVariable String chaine,@PathVariable String classement,
+     @PathVariable String chambreMin,@PathVariable String chambreMax) throws ParseException{
+        // System.out.println("checkin is   "+checkin);
+        // System.out.println("checkout is   "+checkout);
+        // System.out.println("capacite is   "+capacite);
+        // System.out.println("vue is   "+vue);
+        // System.out.println("prixMin is   "+prixMin);
+        // System.out.println("prixMax is   "+prixMax);
+        // System.out.println("chaines is   "+chaine);
+        // System.out.println("classement is   "+classement);
+        // System.out.println("chambre min is   "+chambreMin);
+        // System.out.println("chambre max is is   "+chambreMax);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date checkinFormatted = null;
+        Date checkoutFormatted = null;
+        Calendar calendar = Calendar.getInstance();
+
+        if (!checkin.equals("NAN")){
+            checkinFormatted = sdf.parse(checkin);
+        } 
+        if(!checkout.equals("NAN")){
+            checkoutFormatted = sdf.parse(checkout);
+        }
+
+        List<ChambreHotelDTO> result = null;
+        // Cast
+        Integer chambreMinFormatted = Integer.parseInt(chambreMin);
+        Integer chambreMaxFormatted = Integer.parseInt(chambreMax);
+        Integer classementFormatted = Integer.parseInt(classement);
+
+
+        Double priceMinFormatted = Double.parseDouble(prixMin);
+        Double priceMaxFormatted = Double.parseDouble(prixMax);
+
+
+        // 1er cas, utilisateur entre les deux dates checkin et checkout
+        if (!checkin.equals("NAN") && !checkout.equals("NAN")){
+            result = chambreService.getAllRoomsCheckinAndCheckout(checkinFormatted,checkoutFormatted,capacite,vue,priceMinFormatted,
+            priceMaxFormatted,chaine,classementFormatted,chambreMinFormatted,chambreMaxFormatted);
+        }else if (checkin.equals("NAN") && !checkout.equals("NAN")){ // cas 2: utilisateur entre tout a l exception de checkin
+            // System.out.println("I should be here");
+            calendar.setTime(checkoutFormatted);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            // ceci date checkin minimale 
+            checkinFormatted = calendar.getTime();
+
+            result =  chambreService.getAllRoomsCheckoutOnly(checkinFormatted,checkoutFormatted,capacite,vue,priceMinFormatted,
+            priceMaxFormatted,chaine,classementFormatted,chambreMinFormatted,chambreMaxFormatted);
+        }else if (!checkin.equals("NAN") && checkout.equals("NAN")){// cas 3: utilisateur entre tout a l exception de checkout
+            // System.out.println("I should be here");
+            calendar.setTime(checkinFormatted);
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            // ceci date checkin minimale 
+            checkoutFormatted = calendar.getTime();
+
+            result =  chambreService.getAllRoomsCheckinOnly(checkinFormatted,checkoutFormatted,capacite,vue,priceMinFormatted,
+            priceMaxFormatted,chaine,classementFormatted,chambreMinFormatted,chambreMaxFormatted);
+        }else if(checkin.equals("NAN") && checkout.equals("NAN")){ // cas4: utilisateur entre tout a l exception de checkin et checkout
+            // System.out.println("I should be here NOW");
+            result =  chambreService.getAllRoomsNoDates(capacite,vue,priceMinFormatted,
+            priceMaxFormatted,chaine,classementFormatted,chambreMinFormatted,chambreMaxFormatted);
+        }
+
+        return result;
+
+    }
+
 
 
 

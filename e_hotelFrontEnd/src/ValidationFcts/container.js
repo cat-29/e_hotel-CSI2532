@@ -578,36 +578,28 @@ const isRoomAvailable = async (checkin, checkout, state) => {
   data.idHotel = state.idHotel;
   const res = await fcts.isRoomAvailable(data);
   return res;
-  // const res = await fcts.isRoomAvailable(data);
 };
 
 // Handling Filters section here
-const submitFilters = async (filters) => {
-  let activeFilters = {};
-  for (let key in filters) {
-    // console.log("key",filters[key]);
-    if (
-      key == "checkin" ||
-      key == "checkout" ||
-      key == "capacite" ||
-      key == "prixMin" ||
-      key == "prixMax"
-    ) {
-      if (filters[key] != "") {
-        activeFilters[key] = filters[key];
+const submitFilters = async (filters)=>{
+  for (let key in filters){
+      if (key == 'prixMin' && filters[key] == ""){
+        filters[key] = '0';
+      } else if (key == 'prixMax' && filters[key] == ""){
+        filters[key] = '10000'
+      }else if(key == 'chambreMin' && filters[key] == ""){
+        filters[key] = '1';
+      }else if(key == 'chambreMax' && filters[key] == ""){
+        filters[key] = '1000'
+      }else if (key == 'checkin' && filters[key] == ""){
+        filters[key] = 'NAN'
+      }else if (key == 'checkout' && filters[key] == ""){
+        filters[key] = 'NAN'
       }
-    } else if (key == "vue") {
-      if (filters[key].length != 0) {
-        activeFilters[key] = filters[key];
-      }
-    } else if (key == "etendre") {
-      if (filters[key] == true) {
-        activeFilters[key] = filters[key];
-      }
-    }
   }
-  // console.log("activeFilters",activeFilters);
-  const rooms = await fcts.getFilteredResults(activeFilters);
+  // console.log("activeFilters before sending a get request",filters);
+  
+  const rooms = await fcts.getFilteredResults(filters);
   // console.log("the rooms here are",rooms);
   return rooms;
 };
