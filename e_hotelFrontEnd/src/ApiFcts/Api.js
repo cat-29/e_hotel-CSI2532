@@ -72,24 +72,23 @@ const getFilteredResultsTwoElementsCheckinCheckout = async(checkin,checkout)=>{
 
 
 const getFilteredResults = async(filters)=>{
-    // Case 1: filters has one element:
-    // console.log("length",Object.keys(filters).length);
-    if (Object.keys(filters).length == 1){
-        // console.log("I should be here");
-        const resOneElement = await getFilteredResultsOneElement(filters);
-        // console.log("filteredOneElement",resOneElement);
-        return resOneElement;
-    }else if (Object.keys(filters).length == 2){
-        // console.log("I should be here");
-        // const restw = await getFilteredResultsOneElement(filters);
-        // console.log("filteredOneElement",resOneElement);
-        // return resOneElement;
-        if (Object.keys(filters).includes("checkin") && Object.keys(filters).includes("checkout")){
-            // console.log("now both are specified");
-            const resTwoElementCheckinCheckout = await getFilteredResultsTwoElementsCheckinCheckout(filters["checkin"],filters["checkout"]);
-            return resTwoElementCheckinCheckout;
+    let rooms = null;
+    try{
+        // console.log("before hitting the endpoint,  "+ filters);
+        const response = await axios.get(`http://localhost:8080/chambre/getRoomsFilters/${filters["checkin"]}/${filters["checkout"]}/${filters["capacite"]}/${filters["vue"]}/${filters["prixMin"]}/${filters["prixMax"]}/${filters["chaine"]}/${filters["classement"]}/${filters["chambreMin"]}/${filters["chambreMax"]}`);
+        if (response.status == 200){
+            console.log("fetching completed successfully");
+            rooms = response.data;
+            // console.log("the rooms are here",rooms)
+        }else{
+            console.log("Sorry, something went wrong while fetching");
         }
+    }catch(error){
+        console.log("Error occured",error);
     }
+    return rooms;
+
+
 
 
 }

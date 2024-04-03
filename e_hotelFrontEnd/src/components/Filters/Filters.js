@@ -5,19 +5,37 @@ import connexionCompte from '../../services/connexion-compte';
 
 // State to store filters data
 
+// Init the filters checkin to tomorrow
+
+const todayCheckin = new Date();
+
+todayCheckin.setDate(todayCheckin.getDate()+1);
+
+// Init the checkout to 3 days after tomorrow
+
+const todayCheckout = new Date();
+// const nextDay = (new Date()+3).toISOString().slice(0,10);
+todayCheckout.setDate(todayCheckout.getDate() + 4);
+
+const vCheckin = todayCheckin.toISOString().slice(0,10);
+const vCheckout = todayCheckout.toISOString().slice(0,10);
+
+// console.log("todayCheckinHere is   ",vCheckin);
+// console.log("next day checkout here is    ",vCheckout);
+
 export const Filters = ({onStateChange})=>{
     const [filters, setFilters] = useState({
-        checkin: '',
-        checkout:'',
-        capacite:'',
+        checkin: vCheckin,
+        checkout:vCheckout,
+        capacite:'SIMPLE',
         etendre:false,
-        vue:[],
-        prixMin:'',
-        prixMax:'',
-        chaines:[],
-        classement:[],
-        chambreMin:'',
-        chambreMax:''
+        vue:'MER',
+        prixMin:'0',
+        prixMax:'10000',
+        chaine:'Hotels Bellevue',
+        classement:'3',
+        chambreMin:'1',
+        chambreMax:'1000'
     });
 
 
@@ -45,6 +63,8 @@ export const Filters = ({onStateChange})=>{
         const target = event.target;
         const value = target.value;
         const name = target.name;
+        // console.log("name   ",   name);
+        // console.log("value ",   value);
 
         if(name == 'etendre'){
             let prevValue = filters.etendre;
@@ -53,6 +73,7 @@ export const Filters = ({onStateChange})=>{
                 [name]: !prevValue
             });
         }else if(name == 'vueMer'){
+            // this else if won't be used now but stays here for future use
             // console.log("I am mer");
             let nameV = 'vue';
             let merIncluded = filters.vue.includes('MER');
@@ -77,27 +98,26 @@ export const Filters = ({onStateChange})=>{
                 let vueArray = [...filters.vue];
                 let index = vueArray.indexOf('MONTAGNE');
                 vueArray.splice(index,1);
-                setFilters({...filters,[nameV]:vueArray});
-
-                
+                setFilters({...filters,[nameV]:vueArray});     
             }
-        }else if(name == 'chaines' || name == 'classement'){
-            console.log('chaine ou classement');
-            console.log(value);
-    
-            let included = filters[name].includes(value);
-            if (!included){
-                setFilters((prev)=>(
-                    {...filters,[name]:[...prev[name],value]}
-                ));
-            }else {
-                let chainesArray = [...filters[name]];
-                let index = chainesArray.indexOf(value);
-                chainesArray.splice(index,1);
-                setFilters({...filters,[name]:chainesArray});
-            }
-
         }
+        // else if(name == 'chaines' || name == 'classement'){
+        //     console.log('chaine ou classement');
+        //     console.log(value);
+    
+        //     let included = filters[name].includes(value);
+        //     if (!included){
+        //         setFilters((prev)=>(
+        //             {...filters,[name]:[...prev[name],value]}
+        //         ));
+        //     }else {
+        //         let chainesArray = [...filters[name]];
+        //         let index = chainesArray.indexOf(value);
+        //         chainesArray.splice(index,1);
+        //         setFilters({...filters,[name]:chainesArray});
+        //     }
+
+        // }
         else{
             if(name == 'prixMin' || name== 'prixMax' || name=='chambreMin' || name=='chambreMax'){
                 let newValue = value.replace(/,/,'');
@@ -140,7 +160,7 @@ export const Filters = ({onStateChange})=>{
                     <div id='capaciteChambre' className=''>
                         <label className='p-2 m-1 fw-bold'>Capacité</label>
                         <select className='form-select' name='capacite' onChange={handleInputChange}>
-                            <option value={''}></option>
+                            {/* <option value={''}></option> */}
                             <option value={'SIMPLE'}>Simple</option>
                             <option value={'DOUBLE'}>Double</option>
                             <option value={'TRIPLE'}>Triple</option>
@@ -156,19 +176,19 @@ export const Filters = ({onStateChange})=>{
 
                         <div className='form-check text-start'>
 
-                            <input className="form-check-input" type="checkbox" name='etendre' onChange={handleInputChange} id="etendreOui"/>
+                            <input className="form-check-input" type="checkbox" name='etendre' value={filters.etendre} onChange={handleInputChange} id="etendreOui"/>
                                 <label className="form-check-label" htmlFor="etendreOui">Oui</label>
                         </div> 
                     </div>
                     <div id='vue' className=''>
                         <label className='p-2 fw-bold'>Vue</label>
                             <div className='form-check text-start'>
-                                <input className="form-check-input" type="checkbox" name='vueMer' onChange={handleInputChange} id="merCheck"/>
+                                <input className="form-check-input" type="radio" name='vue' checked={filters.vue == 'MER'} value={'MER'} onChange={handleInputChange} id="merCheck"/>
                                 <label className="form-check-label" htmlFor="merCheck">Mer</label>
                             </div>
 
                             <div className='form-check text-start'>
-                                <input className="form-check-input" type="checkbox" name='vueMontagne' onChange={handleInputChange} id="montagneCheck"/>
+                                <input className="form-check-input" type="radio" name='vue' checked={filters.vue == 'MONTAGNE'} value={'MONTAGNE'} onChange={handleInputChange} id="montagneCheck"/>
                                 <label className="form-check-label" htmlFor="montagneCheck">Montagne</label>
                             </div>  
                     </div>
@@ -203,7 +223,7 @@ export const Filters = ({onStateChange})=>{
                         <div className="text-start">
                             {nomchaines.map((item,index)=>(
                                 <div key={index} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='chaines' onChange={handleInputChange} id={`chaine${index}`} value={item}/>
+                                    <input className="form-check-input" type="radio" name='chaine' checked={filters.chaine == item} onChange={handleInputChange} id={`chaine${index}`} value={item}/>
                                     <label className="form-check-label" htmlFor={`chaine${index}`}>{item}</label>
                                 </div>
                             ))}
@@ -217,23 +237,23 @@ export const Filters = ({onStateChange})=>{
                         <label className='p-2 m-1 fw-bold'>Classement</label>
                             <div className='d-md-flex flex-wrap gap-2'>
                                 <div key={0} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'oneStar'} value={'1'}/>
+                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '1'} onChange={handleInputChange} id={'oneStar'} value={'1'}/>
                                     <label className="form-check-label" htmlFor={'oneStar'}>⭐</label>
                                 </div>
                                 <div key={1} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'twoStar'} value={'2'}/>
+                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '2'} onChange={handleInputChange} id={'twoStar'} value={'2'}/>
                                     <label className="form-check-label" htmlFor={'twoStar'}>⭐⭐</label>
                                 </div>
                                 <div key={2} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'threeStar'} value={'3'}/>
+                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '3'} onChange={handleInputChange} id={'threeStar'} value={'3'}/>
                                     <label className="form-check-label" htmlFor={'threeStar'}>⭐⭐⭐</label>
                                 </div>
                                 <div key={3} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'fourStar'} value={'4'}/>
+                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '4'} onChange={handleInputChange} id={'fourStar'} value={'4'}/>
                                     <label className="form-check-label" htmlFor={'fourStar'}>⭐⭐⭐⭐</label>
                                 </div>
                                 <div key={4} className='form-check'>
-                                    <input className="form-check-input" type="checkbox" name='classement' onChange={handleInputChange} id={'fiveStar'} value={'5'}/>
+                                    <input className="form-check-input" type="radio" name='classement' checked={filters.classement == '5'} onChange={handleInputChange} id={'fiveStar'} value={'5'}/>
                                     <label className="form-check-label" htmlFor={'fiveStar'}>⭐⭐⭐⭐⭐</label>
                                 </div>
                             </div>
