@@ -27,4 +27,14 @@ public class ChambreMapper {
                 chambreDTO.getVueChambre(),
                 chambreDTO.getCapaciteAEtendre());
     }
+
+    public static Chambre mapToChambre(ChambreDTO chambreDTO) {
+        return new Chambre(
+                chambreDTO.getNumeroChambre(),
+                chambreDTO.getIdHotel(),
+                chambreDTO.getPrix(),
+                chambreDTO.getCapaciteChambre(),
+                chambreDTO.getVueChambre(),
+                chambreDTO.getCapaciteAEtendre());
+    }
 }
