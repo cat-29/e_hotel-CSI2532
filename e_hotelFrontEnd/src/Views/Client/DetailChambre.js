@@ -60,8 +60,8 @@ export const DetailChambre = ()=>{
         <>
             <AppHeader info={state} isUserTypeClient={true}/>
             <h5 className="title m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-8">Détails de la chambre</h5>
-            <div className="container-fluid d-flex flex-row ">
-                <div style={{lineHeight:"2rem"}} className="container-fluid mx-auto d-flex flex-column justify-content-center">
+            <div className="d-flex flex-row">
+                <div style={{lineHeight:"2rem"}} className="col-5 container-fluid mx-auto d-flex flex-column justify-content-center">
 
                     <div id="hotel"><b>Nom de l'hôtel:</b> {chambre.nom}</div>
                     <div id="chaine"><b>Nom de la chaîne:</b> {chambre.nomChaine}</div>
@@ -73,12 +73,12 @@ export const DetailChambre = ()=>{
                     <div id="vue"><b>Vue:</b> {chambre.vueChambre.toLowerCase()}</div>
                     <div id="nbreChambreTot"><b>Nombre de chambres de l'hôtel:</b> {chambre.nbrChambre}</div>
                     <div id="Addresse"><b>Addresse:</b> {`${chambre.numero} ${chambre.rue}, ${chambre.ville}, ${chambre.province}, ${chambre.codePostal}, ${chambre.pays} `}</div> 
-                    <a className="btn btn-secondary p-1 m-2 mx-auto" onClick={()=>reserve(chambre.numeroChambre,chambre.nom,userNas,chambre.prix,chambre.idHotel)}>Réserver</a>
+                    <a className="btn btn-secondary p-1 mt-3 mb-5" onClick={()=>reserve(chambre.numeroChambre,chambre.nom,userNas,chambre.prix,chambre.idHotel)}>Réserver</a>
                 </div>
-                <div style={{lineHeight:"2rem"}} className="container-fluid mx-auto d-flex flex-column">
+                <div style={{lineHeight:"2rem"}} className="col-4 container-fluid d-flex flex-column">
                     {comms.length ? 
-                    <div style={{lineHeight:"2rem",height:"fit-content"}} className="container-fluid mx-auto d-flex flex-column bg-primary  rounded ">
-                        <h3 className="m-3 p-3 col-md-3 col-6 mx-auto text-center border-5 border-bottom col-md-5">Commoditées</h3>
+                    <div style={{lineHeight:"2rem",height:"fit-content"}} className="container-fluid mx-auto d-flex flex-column bg-secondary rounded ">
+                        <h3 className="p-3 text-center border-2 border-bottom">Commoditées</h3>
                         <div className="d-flex flex-row text-center justify-content-center flex-wrap m-1">
                             {comms.map((item,index)=>(
                                     <div className="m-2 fs-5" key={`Comm${index}`}>{item}</div>
