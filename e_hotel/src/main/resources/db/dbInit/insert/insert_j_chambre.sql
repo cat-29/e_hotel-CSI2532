@@ -488,7 +488,7 @@ VALUES
         100, 31, 140.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 31, 125.00, 'DOUBLE', 'MONTAGNE', false
+        101, 31, 125.00, 'TRIPLE', 'MONTAGNE', false
     ),
     (
         102, 31, 130.00, 'TRIPLE', 'MER', true
@@ -497,7 +497,7 @@ VALUES
         103, 31, 120.00, 'SIMPLE', 'MONTAGNE', false
     ),
     (
-        104, 31, 135.00, 'DOUBLE', 'MER', true
+        104, 31, 135.00, 'TRIPLE', 'MER', true
     ),
     -- Hotel 32
     (
@@ -635,7 +635,7 @@ VALUES
         101, 40, 130.00, 'DOUBLE', 'MONTAGNE', false
     ),
     (
-        102, 40, 135.00, 'TRIPLE', 'MER', true
+        102, 40, 135.00, 'DOUBLE', 'MER', true
     ),
     (
         103, 40, 120.00, 'SIMPLE', 'MONTAGNE', false

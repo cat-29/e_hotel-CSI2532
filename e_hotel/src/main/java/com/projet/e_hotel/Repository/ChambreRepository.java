@@ -222,10 +222,10 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                 "\tintersect \r\n" + //
         "(select * from chambreXHotel where (numero_chambre,id_hotel) \r\n" + //
                 " in \r\n" + //
-        " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax ))", nativeQuery = true)
+        " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax )) intersect (select * from chambreXHotel where capacite_a_etendre = :etendre)", nativeQuery = true)
         // Get all rooms available for checkin, checkout specified along with other params
         List<Object[]> getAllRoomsCheckinAndCheckout(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax);
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -262,12 +262,12 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                                 "\tintersect \r\n" + //
                                 "(select * from chambreXHotel where (numero_chambre,id_hotel) \r\n" + //
                                 " in \r\n" + //
-                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax ))\r\n" + //
+                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax )) intersect (select * from chambreXHotel where capacite_a_etendre = :etendre) \r\n" + //
                                 "",nativeQuery = true)
 
         // Filtrer par tout except checkin
         List<Object[]> getAllRoomsCheckoutOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax);
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -298,14 +298,14 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                                 "\tintersect \r\n" + //
                                 "(select * from chambreXHotel where (numero_chambre,id_hotel) \r\n" + //
                                 " in \r\n" + //
-                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax ))\r\n" + //
+                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax )) intersect (select * from chambreXHotel where capacite_a_etendre = :etendre) \r\n" + //
                                 "",nativeQuery = true)
 
 
         // Filtrer par tout except checkout
 
         List<Object[]> getAllRoomsCheckinOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax);
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -325,12 +325,17 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                                 "\tintersect \r\n" + //
                                 "(select * from chambreXHotel where (numero_chambre,id_hotel) \r\n" + //
                                 " in \r\n" + //
-                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax ))\r\n" + //
+                                " (select numero_chambre,id_hotel from chambrexhoteltotalchambre where tot_chambres BETWEEN :chambreMin AND :chambreMax )) intersect (select * from chambreXHotel where capacite_a_etendre = :etendre) \r\n" + //
                                 "",nativeQuery = true)
         // Filtrer par tout execept checkin et checkout car il etaient pas specifies
         List<Object[]> getAllRoomsNoDates(@Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax);
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
+
+        @Query(value="select type_commodite from chambreXcommodite where id_hotel = :idHotel and numero_chambre = :numero_chambre\r\n" + //
+                                "",nativeQuery = true)
+        // Get all commoditees d une chambre specifique
+        List<Object[]> getAllCommoditees(@Param("idHotel") Integer idHotel,@Param("numero_chambre") Integer numero_chambre);
         
 
 
