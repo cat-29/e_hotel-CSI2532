@@ -36,4 +36,10 @@ public class ChaineHoteliereService {
         return chaineHoteliereRepository.save(exisitingChaine);
     }
 
+    public void deleteChaine(String nomChaine) {
+        // Find chaine info, if exists
+        ChaineHoteliere exisitingChaine = chaineHoteliereRepository.findByNomChaine(nomChaine);
+        chaineHoteliereRepository.delete(exisitingChaine);
+    }
+
 }

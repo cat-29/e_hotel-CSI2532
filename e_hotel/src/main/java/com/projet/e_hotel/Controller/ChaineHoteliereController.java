@@ -28,7 +28,9 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -138,6 +140,38 @@ public class ChaineHoteliereController {
     public EmployeDTO updateEmploye(@RequestBody EmployeDTO dto) {
         return EmployeMapper.mapToEmployeDTO(employeService.updateEmploye(EmployeMapper.mapToEmploye(dto)));
     }
+
+    @PostMapping("/deleteChaine/{nomChaine}")
+    public ResponseEntity<String> deleteChaine(@PathVariable String nomChaine) {
+        System.out.println("---------------------------------------------NOMCHAINE: " + nomChaine);
+        chaineHoteliereService.deleteChaine(nomChaine);
+        return ResponseEntity.ok("Chaine supprimée.");
+    }
+
+    // @PostMapping("/deleteHotel/{id_hotel}")
+    // public ResponseEntity<String> deleteHotel(@PathVariable Integer id_hotel) {
+    // System.out.println("---------------------------------------------IDHOTEL: " +
+    // id_hotel);
+    // hotelService.deleteHotel(id_hotel);
+    // return ResponseEntity.ok("Hotel supprimé.");
+    // }
+
+    // @PostMapping("/deleteChaine/{nomChaine}")
+    // public ResponseEntity<String> deleteChambre(@PathVariable String nomChaine) {
+    // System.out.println("---------------------------------------------NOMCHAINE: "
+    // + nomChaine);
+    // chaineHoteliereService.deleteChambre(nomChaine);
+    // return ResponseEntity.ok("Chambre supprimée.");
+    // }
+
+    // @PostMapping("/deleteChaine/{nomChaine}")
+    // public ResponseEntity<String> deleteEmploye(@PathVariable Integer nomChaine)
+    // {
+    // System.out.println("---------------------------------------------NOMCHAINE: "
+    // + nomChaine);
+    // chaineHoteliereService.deleteChaine(nomChaine);
+    // return ResponseEntity.ok("Employe supprimé.");
+    // }
 
     // @GetMapping("/hotel/{idHotel}")
     // public String getChaineHoteliere(@RequestParam String idHotel) {

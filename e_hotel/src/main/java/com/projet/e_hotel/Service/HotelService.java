@@ -115,4 +115,9 @@ public class HotelService {
 
         return hotelRepository.save(existingHotel);
     }
+
+    public void deleteHotel(Integer id_hotel) {
+        Hotel existingHotel = hotelRepository.findById(id_hotel).get();
+        hotelRepository.delete(existingHotel);
+    }
 }

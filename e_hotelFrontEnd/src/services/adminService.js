@@ -162,6 +162,36 @@ class AdminService {
       body: JSON.stringify(chambreInfo),
     });
   }
+
+  async updateChambre(info) {
+    const infoN = { ...info };
+    // Formate
+    const chambreInfo = {};
+    chambreInfo.numeroChambre = infoN.numero_chambre;
+    chambreInfo.idHotel = infoN.id_hotel;
+    chambreInfo.prix = infoN.prix;
+    chambreInfo.capaciteChambre = infoN.capacite_chambre;
+    chambreInfo.vueChambre = infoN.vue_chambre;
+    chambreInfo.capaciteAEtendre = infoN.capacite_a_etendre;
+
+    await fetch("http://localhost:8080/chaine/updateChambre", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(chambreInfo),
+    });
+  }
+
+  async deleteChaine(nomChaine) {
+    await fetch(`http://localhost:8080/chaine/deleteChaine/${nomChaine}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nomChaine),
+    });
+  }
 }
 
 export default new AdminService();
