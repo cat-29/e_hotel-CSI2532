@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS telephone_chaine_hoteliere (
 -- Email_chaine_hoteliere
 CREATE TABLE IF NOT EXISTS email_chaine_hoteliere (
     email VARCHAR(255) CHECK (
-        email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+        email ~ * '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), nom_chaine VARCHAR(255), PRIMARY KEY (email), FOREIGN KEY (nom_chaine) REFERENCES chaine_hoteliere
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS telephone_hotel (
 -- Email_hotel
 CREATE TABLE IF NOT EXISTS email_hotel (
     email VARCHAR(255) CHECK (
-        email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+        email ~ * '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), id_hotel INTEGER, PRIMARY KEY (email), FOREIGN KEY (id_hotel) REFERENCES hotel
 );
 
@@ -132,20 +132,20 @@ CREATE TABLE IF NOT EXISTS loue_chambre (
 -- Enregistre_client
 CREATE TABLE IF NOT EXISTS enregistre_client (
     id_employe CHAR(9), id_client CHAR(9), email VARCHAR(255) CHECK (
-        email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+        email ~ * '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), date_enregistrement DATE NOT NULL, id SERIAL, PRIMARY KEY (id), FOREIGN KEY (id_employe) REFERENCES employe (nas), FOREIGN KEY (id_client) REFERENCES client (nas)
 );
 
 -- COMPTE CLIENT
 CREATE TABLE IF NOT EXISTS compte_client (
     id_compte SERIAL, id_client CHAR(9), email VARCHAR(255) check (
-        email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+        email ~ * '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), password VARCHAR(255) check (length(password) >= 8), UNIQUE (id_client), UNIQUE (email, password), PRIMARY KEY (id_compte), FOREIGN KEY (id_client) REFERENCES client (nas)
 );
 
 CREATE TABLE IF NOT EXISTS compte_employe (
     id_compte SERIAL, id_employe CHAR(9), email VARCHAR(255) check (
-        email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+        email ~ * '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), password VARCHAR(255) check (length(password) >= 8), UNIQUE (id_employe), UNIQUE (email, password), PRIMARY KEY (id_compte), FOREIGN KEY (id_employe) REFERENCES employe (nas)
 );
 
@@ -177,10 +177,9 @@ BEGIN
 	    id_hotel = NEW.id_hotel;
 	RETURN NEW;
 END;
-$$;
-	-- TRIGGER 1
--- Quand une chambre d'hotel est ajoutee, incremente le nombre de chambre 
-
+$$; 
+-- TRIGGER 1
+-- Quand une chambre d'hotel est ajoutee, incremente le nombre de chambre
 CREATE TRIGGER add_chambre_hotel
 AFTER INSERT ON chambre FOR EACH ROW
 EXECUTE PROCEDURE add_chambre_hotel ();
@@ -199,10 +198,9 @@ BEGIN
 	    id_hotel = OLD.id_hotel;
 	RETURN NEW;
 END;
-$$;
-	-- TRIGGER 2
--- Quand une chambre d'hotel est supprimee, decremente le nombre de chambre 
-
+$$; 
+-- TRIGGER 2
+-- Quand une chambre d'hotel est supprimee, decremente le nombre de chambre
 CREATE TRIGGER remove_chambre_hotel
 AFTER DELETE ON chambre FOR EACH ROW
 EXECUTE PROCEDURE remove_chambre_hotel ();
@@ -233,10 +231,9 @@ BEGIN
 	    nom_chaine = OLD.nom_chaine;
 	RETURN NEW;
 END;
-$$;
-	-- TRIGGER 3
--- Quand on modifie le nom de la chaine, on la modifie aussi dans hotel 
-
+$$; 
+-- TRIGGER 3
+-- Quand on modifie le nom de la chaine, on la modifie aussi dans hotel
 CREATE TRIGGER modifie_nom_chaine
 AFTER
 UPDATE ON chaine_hoteliere FOR EACH ROW
@@ -304,19 +301,32 @@ order by nom, capacite_chambre;
 
 -- Vue 3: Vue montrant les détails de tous les chambres et leurs hôtels respectifs
 create view chambreXhotel as (
-select * from chambre natural join hotel);
+    select *
+    from chambre
+        natural join hotel
+);
 
--- Vue 4: Vue montrant le nombre total de chambres (disponibles et non) par hôtel. 
-create view tot_chambres_per_hotel as 
-select id_hotel,count(numero_chambre) as tot_chambres from chambreXHotel group by id_hotel;
+-- Vue 4: Vue montrant le nombre total de chambres (disponibles et non) par hôtel.
+create view tot_chambres_per_hotel as
+select id_hotel, count(numero_chambre) as tot_chambres
+from chambreXHotel
+group by
+    id_hotel;
 
--- Vue 5: Vue montrant les détails des chambres, des hôtels et une colonne pour le nombre total 
+-- Vue 5: Vue montrant les détails des chambres, des hôtels et une colonne pour le nombre total
 -- de chambre dans chaque hôtel
 
-create view chambreXhotelTotalChambre as select * from chambreXHotel natural join tot_chambres_per_hotel;
+create view chambreXhotelTotalChambre as
+select *
+from
+    chambreXHotel
+    natural join tot_chambres_per_hotel;
 
 -- Vue 6: Vue montrant les commodtes dans chaque chambre;
-create view chambreXcommodite as select * from contient_commodite natural join commodite;
+create view chambreXcommodite as
+select *
+from contient_commodite
+    natural join commodite;
 
 -- Cree une table pour inserer les logs quand on supprime une reservation
 CREATE TABLE IF NOT EXISTS log_client_reserve (
@@ -365,8 +375,87 @@ BEGIN
 	    and numero_chambre = OLD.numero_chambre;
 	RETURN OLD;
 END;
-$$;
--- TRIGGER 
+$$; 
+-- TRIGGER
 
 CREATE TRIGGER add_logs_before_deleting_chambre BEFORE DELETE ON chambre FOR EACH ROW
 EXECUTE PROCEDURE add_logs_before_deleting_chambre ();
+
+CREATE OR REPLACE FUNCTION add_logs_before_deleting_chambre
+() RETURNS TRIGGER 
+LANGUAGE PLPGSQL AS 
+$$
+BEGIN
+	-- Ajoute toutes les lignes dans client_reserve qui doivent etres supprimees
+	INSERT INTO
+	    log_client_reserve (
+	        id_client, numero_chambre, id_hotel, date_checkin, date_checkout, prix, paiement_complete, date_paiement_complete
+	    )
+	SELECT *
+	FROM client_reserve
+	WHERE
+	    numero_chambre = OLD.numero_chambre;
+	-- Ajoute toutes les lignes dans loue_chambre qui doivent etres supprimees
+	INSERT INTO
+	    log_loue_chambre (
+	        numero_chambre, id_hotel, id_client, id_employe, date_checkin, date_checkout, montant_du, paiement_complete, date_paiement_complete
+	    )
+	SELECT *
+	FROM loue_chambre
+	WHERE
+	    numero_chambre = OLD.numero_chambre;
+	-- Supprime les lignes dans client_reserve et loue_chambre
+	DELETE FROM client_reserve
+	where
+	    id_hotel = OLD.id_hotel
+	    and numero_chambre = OLD.numero_chambre;
+	DELETE FROM loue_chambre
+	where
+	    id_hotel = OLD.id_hotel
+	    and numero_chambre = OLD.numero_chambre;
+	RETURN OLD;
+END;
+$$; 
+-- TRIGGER
+
+-- FONCTION POUR LE TRIGGER
+-- Incremente le nombre d'hotel dans chaine
+CREATE OR REPLACE FUNCTION add_hotel_chaine() RETURNS 
+TRIGGER 
+LANGUAGE PLPGSQL AS 
+$$
+BEGIN
+	UPDATE chaine_hoteliere
+	SET
+	    nbr_hotel = (nbr_hotel + 1)
+	WHERE
+	    nom_chaine = NEW.nom_chaine;
+	RETURN NEW;
+END;
+$$; 
+-- TRIGGER
+-- Quand un hotel est ajoute, incremente le nombre d'hotel dans chaine
+CREATE TRIGGER add_hotel_chaine
+AFTER INSERT ON hotel FOR EACH ROW
+EXECUTE PROCEDURE add_hotel_chaine ();
+
+-- FONCTION POUR LE TRIGGER
+-- Decremente le nombre d'hotel dans la table chaine
+CREATE OR REPLACE FUNCTION remove_hotel_chaine() RETURNS 
+TRIGGER 
+LANGUAGE PLPGSQL AS 
+$$
+BEGIN
+	UPDATE chaine_hoteliere
+	SET
+	    nbr_hotel = (nbr_hotel - 1)
+	WHERE
+	    nom_chaine = OLD.nom_chaine;
+	RETURN NEW;
+END;
+$$; 
+-- TRIGGER
+-- Quand un hotel est supprime, decremente le nombre d'hotel dans chaine
+CREATE TRIGGER remove_hotel_chaine
+AFTER DELETE ON hotel FOR EACH ROW
+EXECUTE PROCEDURE remove_hotel_chaine ();
