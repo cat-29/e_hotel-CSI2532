@@ -243,66 +243,6 @@ public class ChambreController {
         return result;
     }
 
-    // 1 filtre applique, checkin seulement
-    @GetMapping("/getAvCheckin/{checkin}")
-    public List<ChambreHotelDTO> getAllRoomsAvCheckin(@PathVariable String checkin) throws ParseException {
-        // Faire des modifications pour la date recu pour ne pas avoir une journee de
-        // moins
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        // On desire voir les disponibilites pour cette date de checkin
-        Date checkinFormatted = sdf.parse(checkin);
-        // Calculons c est quoi lendemain de cette date (pour voir les disponibilites
-        // des chambres, on se pose comme critere que la date de checkout min est le
-        // lendemain)
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(checkinFormatted);
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        // ceci date checkout minimale
-        Date mincheckoutFormatted = calendar.getTime();
-
-        List<ChambreHotelDTO> result = chambreService.getAllRoomsAvCheckin(checkinFormatted, mincheckoutFormatted);
-        return result;
-    }
-
-    // 1 filtre applique, checkout seulement
-    @GetMapping("/getAvCheckout/{checkout}")
-    public List<ChambreHotelDTO> getAllRoomsAvCheckout(@PathVariable String checkout) throws ParseException {
-        // Faire des modifications pour la date recu pour ne pas avoir une journee de
-        // moins
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        // On desire voir les disponibilites pour cette date de checkout
-        Date checkoutFormatted = sdf.parse(checkout);
-        // Calculons c est quoi hier de cette date (pour voir les disponibilites des
-        // chambres, on se pose comme critere que la date de checkin min est le hier)
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(checkoutFormatted);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-        // ceci date checkout minimale
-        Date mincheckinFormatted = calendar.getTime();
-        // System.out.println("what I entered was "+checkoutFormatted);
-
-        // System.out.println("yesterday was "+mincheckinFormatted);
-
-        List<ChambreHotelDTO> result = chambreService.getAllRoomsAvCheckout(checkoutFormatted, mincheckinFormatted);
-        return result;
-    }
-
-    // 2 filtres appliques, checkin et checkout
-    @GetMapping("/getAvCheckinAndCheckout/{checkin}/{checkout}")
-    public List<ChambreHotelDTO> getAllRoomsAvCheckinAndCheckout(@PathVariable String checkin,
-            @PathVariable String checkout) throws ParseException {
-        // Faire des modifications pour la date recu pour ne pas avoir une journee de
-        // moins
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        // On desire voir les disponibilites pour cette date de checkout
-        Date checkinFormatted = sdf.parse(checkin);
-        Date checkoutFormatted = sdf.parse(checkout);
-
-        List<ChambreHotelDTO> result = chambreService.getAllRoomsAvCheckinAndCheckout(checkinFormatted,
-                checkoutFormatted);
-        return result;
-    }
-
     // Tous filtres appliques
     // {checkin}/{checkout}/{capacite}/{vue}/{prixMin}/{prixMax}/{chaines}/{classement}/{chambreMin}/{chambreMax}/{etendre}
 
@@ -664,7 +604,7 @@ public class ChambreController {
                                                                               // exception de checkout
                     calendar.setTime(checkinFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
-                    // ceci date checkin minimale
+                    // ceci date checkout minimale
                     checkoutFormatted = calendar.getTime();
 
                     result = chambreService.getAllRoomsCheckinOnly(checkinFormatted, checkoutFormatted, capacite, vue,
