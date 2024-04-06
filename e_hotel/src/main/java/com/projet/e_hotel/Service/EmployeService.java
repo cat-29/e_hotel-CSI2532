@@ -6,13 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.e_hotel.Classes.Chambre;
+import com.projet.e_hotel.Classes.CompteEmploye;
 import com.projet.e_hotel.Classes.Employe;
+import com.projet.e_hotel.Classes.EnregistreClient;
+import com.projet.e_hotel.Classes.LoueChambre;
+import com.projet.e_hotel.Repository.CompteEmployeRepository;
 import com.projet.e_hotel.Repository.EmployeRepository;
+import com.projet.e_hotel.Repository.EnregistreClientRepository;
+import com.projet.e_hotel.Repository.LoueChambreRepository;
 
 @Service
 public class EmployeService {
     @Autowired
     private EmployeRepository employeRepository;
+    @Autowired
+    private LoueChambreRepository loueChambreRepository;
+    @Autowired
+    private EnregistreClientRepository enregistreClientRepository;
+    @Autowired
+    private CompteEmployeRepository compteEmployeRepository;
 
     public List<Employe> getEmployesFromHotel(Integer id) {
         return employeRepository.findAllByIdHotel(id);
@@ -38,5 +50,12 @@ public class EmployeService {
         existingEmploye.setRoleEmploye(employe.getRoleEmploye());
         existingEmploye.setIdHotel(employe.getIdHotel());
         return employeRepository.save(existingEmploye);
+    }
+
+    public void deleteEmploye(String id) {
+        System.out.println("DELETING EMPLOYEE WITH ID " + id);
+        Employe existingEmploye = employeRepository.findById(id).get();
+        employeRepository.delete(existingEmploye);
+        System.out.println("Employee " + id + " deleted.");
     }
 }

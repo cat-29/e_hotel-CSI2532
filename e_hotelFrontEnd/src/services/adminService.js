@@ -192,6 +192,39 @@ class AdminService {
       body: JSON.stringify(nomChaine),
     });
   }
+
+  async deleteHotel(id_hotel) {
+    await fetch(`http://localhost:8080/chaine/deleteHotel/${id_hotel}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(id_hotel),
+    });
+  }
+
+  async deleteChambre(id_hotel, numero_chambre) {
+    await fetch(
+      `http://localhost:8080/chaine/deleteChambre/${id_hotel}/${numero_chambre}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id_hotel, numero_chambre),
+      }
+    );
+  }
+
+  async deleteEmploye(id_employe) {
+    await fetch(`http://localhost:8080/chaine/deleteEmploye/${id_employe}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(id_employe),
+    });
+  }
 }
 
 export default new AdminService();

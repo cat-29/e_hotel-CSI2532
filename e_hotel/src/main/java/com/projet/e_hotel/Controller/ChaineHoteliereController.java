@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -56,16 +57,16 @@ public class ChaineHoteliereController {
     @Autowired
     private AjoutHotelService ajoutHotelService;
 
-    @GetMapping("/hotel")
-    public String admin(Model model) {
-        model.addAttribute("allchainehotelierelist", chaineHoteliereService.getAllChaineHoteliere());
-        return "admin";
-    }
-
     @GetMapping
     public List<ChaineHoteliereDTO> getAllChaine() {
         return chaineHoteliereService.getAllChaineHoteliere().stream()
                 .map(r -> ChaineHoteliereMapper.mapToChaineHoteliereDTO(r)).toList();
+    }
+
+    @GetMapping("/hotel")
+    public String admin(Model model) {
+        model.addAttribute("allchainehotelierelist", chaineHoteliereService.getAllChaineHoteliere());
+        return "admin";
     }
 
     @GetMapping("/hotels/{nomChaine}")
@@ -148,30 +149,37 @@ public class ChaineHoteliereController {
         return ResponseEntity.ok("Chaine supprimée.");
     }
 
-    // @PostMapping("/deleteHotel/{id_hotel}")
-    // public ResponseEntity<String> deleteHotel(@PathVariable Integer id_hotel) {
-    // System.out.println("---------------------------------------------IDHOTEL: " +
-    // id_hotel);
-    // hotelService.deleteHotel(id_hotel);
-    // return ResponseEntity.ok("Hotel supprimé.");
-    // }
+    @PostMapping("/deleteHotel/{id_hotel}")
+    public ResponseEntity<String> deleteHotel(@PathVariable Integer id_hotel) {
+        System.out.println("---------------------------------------------IDHOTEL: " +
+                id_hotel);
+        // Have to delete all loue_chambre and client_reserve
+        hotelService.deleteHotel(id_hotel);
+        return ResponseEntity.ok("Hotel supprimé.");
+    }
 
-    // @PostMapping("/deleteChaine/{nomChaine}")
-    // public ResponseEntity<String> deleteChambre(@PathVariable String nomChaine) {
-    // System.out.println("---------------------------------------------NOMCHAINE: "
-    // + nomChaine);
-    // chaineHoteliereService.deleteChambre(nomChaine);
-    // return ResponseEntity.ok("Chambre supprimée.");
-    // }
+    @PostMapping("/deleteChambre/{id_hotel}/{numero_chambre}")
+    public ResponseEntity<String> deleteChambre(@PathVariable Integer id_hotel,
+            @PathVariable Integer numero_chambre) {
+        System.out.println("---------------------------------------------IDHOTEL: " + id_hotel);
+        System.out.println("---------------------------------------------NUMEROCHAMBRE: " + numero_chambre);
+        chambreService.deleteChambre(id_hotel, numero_chambre);
+        return ResponseEntity.ok("Chambre supprimée.");
+    }
 
-    // @PostMapping("/deleteChaine/{nomChaine}")
-    // public ResponseEntity<String> deleteEmploye(@PathVariable Integer nomChaine)
-    // {
-    // System.out.println("---------------------------------------------NOMCHAINE: "
-    // + nomChaine);
-    // chaineHoteliereService.deleteChaine(nomChaine);
-    // return ResponseEntity.ok("Employe supprimé.");
-    // }
+    @PostMapping("/deleteEmploye/{id_employe}")
+    public ResponseEntity<String> deleteEmploye(@PathVariable String id_employe) {
+        System.out.println("---------------------------------------------IDEMPLOYE: "
+                + id_employe);
+        employeService.deleteEmploye(id_employe);
+        return ResponseEntity.ok("Employe supprimé.");
+    }
+
+    @GetMapping("/{id}")
+    public ChaineHoteliereDTO getChaineInfo(@PathVariable Integer id) {
+        String nomChaine = hotelService.getNameHotel(id).getNomChaine();
+        return ChaineHoteliereMapper.mapToChaineHoteliereDTO(chaineHoteliereService.getChaineInfo(nomChaine));
+    }
 
     // @GetMapping("/hotel/{idHotel}")
     // public String getChaineHoteliere(@RequestParam String idHotel) {

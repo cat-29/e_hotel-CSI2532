@@ -147,7 +147,7 @@ export const ChaineInfo = () => {
       }
     } else {
       alert(
-        "Veuillez supprimer les hôtels contenus dans la chaîne hotelère et réessayer."
+        "Veuillez supprimer les hôtels contenus dans la chaîne hotelière et réessayer."
       );
     }
   };

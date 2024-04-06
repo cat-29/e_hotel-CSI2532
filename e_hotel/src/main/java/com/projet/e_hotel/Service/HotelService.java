@@ -6,15 +6,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projet.e_hotel.Classes.ClientReserve;
 import com.projet.e_hotel.Classes.Hotel;
+import com.projet.e_hotel.Classes.LoueChambre;
 import com.projet.e_hotel.Classes.dto.HotelCapaciteDto;
 import com.projet.e_hotel.Classes.mapper.sqlMapping.HotelCapaciteMapper;
+import com.projet.e_hotel.Repository.ClientReserveRepository;
 import com.projet.e_hotel.Repository.HotelRepository;
+import com.projet.e_hotel.Repository.LoueChambreRepository;
 
 @Service
 public class HotelService {
     @Autowired
     private HotelRepository hotelRepository;
+    @Autowired
+    private LoueChambreRepository loueChambreRepository;
+    @Autowired
+    private ClientReserveRepository clientReserveRepository;
 
     public Hotel getNameHotel(Integer idHotel) {
         return hotelRepository.findById(idHotel).orElseThrow();
@@ -119,5 +127,9 @@ public class HotelService {
     public void deleteHotel(Integer id_hotel) {
         Hotel existingHotel = hotelRepository.findById(id_hotel).get();
         hotelRepository.delete(existingHotel);
+    }
+
+    public Hotel getHotelInfo(Integer id) {
+        return hotelRepository.findById(id).get();
     }
 }

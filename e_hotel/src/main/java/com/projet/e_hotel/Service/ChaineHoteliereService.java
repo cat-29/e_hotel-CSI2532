@@ -42,4 +42,8 @@ public class ChaineHoteliereService {
         chaineHoteliereRepository.delete(exisitingChaine);
     }
 
+    public ChaineHoteliere getChaineInfo(String nomChaine) {
+        return chaineHoteliereRepository.findByNomChaine(nomChaine);
+    }
+
 }

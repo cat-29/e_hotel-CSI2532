@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.projet.e_hotel.Classes.Chambre;
 import com.projet.e_hotel.Classes.ClientReserve;
+import com.projet.e_hotel.Classes.ContientCommodite;
 import com.projet.e_hotel.Classes.Dommage;
 import com.projet.e_hotel.Classes.LoueChambre;
 import com.projet.e_hotel.Classes.SubiDommage;
@@ -404,6 +405,31 @@ public class ChambreService {
         existingChambre.setVueChambre(chambre.getVueChambre());
         existingChambre.setCapaciteAEtendre(chambre.getCapaciteAEtendre());
         return chambreRepository.save(existingChambre);
+    }
+
+    public void deleteChambre(Integer idHotel, Integer numChambre) {
+        // delete client_reserve, contient_commodite, loue_chambre, subi_dommage
+        // List<ClientReserve> existingClientReserve =
+        // clientReserveRepository.findAllByIdHotel(idHotel);
+        // for (int i = 0; i < existingClientReserve.size(); i++) {
+        // ClientReserve clientReserve = existingClientReserve.get(i);
+        // clientReserveRepository.delete(clientReserve);
+        // }
+
+        // List<ContientCommodite> existingContientCommodites =
+
+        // List<LoueChambre> existingLoueChambre =
+        // loueChambreRepository.findAllByIdHotel(idHotel);
+        // for (int i = 0; i < existingLoueChambre.size(); i++) {
+        // LoueChambre loueChambre = existingLoueChambre.get(i);
+        // loueChambreRepository.delete(loueChambre);
+        // }
+
+        Chambre existingChambre = chambreRepository.findByIdHotelAndNumeroChambre(idHotel, numChambre);
+        chambreRepository.delete(existingChambre);
+
+        // Chambre chambre = new Chambre(idHotel, numChambre);
+        // Chambre existingChambre = chambreRepository.deleteById(chambre);
     }
 
 }
