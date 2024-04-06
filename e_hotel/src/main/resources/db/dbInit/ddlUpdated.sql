@@ -161,6 +161,8 @@ CREATE INDEX idx_prenom ON client (prenom);
 -- Ajout index pour le prenom de l'employe dans la table employe
 CREATE INDEX idx_prenom_employe ON employe (prenom);
 
+CREATE INDEX idx_role_employe ON employe (role);
+
 -- Creation des triggers
 
 -- FONCTION POUR LE TRIGGER 1
