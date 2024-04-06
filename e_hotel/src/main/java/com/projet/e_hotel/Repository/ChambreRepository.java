@@ -22,6 +22,8 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
     Chambre findByNumeroChambre(Integer numeroChambre);
 
+    Chambre findByNumeroChambreAndIdHotel(Integer numeroChambre, Integer idHotel);
+    
     List<Chambre> findChambresByIdHotel(Integer id);
 
     List<Chambre> findAllByNumeroChambre(Integer numeroChambre);

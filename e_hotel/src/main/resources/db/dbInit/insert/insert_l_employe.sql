@@ -3,7 +3,7 @@ INSERT INTO
         nas, prenom, nom_famille, numero, rue, ville, province, pays, code_postal, role, id_hotel
     )
 VALUES (
-        '123456789', 'Jean', 'Tremblay', 123, 'Rue Sainte-Catherine', 'Montreal', 'QC', 'Canada', 'H2L2M8', 'EMPLOYE', 1
+        '987654321', 'Jean', 'Tremblay', 123, 'Rue Sainte-Catherine', 'Montreal', 'QC', 'Canada', 'H2L2M8', 'EMPLOYE', 1
     ),
     (
         '234567890', 'Marie', 'Gagnon', 456, 'Avenue McGill College', 'Toronto', 'ON', 'Canada', 'M5G2C9', 'EMPLOYE', 1

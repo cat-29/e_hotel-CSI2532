@@ -84,9 +84,11 @@ public class ChambreService {
         // Va chercher toutes les chambres dans hotelId
         Optional<List<Chambre>> chambres = chambreRepository.findByIdHotelAndCapaciteChambreAndVueChambre(hotelId,
                 capacite, vue);
+                System.out.println("Ligne 87 : chambre.size  = " + chambres.get().size());
 
         // Pas de chambres, on retourne null
-        if (!chambres.isPresent()) {
+        if (!chambres.isPresent() || chambres.get().size() == 0) {
+            System.out.println("Ligne 90");
             return null;
         }
 
@@ -94,8 +96,12 @@ public class ChambreService {
         // specifications donnees et liste la premiere reservation client pour chaque
         // chambres de l'hotel qui n'est pas affecte par les dates de checkin et
         // checkout de l'utilisateur
+        List<LoueChambre> listeChambreValides = new ArrayList<LoueChambre>();
+        
+        Boolean isThisRoomValid = true; // variable qui sera appeler si une chambre est valide ou non
         for (int idx = 0; idx < chambres.get().size(); idx++) {
-            List<LoueChambre> listeChambreValides = new ArrayList<LoueChambre>();
+            System.out.println("sixe of chambre is: " + chambres.get().size());
+            
             List<Chambre> list = chambres.get();
 
             // Check pour des reservations de client fait avec les specifications
@@ -104,14 +110,18 @@ public class ChambreService {
 
             // Il n'y a pas de reservations faites dans le passe pour cette chambre, check
             // dans loue chambre que c'est pareil
-            if (!listClientReserve.isPresent()) {
+            if (!listClientReserve.isPresent() || listClientReserve.get().size() == 0) {
+                System.out.println("Ligne 113");
+
                 Optional<List<LoueChambre>> listCheckLoueChambrePresent = loueChambreRepository
                         .findAllByNumeroChambreAndIdHotel(list.get(idx).getNumeroChambre(), list.get(idx).getIdHotel());
 
                 // Pas present dans loue chambre aussi, ainsi on peut louer cette chambre
                 // Cette chambre a JAMAIS ete reserve et loue. Alors ca fonctionne!
-                if (!listCheckLoueChambrePresent.isPresent()) {
-                    return chambreRepository.findByNumeroChambre(list.get(idx).getNumeroChambre());
+                if (!listCheckLoueChambrePresent.isPresent() || listCheckLoueChambrePresent.get().size() == 0) {
+                    System.out.println("Ligne 121");
+
+                    return chambreRepository.findByNumeroChambreAndIdHotel(list.get(idx).getNumeroChambre(), hotelId);
                 } else {
 
                     // Cette chambre a deja ete loue dans le passe.
@@ -124,7 +134,8 @@ public class ChambreService {
 
                         // Dates respectee. Retourne la chambre
                         if (areDatesRespected) {
-                            return chambreRepository.findByNumeroChambre(list2.get(i).getNumeroChambre());
+                            System.out.println("Dates respectee a ligne 128");
+                            return chambreRepository.findByNumeroChambreAndIdHotel(list2.get(i).getNumeroChambre(), hotelId);
                         }
                         // Dates pas respecte. Continue
                     }
@@ -140,13 +151,18 @@ public class ChambreService {
 
                     // Dates respectee. Assurons nous qu'elle
                     if (areDatesRespected) {
+                        System.out.println("Dates respectee a ligne 145");
                         Optional<List<LoueChambre>> listCheckLoueChambrePresent = loueChambreRepository
                                 .findAllByNumeroChambreAndIdHotel(list2.get(i).getNumeroChambre(),
                                         list2.get(i).getIdHotel());
 
-                        if (!listCheckLoueChambrePresent.isPresent()) {
+                        if (!listCheckLoueChambrePresent.isPresent() || listCheckLoueChambrePresent.get().size() == 0) {
+                            System.out.println("Ligne 159");
+
                             // peut faire une location car les dates sont respectee dans la reservation
-                            return chambreRepository.findByNumeroChambre(list2.get(i).getNumeroChambre());
+                            // Retour seulement la chambre pour lequel l'employe travaille
+
+                            return chambreRepository.findByNumeroChambreAndIdHotel(list2.get(i).getNumeroChambre(), hotelId);
                         } else {
 
                             // Assurons nous que les dates pour les locations dans loue_chambre respectent
@@ -162,7 +178,6 @@ public class ChambreService {
                     // Dates pas respecte. Continue
                 }
 
-                Boolean isThisRoomValid = true; // variable qui sera appeler si une chambre est valide ou non
 
                 // Check le arrayList. Retourne 1ere chambre qui est valide, si il y en a une.
                 for (int i = 0; i < listeChambreValides.size(); i++) {
@@ -175,12 +190,30 @@ public class ChambreService {
                 }
 
                 if (isThisRoomValid) {
-                    // Chambre est valide et la liste qui comportait les chambres valides a un size
-                    // plus grand que 1
-                    if (listeChambreValides.size() > 0) {
-                        return chambreRepository.findByNumeroChambre(listeChambreValides.get(0).getNumeroChambre());
-                    }
+                    break;
                 }
+
+                
+            }
+        }
+
+        if (isThisRoomValid) {
+            System.out.println("Dates respectee a ligne 181");
+            // Chambre est valide et la liste qui comportait les chambres valides a un size
+            // plus grand que 1
+            if (listeChambreValides.size() > 0) {
+                System.out.println("On dis que la liste est plus grande que un size de 0");
+                Integer l = listeChambreValides.stream().map(r -> r.getNumeroChambre()).findFirst().get();
+                // break;
+                for (int i = 0; i < listeChambreValides.size(); i++ ){
+                    Chambre c = chambreRepository.findAllByNumeroChambre(l).get(i);
+                    System.out.println(i + ": num chambre: " + c.getNumeroChambre() + ", hotelID: " + c.getIdHotel());
+                } 
+                return chambreRepository.findAllByNumeroChambre(l).get(0);
+
+                // return chambreRepository.findByNumeroChambre(l);
+                // return chambreRepository.findByNumeroChambre(listeChambreValides.get(0).getNumeroChambre());
+                // return chambreRepository.findByNumeroChambre(listeChambreValides.get(0).getNumeroChambre());
             }
         }
 
@@ -237,6 +270,7 @@ public class ChambreService {
             return false;
         }
 
+        System.out.println("DATES are respected.");
         // Les checkIns et CheckOuts n'interferent pas les nouvelles dates de
         // reservations
         return true;

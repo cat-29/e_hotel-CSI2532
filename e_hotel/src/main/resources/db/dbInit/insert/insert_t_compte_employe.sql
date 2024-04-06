@@ -3,7 +3,7 @@ INSERT INTO
         id_compte, id_employe, email, password
     )
 VALUES (
-        1, '123456789', 'employe@test.ca', 'employetest'
+        1, '987654321', 'employe@test.ca', 'employetest'
     ),
     (
         2, '345678901', 'superviseur@test.ca', 'superviseurtest'
