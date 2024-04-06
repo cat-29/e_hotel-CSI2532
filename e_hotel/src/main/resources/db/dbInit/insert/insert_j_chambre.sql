@@ -8,7 +8,7 @@ VALUES
         100, 1, 115.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 1, 120.00, 'DOUBLE', 'MONTAGNE', false
+        101, 1, 120.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 1, 125.00, 'TRIPLE', 'MER', true
@@ -17,7 +17,7 @@ VALUES
         103, 1, 110.00, 'SIMPLE', 'MONTAGNE', false
     ),
     (
-        104, 1, 130.00, 'DOUBLE', 'MER', true
+        104, 1, 130.00, 'DOUBLE', 'MER', false
     ),
     -- Hotel 2
     (
@@ -53,10 +53,10 @@ VALUES
     ),
     -- Hotel 4
     (
-        100, 4, 130.00, 'SIMPLE', 'MER', true
+        100, 4, 130.00, 'SIMPLE', 'MER', false
     ),
     (
-        101, 4, 135.00, 'DOUBLE', 'MONTAGNE', false
+        101, 4, 135.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 4, 140.00, 'TRIPLE', 'MER', true
@@ -81,7 +81,7 @@ VALUES
         103, 5, 130.00, 'SIMPLE', 'MER', false
     ),
     (
-        104, 5, 150.00, 'DOUBLE', 'MONTAGNE', true
+        104, 5, 150.00, 'DOUBLE', 'MONTAGNE', false
     ),
     -- Hotel 6
     (
@@ -91,7 +91,7 @@ VALUES
         101, 6, 145.00, 'DOUBLE', 'MONTAGNE', false
     ),
     (
-        102, 6, 150.00, 'TRIPLE', 'MER', true
+        102, 6, 150.00, 'TRIPLE', 'MER', false
     ),
     (
         103, 6, 135.00, 'SIMPLE', 'MONTAGNE', false
@@ -110,7 +110,7 @@ VALUES
         102, 7, 130.00, 'TRIPLE', 'MER', true
     ),
     (
-        103, 7, 120.00, 'SIMPLE', 'MONTAGNE', false
+        103, 7, 120.00, 'SIMPLE', 'MONTAGNE', true
     ),
     (
         104, 7, 135.00, 'DOUBLE', 'MER', true
@@ -136,7 +136,7 @@ VALUES
         100, 9, 130.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 9, 135.00, 'DOUBLE', 'MONTAGNE', false
+        101, 9, 135.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 9, 140.00, 'TRIPLE', 'MER', true
@@ -149,7 +149,7 @@ VALUES
     ),
     -- Hotel 10
     (
-        100, 10, 135.00, 'SIMPLE', 'MER', true
+        100, 10, 135.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 10, 140.00, 'DOUBLE', 'MONTAGNE', false
@@ -158,7 +158,7 @@ VALUES
         102, 10, 145.00, 'TRIPLE', 'MER', true
     ),
     (
-        103, 10, 130.00, 'SIMPLE', 'MONTAGNE', false
+        103, 10, 130.00, 'SIMPLE', 'MONTAGNE', true
     ),
     (
         104, 10, 120.00, 'DOUBLE', 'MER', true
@@ -197,13 +197,13 @@ VALUES
     ),
     -- Hotel 13
     (
-        100, 13, 130.00, 'SIMPLE', 'MER', true
+        100, 13, 130.00, 'SIMPLE', 'MER', false
     ),
     (
-        101, 13, 135.00, 'DOUBLE', 'MONTAGNE', false
+        101, 13, 135.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
-        102, 13, 140.00, 'TRIPLE', 'MER', true
+        102, 13, 140.00, 'TRIPLE', 'MER', false
     ),
     (
         103, 13, 125.00, 'SIMPLE', 'MONTAGNE', false
@@ -232,7 +232,7 @@ VALUES
         100, 15, 140.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 15, 125.00, 'DOUBLE', 'MONTAGNE', false
+        101, 15, 125.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 15, 130.00, 'TRIPLE', 'MER', true
@@ -257,7 +257,7 @@ VALUES
         103, 16, 120.00, 'SIMPLE', 'MONTAGNE', false
     ),
     (
-        104, 16, 140.00, 'DOUBLE', 'MER', true
+        104, 16, 140.00, 'DOUBLE', 'MER', false
     ),
     -- Hotel 17
     (
@@ -270,14 +270,14 @@ VALUES
         102, 17, 120.00, 'TRIPLE', 'MER', true
     ),
     (
-        103, 17, 135.00, 'SIMPLE', 'MONTAGNE', false
+        103, 17, 135.00, 'SIMPLE', 'MONTAGNE', true
     ),
     (
         104, 17, 115.00, 'DOUBLE', 'MER', true
     ),
     -- Hotel 18
     (
-        100, 18, 135.00, 'SIMPLE', 'MER', true
+        100, 18, 135.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 18, 140.00, 'DOUBLE', 'MONTAGNE', false
@@ -293,7 +293,7 @@ VALUES
     ),
     -- Hotel 19
     (
-        100, 19, 140.00, 'SIMPLE', 'MER', true
+        100, 19, 140.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 19, 125.00, 'DOUBLE', 'MONTAGNE', false
@@ -318,7 +318,7 @@ VALUES
         102, 20, 135.00, 'TRIPLE', 'MER', true
     ),
     (
-        103, 20, 120.00, 'SIMPLE', 'MONTAGNE', false
+        103, 20, 120.00, 'SIMPLE', 'MONTAGNE', true
     ),
     (
         104, 20, 140.00, 'DOUBLE', 'MER', true
@@ -344,7 +344,7 @@ VALUES
         100, 22, 135.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 22, 140.00, 'DOUBLE', 'MONTAGNE', false
+        101, 22, 140.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 22, 145.00, 'TRIPLE', 'MER', true
@@ -353,7 +353,7 @@ VALUES
         103, 22, 130.00, 'SIMPLE', 'MONTAGNE', false
     ),
     (
-        104, 22, 120.00, 'DOUBLE', 'MER', true
+        104, 22, 120.00, 'DOUBLE', 'MER', false
     ),
     -- Hotel 23
     (
@@ -376,7 +376,7 @@ VALUES
         100, 24, 125.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 24, 130.00, 'DOUBLE', 'MONTAGNE', false
+        101, 24, 130.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 24, 135.00, 'TRIPLE', 'MER', true
@@ -408,7 +408,7 @@ VALUES
         100, 26, 135.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 26, 140.00, 'DOUBLE', 'MONTAGNE', false
+        101, 26, 140.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 26, 145.00, 'TRIPLE', 'MER', true
@@ -421,7 +421,7 @@ VALUES
     ),
     -- Hotel 27
     (
-        100, 27, 140.00, 'SIMPLE', 'MER', true
+        100, 27, 140.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 27, 125.00, 'DOUBLE', 'MONTAGNE', false
@@ -453,7 +453,7 @@ VALUES
     ),
     -- Hotel 29
     (
-        100, 29, 130.00, 'SIMPLE', 'MER', true
+        100, 29, 130.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 29, 135.00, 'DOUBLE', 'MONTAGNE', false
@@ -462,7 +462,7 @@ VALUES
         102, 29, 140.00, 'TRIPLE', 'MER', true
     ),
     (
-        103, 29, 125.00, 'SIMPLE', 'MONTAGNE', false
+        103, 29, 125.00, 'SIMPLE', 'MONTAGNE', true
     ),
     (
         104, 29, 115.00, 'DOUBLE', 'MER', true
@@ -475,7 +475,7 @@ VALUES
         101, 30, 140.00, 'DOUBLE', 'MONTAGNE', false
     ),
     (
-        102, 30, 145.00, 'TRIPLE', 'MER', true
+        102, 30, 145.00, 'TRIPLE', 'MER', false
     ),
     (
         103, 30, 130.00, 'SIMPLE', 'MONTAGNE', false
@@ -485,7 +485,7 @@ VALUES
     ),
     -- Hotel 31
     (
-        100, 31, 140.00, 'SIMPLE', 'MER', true
+        100, 31, 140.00, 'SIMPLE', 'MER', false
     ),
     (
         101, 31, 125.00, 'TRIPLE', 'MONTAGNE', false
@@ -504,7 +504,7 @@ VALUES
         100, 32, 125.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 32, 130.00, 'DOUBLE', 'MONTAGNE', false
+        101, 32, 130.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 32, 135.00, 'TRIPLE', 'MER', true
@@ -520,7 +520,7 @@ VALUES
         100, 33, 130.00, 'SIMPLE', 'MER', true
     ),
     (
-        101, 33, 125.00, 'DOUBLE', 'MONTAGNE', false
+        101, 33, 125.00, 'DOUBLE', 'MONTAGNE', true
     ),
     (
         102, 33, 120.00, 'TRIPLE', 'MER', true
@@ -539,7 +539,7 @@ VALUES
         101, 34, 140.00, 'DOUBLE', 'MONTAGNE', false
     ),
     (
-        102, 34, 145.00, 'TRIPLE', 'MER', true
+        102, 34, 145.00, 'TRIPLE', 'MER', false
     ),
     (
         103, 34, 130.00, 'SIMPLE', 'MONTAGNE', false
@@ -642,5 +642,4 @@ VALUES
     ),
     (
         104, 40, 140.00, 'DOUBLE', 'MER', true
-    )
-ON CONFLICT DO NOTHING;
+    ) ON CONFLICT DO NOTHING;
