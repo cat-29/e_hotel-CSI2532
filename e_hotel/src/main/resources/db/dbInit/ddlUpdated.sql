@@ -346,10 +346,10 @@ CREATE OR REPLACE FUNCTION add_logs_before_deleting_chambre
 LANGUAGE PLPGSQL AS 
 $$
 BEGIN
-	-- Ajoute toutes les lignes dans client_reserve qui doivent etres supprimees
 	INSERT INTO
+	    -- Ajoute toutes les lignes dans client_reserve qui doivent etres supprimees
 	    log_client_reserve (
-	        id_client, numero_chambre, id_hotel, date_checkin, date_checkout, prix, paiement_complete, date_paiement_complete
+	        id_client, numero_chambre, id_hotel, date_checkin, date_checkout, prix, date_paiement_complete, paiement_complete
 	    )
 	SELECT *
 	FROM client_reserve
@@ -373,6 +373,15 @@ BEGIN
 	where
 	    id_hotel = OLD.id_hotel
 	    and numero_chambre = OLD.numero_chambre;
+	-- Supprime les lignes dans contient_commodite et subi_dommage
+	DELETE FROM contient_commodite
+	WHERE
+	    numero_chambre = OLD.numero_chambre
+	    AND id_hotel = OLD.id_hotel;
+	DELETE FROM subi_dommage
+	WHERE
+	    numero_chambre = OLD.numero_chambre
+	    AND id_hotel = OLD.id_hotel;
 	RETURN OLD;
 END;
 $$; 

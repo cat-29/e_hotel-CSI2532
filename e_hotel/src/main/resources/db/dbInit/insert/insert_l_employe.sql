@@ -16,5 +16,8 @@ VALUES (
     ),
     (
         '567890123', 'Michel', 'Côté', 202, 'Rue Peel', 'Calgary', 'AB', 'Canada', 'T2P2Y7', 'GESTIONNAIRE', 1
+    ),
+    (
+        '111111111', 'Lucie', 'Cocotte', 50, 'Rue Rocherville', 'Gatineau', 'QC', 'Canada', 'H2J3K4', 'ADMIN', 1
     )
 ON CONFLICT DO NOTHING;
