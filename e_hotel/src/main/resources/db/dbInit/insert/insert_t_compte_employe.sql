@@ -10,5 +10,8 @@ VALUES (
     ),
     (
         3, '567890123', 'gestion@test.ca', 'gestiontest'
+    ),
+    (
+        4, '111111111', 'admin@test.ca', 'admintest'
     )
 ON CONFLICT DO NOTHING;

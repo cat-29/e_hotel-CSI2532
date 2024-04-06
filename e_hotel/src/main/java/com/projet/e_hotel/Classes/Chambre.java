@@ -46,6 +46,11 @@ public class Chambre {
         this.capaciteAEtendre = capaciteAEtendre;
     }
 
+    public Chambre(Integer numeroChambre, Integer idHotel) {
+        this.numeroChambre = numeroChambre;
+        this.idHotel = idHotel;
+    }
+
     public Chambre() {
     }
 }

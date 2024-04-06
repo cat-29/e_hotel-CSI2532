@@ -8,6 +8,8 @@ import InputMask from "react-input-mask";
 export const HotelInfo = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [numEmployes, setNumEmployes] = useState(false);
+  const [isUserAdmin, setIsUserAdmin] = useState(false);
 
   const [chambre, setChambre] = useState([]);
   const [employe, setEmploye] = useState([]);
@@ -42,6 +44,10 @@ export const HotelInfo = () => {
       pays: state.hotelInfo.pays,
       codePostal: state.hotelInfo.codePostal,
     });
+    if (state.employeInfo.roleEmploye == "ADMIN") {
+      setIsUserAdmin(true);
+      console.log("User is an ADMIN");
+    }
     console.log(formData);
   }, []);
 
@@ -120,7 +126,11 @@ export const HotelInfo = () => {
       .getEmployeFromHotel(state.hotelInfo.id)
       .then((response) => {
         setEmploye(response.data);
-        console.log(response);
+        console.log("employes!!!, ", response.data.length);
+        if (response.data.length == 0) {
+          setNumEmployes(true);
+        }
+        console.log("numEmployes!!!, ", numEmployes);
       })
       .catch((e) => {
         console.log(e);
@@ -129,6 +139,16 @@ export const HotelInfo = () => {
 
   const navigateToHotels = () => {
     navigate("/chaineInfo", {
+      state: {
+        employeInfo: state.employeInfo,
+        hotelInfo: state.hotelInfo,
+        chaineInfo: state.chaineInfo,
+      },
+    });
+  };
+
+  const navigateBackToHotelInfo = () => {
+    navigate("/hotelInfo", {
       state: {
         employeInfo: state.employeInfo,
         hotelInfo: state.hotelInfo,
@@ -182,7 +202,24 @@ export const HotelInfo = () => {
         await adminService.updateHotel(formData).then(() => {
           console.log("saveHotel called");
           console.log(formData);
-          navigateToHotels();
+          if (!isUserAdmin) {
+            navigateToHotels();
+          } else {
+            console.log("setModify called, before state: ", state);
+            state.hotelInfo.id = formData.id;
+            state.hotelInfo.nomChaine = formData.nomChaine;
+            state.hotelInfo.rating = formData.rating;
+            state.hotelInfo.nbrChambre = formData.nbrChambre;
+            state.hotelInfo.numero = formData.numero;
+            state.hotelInfo.rue = formData.rue;
+            state.hotelInfo.ville = formData.ville;
+            state.hotelInfo.province = formData.province;
+            state.hotelInfo.pays = formData.pays;
+            state.hotelInfo.codePostal = formData.codePostal;
+            state.hotelInfo.nom = formData.nom;
+            setModify(false);
+            console.log("setModify called, AFTER state: ", state);
+          }
         });
       } catch (error) {
         console.error(error);
@@ -190,15 +227,39 @@ export const HotelInfo = () => {
     }
   };
 
+  const handleDeleteSubmit = async (e) => {
+    console.log("HEYLOOKHERE", state.hotelInfo.nbrChambre, numEmployes);
+    if (state.hotelInfo.nbrChambre == 0 && numEmployes == true) {
+      console.log(e);
+      console.log("handleDeleteSubmit sent");
+      try {
+        await adminService.deleteHotel(state.hotelInfo.id).then(() => {
+          console.log("deleteHotel called for: ", state.hotelInfo.id);
+          navigateToHotels();
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      alert(
+        "Veuillez supprimer les chambres ou employés contenus dans l'hôtel' et réessayer."
+      );
+    }
+  };
+
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />
 
-      <div className="d-grid gap-2 d-md-flex m-3 mx-4">
-        <button className="ms-3 btn btn-secondary" onClick={navigateToHotels}>
-          Retour
-        </button>
-      </div>
+      {!isUserAdmin ? (
+        <div className="d-grid gap-2 d-md-flex m-3 mx-4">
+          <button className="ms-3 btn btn-secondary" onClick={navigateToHotels}>
+            Retour
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
 
       <div className="text-center">
         <h1 className="mx-4 my-4">Administration</h1>
@@ -215,17 +276,41 @@ export const HotelInfo = () => {
                 hidePageInfo();
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen me-1" viewBox="0 0 15 18">
-                  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pen me-1"
+                viewBox="0 0 15 18"
+              >
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
               </svg>
               Modifier
             </button>
-            <button type="submit" className="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3 me-1" viewBox="0 0 15 18">
-                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-              </svg>
-              Supprimer
-            </button>
+            {!isUserAdmin ? (
+              <button
+                type="button"
+                className="btn btn-dark"
+                onClick={() => {
+                  handleDeleteSubmit();
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  className="bi bi-trash3 me-1"
+                  viewBox="0 0 15 18"
+                >
+                  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                </svg>
+                Supprimer
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           <></>
@@ -455,8 +540,8 @@ export const HotelInfo = () => {
                   {val.prenom} {val.nomFamille}
                 </td>
                 <td className="text-center">
-                  {val.numero} {val.rue}, {val.ville}, {val.province}{" "}
-                  {val.pays} {val.codePostal}
+                  {val.numero} {val.rue}, {val.ville}, {val.province} {val.pays}{" "}
+                  {val.codePostal}
                 </td>
                 <td className="text-center">{val.roleEmploye}</td>
                 <td className="text-center">
@@ -480,16 +565,16 @@ export const HotelInfo = () => {
         <h4 className="p-4 pb-1">Chambres</h4>
       </div>
       <div className="d-grid gap-2 d-md-flex mx-4">
-      <button
-        type="button"
-        className="btn btn-secondary ms-4"
-        onClick={() => {
-          showAjoutChambre();
-        }}
-      >
-        Ajouter une chambre
-      </button>
-    </div>
+        <button
+          type="button"
+          className="btn btn-secondary ms-4"
+          onClick={() => {
+            showAjoutChambre();
+          }}
+        >
+          Ajouter une chambre
+        </button>
+      </div>
       <table className="table align-middle table-bordered mx-5 my-2 w-auto mb-5">
         <thead>
           <tr className="text-center">
@@ -529,7 +614,7 @@ export const HotelInfo = () => {
             </tbody>
           );
         })}
-      </table>      
+      </table>
     </>
   );
 };
