@@ -12,11 +12,7 @@ export const EmployeAjouteLocation = () => {
 
     // When get employe id, get the hotel 
     useEffect(() => {
-
-        console.log("in employe ajoute location")
-        console.log(state.employeInfo);
         connexionCompte.getNameHotelEmployeWorksFor(state.employeInfo.idHotel).then((response) => {
-            console.log("name hotel employe works for is: " + response.data);
             setFormData({...formData, nomHotel: response.data});
         }).catch((e) => {
             console.log(e);
@@ -54,7 +50,6 @@ export const EmployeAjouteLocation = () => {
         const value = target.value;
         const name = target.name;
         if (name == "numero"){
-            // This desactivates all keyboards buttons axcept numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
         } else if (name == "idClient" || name == "codePostal") {
@@ -72,18 +67,11 @@ export const EmployeAjouteLocation = () => {
             console.log("checkout" + formData.dateCheckout);
 
         } else if (name == "vue") {
-            if (target.id == "vue_mer") {
-                console.log("vue_mer");
-            } else if (target.id == "vue_montagne") {
-                console.log("vue_montagne")
-            }
             const newValue = event.target.id;
             setFormData({ ...formData, [name]: newValue});
-            console.log("new value vue is " + newValue);
         } else if (name == "capacite") {
             const newValue = event.target.id;
             setFormData({ ...formData, [name]: newValue});
-            console.log("new value capacite is " + newValue);
         }
         else {
             setFormData({ ...formData, [name]: value });
@@ -116,7 +104,6 @@ export const EmployeAjouteLocation = () => {
         // Set le prix comme le montant du
         formData.montantDu = montant;
         setFormData({ ...formData, ["montantDu"]: montant});
-        console.log("nbr de jour entre = " + Math.round(diffNbrJours / JOUR_MSEC));
 
         // Le client existe-t-il? Si oui, on continue, sinon, on cree un nouveau client avec les informations entrees
         connexionCompte.doesClientExist(formData.idClient).then((response) => {
@@ -175,10 +162,12 @@ export const EmployeAjouteLocation = () => {
             // get the first room that matches the specifications.. if no room, then show alert
             // continue to the payment section
             connexionCompte.getNumeroChambreForSpecifications(state.employeInfo.idHotel, new Date(formData.dateCheckin).toISOString().slice(0,10), new Date(formData.dateCheckout).toISOString().slice(0,10), formData.capacite, formData.vue).then((response) => {
-
+                
                 // check if an element is null in the response data. If so, then show error msg.
-                if (response.data.numeroChambre == null && response.data.idHotel == null) {
-                    alert("Veuillez changer les filtres et/ou les dates de checkin et checkout!");
+                if (response.data.errorType == 1) {
+                    alert("Aucune chambre trouvé. Veuillez changer vos filtres!");
+                } else if (response.data.errorType == 2) {
+                    alert("Aucune chambre de disponible pour les dates de checkin et checkout entrées. Veuillez changer ces dates!");
                 } else {
                     // Set les informations concernant la chambre de libre
                     setRoomNumberInfo(response.data);
@@ -382,15 +371,9 @@ export const EmployeAjouteLocation = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* 1. Add Hotel textbox where it is disabled and set as the hotel name the employe works at */}
-                {/* 2. when create location, return 1st chambreNumber that is not used during the dates suggested */}
-                {/* 3. Add the payment section on Suivant and add the handleSubmit on the button */}
                 <div className="d-grid gap-2 d-md-flex m-3 mb-5">
-                    {/* <button type="submit" className='btn btn-primary'>Créesr un compte</button> */}
                     <button type='submit' onClick={handleSubmit} className='btn btn-secondary'>Suivant</button>
                 </div>
-
             </form>
         </>  
     )

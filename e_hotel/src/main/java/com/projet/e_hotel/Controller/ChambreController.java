@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projet.e_hotel.Classes.Chambre;
 import com.projet.e_hotel.Classes.Dommage;
 import com.projet.e_hotel.Classes.Hotel;
+import com.projet.e_hotel.Classes.dto.AjoutLocationChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 import com.projet.e_hotel.Classes.dto.ChambreHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambrePKDTO;
@@ -54,22 +55,26 @@ public class ChambreController {
     }
 
     @GetMapping("/numeroChambre/{hotelId}/{dateCheckIn}/{dateCheckOut}/{capacite}/{vue}")
-    public ChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId, @PathVariable String dateCheckIn,
+    public AjoutLocationChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId, @PathVariable String dateCheckIn,
             @PathVariable String dateCheckOut, @PathVariable String capacite,
             @PathVariable String vue) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date checkinFormatted = sdf.parse(dateCheckIn);
         Date checkoutFormatted = sdf.parse(dateCheckOut);
-        Chambre infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkinFormatted,
+        // Chambre infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkinFormatted,
+        //         checkoutFormatted, capacite,
+        //         vue);
+        AjoutLocationChambreDTO infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkinFormatted,
                 checkoutFormatted, capacite,
                 vue);
-        if (infoChambre == null) {
-            // Utilisateur doit changer ces filtres car il y a quelque chose qui est
-            // problematique
-            return ChambreMapper.mapToChambreDTO(new Chambre());
-        }
-        return ChambreMapper.mapToChambreDTO(infoChambre);
+                return infoChambre;
+        // if (infoChambre == null) {
+        //     // Utilisateur doit changer ces filtres car il y a quelque chose qui est
+        //     // problematique
+        //     return ChambreMapper.mapToChambreDTO(new Chambre());
+        // }
+        // return ChambreMapper.mapToChambreDTO(infoChambre);
     }
 
     @GetMapping("/getAllRooms/rating")
