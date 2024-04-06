@@ -156,6 +156,21 @@ export const PageReservation = () => {
         // console.log("on doit ici changer vers la chambre de details de la chambre");
         navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {client:state, chambre:chambre,nas:state.nas}});
     }
+
+    // Images ajout
+    const renderImages = (capacite)=>{
+        if (capacite == 'simple'){
+            console.log("here");
+            return './images/simple.png'
+
+        }else if (capacite == 'double'){
+            return './images/double.png'
+
+        }else if (capacite == 'triple'){
+            return './images/triple.png'
+
+        }
+    }
     
    
     return (
@@ -193,7 +208,7 @@ export const PageReservation = () => {
                     return(
                         <div key={`card${index}`} className="text-center">
                             <div className="card border-3 border-dark" style={{width: "300px"}}>
-                                <img className="card-img-top" src="" alt={item.numeroChambre}/>
+                                <img className="card-img-top" src={renderImages(item.capaciteChambre.toLowerCase())} alt={item.numeroChambre}/>
                                 <div className="card-body">
                                     <h4 style={{marginTop:"10px"}} className="card-title">{`chambre ${item.capaciteChambre.toLowerCase()}`}</h4>
                                         <div id="hotel">{item.nom}</div>

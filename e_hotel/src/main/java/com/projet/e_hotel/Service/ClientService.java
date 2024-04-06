@@ -22,11 +22,7 @@ public class ClientService {
 
     public ClientService(){
     }
-    // public ClientService(ClientRepository clientRepository) {
-    //     this.clientRepository = clientRepository;
-    // }
-
-    //THIS METHOD IS USED SOMEWHERE ELSE (indexcontroller.java)
+ 
     public List<Client> getAllClient() {
         return clientRepository.findAll();
     }
@@ -40,10 +36,6 @@ public class ClientService {
         return clientRepository.findById(nas).orElseThrow();
     }
 
-    // public EnregistreClient setEnregistrementClient(Client client, String idEmploye) {
-    //     EnregistreClient enregistreClient = new EnregistreClient(idEmploye, client.getId(), null, null);
-    //     return enregistreClient;
-    // }
 
     public Optional<Client> doesClientExist(String nas) {
         return clientRepository.findById(nas);

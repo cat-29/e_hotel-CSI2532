@@ -93,6 +93,12 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
     List<Object[]> determineIfNotAvailable(@Param("checkin") Date checkin, @Param("checkout") Date checkout,
             @Param("idHotel") Integer idHotel, @Param("numeroChambre") Integer numeroChambre);
 
+
+
+
+
+            
+
 //     Determine number of all available rooms per province
     @Query(value="select * from chambre_disponibles",nativeQuery = true)
     List<Object[]> getCountRoomAvailable(); 
@@ -148,8 +154,10 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                                 "\r\n" + //
                                 "", nativeQuery = true)
         // Get all rooms available for checkin, checkout specified along with other params
-        List<Object[]> getAllRoomsCheckinAndCheckout(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
+        List<Object[]> getAllRoomsCheckinAndCheckout(@Param("checkin") Date checkin,@Param("checkout") Date checkout, 
+        @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,
+        @Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -217,8 +225,10 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                 "intersect (select * from chambreXHotel where capacite_a_etendre = :etendre)\r\n" ,nativeQuery = true)
 
         // Filtrer par tout except checkin
-        List<Object[]> getAllRoomsCheckoutOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
+        List<Object[]> getAllRoomsCheckoutOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout,
+        @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,
+        @Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -283,8 +293,10 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
         // Filtrer par tout except checkout
 
-        List<Object[]> getAllRoomsCheckinOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout, @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
-        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,@Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
+        List<Object[]> getAllRoomsCheckinOnly(@Param("checkin") Date checkin,@Param("checkout") Date checkout, 
+        @Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
+        @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,
+        @Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
 
 
 
@@ -325,6 +337,11 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
         List<Object[]> getAllRoomsNoDates(@Param("capacite") String capacite,@Param("vue") String vue,@Param("prixMin") Double prixMin,
         @Param("prixMax") Double prixMax, @Param("chaine") String chaine,@Param("classement") Integer classement,
         @Param("chambreMin") Integer chambreMin,@Param("chambreMax") Integer chambreMax,@Param("etendre") Boolean etendre);
+
+
+
+
+
 
 
         @Query(value="select type_commodite from chambreXcommodite where id_hotel = :idHotel and numero_chambre = :numero_chambre\r\n" + //
