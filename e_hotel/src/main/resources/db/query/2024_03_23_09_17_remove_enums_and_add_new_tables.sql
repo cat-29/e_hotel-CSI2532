@@ -28,9 +28,6 @@ ALTER TABLE chambre ADD capacite_chambre VARCHAR(255), ADD CONSTRAINT fk_cpacite
 ALTER TABLE chambre DROP vue;
 ALTER TABLE chambre ADD vue_chambre VARCHAR(255), ADD CONSTRAINT fk_vue_chambre FOREIGN KEY (vue_chambre) REFERENCES vue_chambre_type(type);
 
-ALTER TABLE travaille_pour DROP role;
-ALTER TABLE travaille_pour ADD role VARCHAR(255), ADD CONSTRAINT fk_role FOREIGN KEY (role) REFERENCES role_employe_type(type);
-
 ALTER TABLE employe DROP role;
 ALTER TABLE employe ADD role VARCHAR(255), ADD CONSTRAINT fk_role FOREIGN KEY (role) REFERENCES role_employe_type(type);
 

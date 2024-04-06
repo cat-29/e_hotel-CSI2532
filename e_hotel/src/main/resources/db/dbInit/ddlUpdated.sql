@@ -80,11 +80,6 @@ CREATE TABLE IF NOT EXISTS employe (
     ), role VARCHAR(255), id_hotel INTEGER, PRIMARY KEY (nas), FOREIGN KEY (id_hotel) REFERENCES hotel (id_hotel), FOREIGN KEY (role) REFERENCES role_employe_type (type)
 );
 
--- Travaille_pour
-CREATE TABLE IF NOT EXISTS travaille_pour (
-    id_hotel INTEGER, id_employe CHAR(9), role VARCHAR(255), PRIMARY KEY (id_hotel, id_employe), FOREIGN KEY (id_hotel) REFERENCES hotel (id_hotel), FOREIGN KEY (id_employe) REFERENCES employe (nas), FOREIGN KEY (role) REFERENCES role_employe_type (type)
-);
-
 -- Supervise
 CREATE TABLE IF NOT EXISTS supervise (
     id_superviseur CHAR(9), id_employe CHAR(9) CHECK (id_superviseur <> id_employe), PRIMARY KEY (id_superviseur, id_employe), FOREIGN KEY (id_employe) REFERENCES employe (nas), FOREIGN KEY (id_superviseur) REFERENCES employe (nas) ON DELETE CASCADE

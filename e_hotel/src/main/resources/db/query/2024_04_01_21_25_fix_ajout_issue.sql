@@ -1,4 +1,4 @@
--- Active: 1709601758715@@localhost@5432@e_hotel_projet@public
+-- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
 DROP TABLE enregistre_client;
 
 DROP TABLE loue_chambre;
@@ -16,8 +16,6 @@ DROP TABLE dommage;
 DROP TABLE compte;
 
 DROP TABLE supervise;
-
-DROP TABLE travaille_pour;
 
 DROP TABLE compte_client;
 
