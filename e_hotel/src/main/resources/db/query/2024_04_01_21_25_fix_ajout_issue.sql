@@ -1,4 +1,4 @@
--- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
+-- Active: 1709601758715@@localhost@5432@e_hotel_projet@public
 DROP TABLE enregistre_client;
 
 DROP TABLE loue_chambre;
@@ -72,6 +72,10 @@ DROP FUNCTION IF EXISTS add_logs_before_deleting_chambre CASCADE;
 DROP FUNCTION IF EXISTS modifie_nom_chaine_dans_hotel CASCADE;
 
 DROP FUNCTION IF EXISTS remove_chambre_hotel CASCADE;
+
+DROP FUNCTION IF EXISTS add_hotel_chaine CASCADE;
+
+DROP FUNCTION IF EXISTS remove_hotel_chaine CASCADE;
 
 -- Drop sequence
 DROP SEQUENCE IF EXISTS hotel_id_seq CASCADE;
