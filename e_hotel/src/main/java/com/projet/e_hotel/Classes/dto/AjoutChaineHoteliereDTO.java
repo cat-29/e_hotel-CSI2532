@@ -18,5 +18,4 @@ public class AjoutChaineHoteliereDTO {
     private String province;
     private String pays;
     private String codePostal;
-
 }

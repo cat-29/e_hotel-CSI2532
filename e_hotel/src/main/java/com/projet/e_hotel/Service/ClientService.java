@@ -10,15 +10,12 @@ import com.projet.e_hotel.Classes.Client;
 import com.projet.e_hotel.Classes.dto.EmployeAjouteLocationDTO;
 import com.projet.e_hotel.Classes.mapper.EmployeAjouteLocationMapper;
 import com.projet.e_hotel.Repository.ClientRepository;
-import com.projet.e_hotel.Repository.EnregistreClientRepository;
 
 @Service
 public class ClientService {
     @Autowired
 
     private ClientRepository clientRepository;
-
-    private EnregistreClientRepository enregistreClientRepository;
 
     public ClientService(){
     }

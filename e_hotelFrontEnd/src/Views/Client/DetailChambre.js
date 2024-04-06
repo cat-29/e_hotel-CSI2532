@@ -4,10 +4,6 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { useEffect, useState } from "react";
 import fcts from "../../ApiFcts/Api";
 
-
-
-
-
 export const DetailChambre = ()=>{
     const {state} = useLocation();
 
@@ -19,11 +15,6 @@ export const DetailChambre = ()=>{
 
     // Commodites ici
     const [comms,setComms] = useState([]);
-
-
-    // console.log('state user',state.client);
-    console.log('chambre',chambre);
-    // console.log('nas',userNas);
 
     useEffect(() => {
 
@@ -41,10 +32,6 @@ export const DetailChambre = ()=>{
 
     // construct an object with all required fields for booking, and go to book page 
     const reserve = (numeroChambre,nom,nas,prix,idHotel)=>{
-        // console.log("si on veut reserver, les params sont:",numeroChambre);
-        // console.log("nom",nom);
-        // console.log("nas",nas);
-        // console.log("prix",prix);
         const data = {};
         data.numeroChambre = numeroChambre;
         data.nom = nom;
@@ -54,8 +41,6 @@ export const DetailChambre = ()=>{
         navigate('/reserver',{state:{client:userInfo,bookingInfo:data}});
     }
 
-    
-    // console.log("Dans la page de details: ",state);
     return(
         <>
             <AppHeader info={state} isUserTypeClient={true}/>
@@ -86,8 +71,6 @@ export const DetailChambre = ()=>{
                         </div>
                     </div>:<></>}
                     <div style={{lineHeight:"2rem"}} className="container-fluid mx-auto text d-flex flex-column justify-content-center">
-
-                    
                     </div>  
                 </div>
             </div>

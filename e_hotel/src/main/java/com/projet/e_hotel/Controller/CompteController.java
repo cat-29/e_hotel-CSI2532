@@ -10,7 +10,6 @@ import com.projet.e_hotel.Service.CompteService;
 
 
 @RestController
-// @RequestMapping("/comptes")
 public class CompteController {
 
     @Autowired
@@ -18,11 +17,7 @@ public class CompteController {
 
 
     @PostMapping("addAccount")
-    
     public Compte addAccount(@RequestBody Compte compte){
         return service.saveCompte(compte);
     }
-
-
-    
 }

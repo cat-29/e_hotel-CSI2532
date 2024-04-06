@@ -19,5 +19,4 @@ public class ProvinceCountAvDTO {
         province = dto.province;
         count = dto.count;
     }
-
 }

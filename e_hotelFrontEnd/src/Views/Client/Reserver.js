@@ -9,11 +9,10 @@ import { AppHeader } from '../../components/AppHeader/AppHeader';
 
 export const Reserver = () => {
     const {state} = useLocation();
-    // console.log("the state in reserver",state);
     // General booking info
     const booking = state.bookingInfo; 
     // containing user details
-    const userInfo = state.client; // ici!
+    const userInfo = state.client; 
 
     const [dates, setDates] = useState({
         checkin: '',
@@ -29,11 +28,9 @@ export const Reserver = () => {
     const [shownPrice,setShownPrice] = useState(false);
 
     // Price value
- 
     const [price,setPrice] = useState(0);
 
     // pending state
-
     const [pending,setPending] = useState(false);
 
     const navigate = useNavigate();
@@ -52,8 +49,6 @@ export const Reserver = () => {
     }
 
     const checkDatesAndCalculatePrice = async()=>{
-        // console.log("let's check whether dates is saved or not");
-        // console.log(dates);
         // Validating dates
         let checkin = "";
         if (dates.checkin != ""){
@@ -65,7 +60,6 @@ export const Reserver = () => {
         }
         let res = [];
         ValidateFcts.validateDates(checkin,checkout,res,1);
-        // console.log("errors are",res);
         setErrors(res); 
         let flag = false;
 
@@ -83,7 +77,6 @@ export const Reserver = () => {
             console.log("Ready for further processing");
             // Validate first by determining if the room is available
             let isRoomAvailable = await ValidateFcts.isRoomAvailable(checkin,checkout,booking);
-            // console.log("isRoomAvailable",isRoomAvailable);
             let room = isRoomAvailable[0];
             // Ce premier if veut dire que la chambre n'est pas disponible
             if ((room.numeroChambre != 0) && (room.id_hotel != 0)){
@@ -93,9 +86,6 @@ export const Reserver = () => {
             }else{
                 let days = ValidateFcts.calculateNumberOfDays(checkin,checkout);
                 let totPrice = days * parseInt(booking.prix);
-                // console.log("days are ",days);
-                // console.log("prix",booking.prix);
-                // console.log("for you, price is", totPrice);
                 setShownPrice(true);
                 setPrice(totPrice);
             }
@@ -121,15 +111,12 @@ export const Reserver = () => {
         newState.prix = price;
         newState.isPaiementComplete = false;
         newState.datePaiementComplete = null;
-        // console.log("Dans ajouter reservation BD",newState);
 
         const answer = await fcts.ajouterReservationDB(newState);
         setPending(false);
-        // console.log("the state is",booking);
         // Should await for reservation to be added first, then navigate back
 
         navigate('/reservationChambre',{state:userInfo});
-        // console.log("back in reserverJs: ",answer);
     }
 
     // In case user wants to pay online
@@ -141,7 +128,6 @@ export const Reserver = () => {
         newState.dateCheckin = dates.checkin;
         newState.dateCheckout = dates.checkout;
         newState.prix = price;
-        // console.log('dans go to paiement',newState);
         navigate('/payerClient',{state:{paiementInfo:newState,clientInfo:userInfo}});
     }
 

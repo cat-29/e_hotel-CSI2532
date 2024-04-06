@@ -13,7 +13,6 @@ import lombok.Setter;
 
 public class ChambreHotelDTO {
     // Those are hotel variables
-    // private Integer id;
     private String nomChaine;
     private String nom;
     private Integer rating;
@@ -24,7 +23,6 @@ public class ChambreHotelDTO {
     private String province;
     private String pays;
     private String codePostal;
-
     
     // Those are Chambre variables
     private Integer numeroChambre;
@@ -36,7 +34,6 @@ public class ChambreHotelDTO {
     
     
     public ChambreHotelDTO(ChambreHotelDTO dto){
-        // I dont think we need id hotel from a client perspective that's why I havent include it here
         nomChaine = dto.nomChaine;
         nom = dto.nom;
         rating = dto.rating;

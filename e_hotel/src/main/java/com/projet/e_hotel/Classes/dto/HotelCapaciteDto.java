@@ -21,7 +21,4 @@ public class HotelCapaciteDto {
         this.nom_hotel = adto.nom_hotel;
         this.listeCapacites = adto.listeCapacites;
     }
-
-
-
 }

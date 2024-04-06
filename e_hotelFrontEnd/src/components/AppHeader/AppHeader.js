@@ -144,8 +144,6 @@ export const AppHeader=(info)=>{
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
                     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet"></link>
                 </div>
-
-                {/* <div className="title">Bienvenue à Hotelio</div> */}
         
                 <div className="d-flex align-content-center align-items-center">
                     { info.info !== undefined ?

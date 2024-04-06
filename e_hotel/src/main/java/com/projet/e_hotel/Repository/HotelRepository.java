@@ -27,8 +27,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
 
     Hotel findByNomChaine(String nomChaine);
 
-    // Hotel findByIdHotel(Integer id);
-
     // Pour la vue 2
     @Query(value = " select * from capacite_chambres_tous_hotels", nativeQuery = true)
     List<Object[]> getCapaciteAllRooms();

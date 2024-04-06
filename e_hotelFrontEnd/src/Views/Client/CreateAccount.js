@@ -54,33 +54,23 @@ export const CreateAccountForm = ()=>{
         else {
             setFormData({ ...formData, [name]: value });
         }
-        // For debugging purposes
-
-        // console.log("target",target);
-        // console.log("name",name);
-        // console.log("value",value);
-        // console.log("formData",formData);
     }
 
     // navigate from a page to another
-
     const navigate = useNavigate();
 
     // Handles our submit event
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        // console.log("the complete form is",formData);
         // Validate input !
         const validationResult = ValidateFcts.validateAllfields(formData);
-        // console.log("validation result",validationResult);
 
         // Set error state to what you found
-
         setFormDataError(validationResult);
         setUserExistsError('');
+        
         // flag used to track whether we submit to backend or we wait for user to fix its errors
-
         let flag = false;
 
         for (let i = 0;i<validationResult.length;i++){
@@ -159,8 +149,6 @@ export const CreateAccountForm = ()=>{
                 <div className="d-grid gap-2 d-md-flex m-3">                    
                     <div>
                         <label htmlFor="nasUtilisateur" className="form-label">Numéro D'assurance Sociale</label>
-                    {/* </div> */}
-                    {/* <div className="d-grid d-flex"> */}
                         <InputMask className="form-control border" mask='999 999 999' placeholder="XXX XXX XXX" id="nasUtilisateur" maskChar={''} value={formData.nas} onChange={handleInputChange} type={isShow ? "text" : "password"} onBlur={hideNAS} onClick={showNAS} name="nas"/>
                         {formDataError[0] != "" ?
         
@@ -169,10 +157,7 @@ export const CreateAccountForm = ()=>{
                             </div> 
                             
                             :<></>}
-                    </div>
-
-                    {/* <input style={disableNas?{color:"black",backgroundColor:"black"}:{}} required type="text" disabled = {disableNas?true:false} className="form-control" id="nasUtilisateur" aria-describedby="nas" name='nas' value={formData.nas} onChange={handleInputChange}/> */}
-                    
+                    </div>                    
                 </div>
 
                 <div className="d-grid gap-2 d-md-flex m-3">
@@ -217,8 +202,6 @@ export const CreateAccountForm = ()=>{
                             </div> 
                         :<></>}
                     </div>
-
-
                 </div>
 
                 <div className="d-grid gap-4 d-md-flex m-3">
@@ -302,7 +285,6 @@ export const CreateAccountForm = ()=>{
                         </div> 
                     :<></>}
                 </div>
-
 
                 <div className="d-grid gap-2 d-md-flex m-3 mb-5">
                     <button type="submit" className='btn btn-secondary'>{submitted ? 'soumission...':'Créer un compte'}</button>

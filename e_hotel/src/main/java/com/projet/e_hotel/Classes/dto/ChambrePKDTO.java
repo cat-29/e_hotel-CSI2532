@@ -9,9 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
-
 public class ChambrePKDTO {
     private Integer numeroChambre;
     private Integer id_hotel;

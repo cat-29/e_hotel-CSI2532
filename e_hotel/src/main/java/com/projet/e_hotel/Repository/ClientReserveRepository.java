@@ -26,8 +26,6 @@ public interface ClientReserveRepository extends JpaRepository<ClientReserve,Cli
 
     Optional<ClientReserve> findByIdHotel(Integer idHotel);
 
-    
-
     @Modifying
     @Transactional
     @Query(value="INSERT INTO client_reserve VALUES \r\n" + //

@@ -1,8 +1,6 @@
 package com.projet.e_hotel.Classes.mapper;
 
 import com.projet.e_hotel.Classes.Chambre;
-import com.projet.e_hotel.Classes.Hotel;
-import com.projet.e_hotel.Classes.dto.AjoutHotelDTO;
 import com.projet.e_hotel.Classes.dto.ChambreDTO;
 
 public class ChambreMapper {
@@ -18,6 +16,8 @@ public class ChambreMapper {
                 chambre.getCapaciteAEtendre());
     }
 
+
+    // Convert ChambreDTO into JPA Entity Chambre
     public static Chambre mapToChambre(ChambreDTO chambreDTO, Integer idHotel) {
         return new Chambre(
                 chambreDTO.getNumeroChambre(),
@@ -28,6 +28,8 @@ public class ChambreMapper {
                 chambreDTO.getCapaciteAEtendre());
     }
 
+
+    // Convert ChambreDTO into Chambre JPA Entity
     public static Chambre mapToChambre(ChambreDTO chambreDTO) {
         return new Chambre(
                 chambreDTO.getNumeroChambre(),

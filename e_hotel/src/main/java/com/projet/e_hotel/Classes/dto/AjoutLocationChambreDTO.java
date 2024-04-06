@@ -17,7 +17,4 @@ public class AjoutLocationChambreDTO {
     private String vueChambre;
     private Boolean capaciteAEtendre;
     private Integer errorType;
-
-    // private Boolean didWeFindChambre;
-    // private String errorType;
 }

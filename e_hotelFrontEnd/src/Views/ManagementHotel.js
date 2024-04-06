@@ -20,11 +20,6 @@ export const ManagementHotel = () => {
     navigate("/ajoutChaine", { state: { employeInfo: state.employeInfo } });
   };
 
-  // chaine.map((nbrHotel) => {
-  //   setTotalHotels(totalHotels + chaine.nbrHotel);
-  // });
-  // console.log("sum of hotels: ", totalHotels);
-
   //to get all chaine info
   useEffect(() => {
     console.log(state);
@@ -39,7 +34,6 @@ export const ManagementHotel = () => {
   }, []);
 
   //to send chaine info to chaineInfo page
-
   return (
     <>
       <AppHeader info={state.employeInfo} isUserTypeClient={false} />

@@ -23,6 +23,7 @@ public class EmployeAjouteLocationMapper {
                 null);
     }
 
+
     // Convert EmployeAjouteLocationDTO into EnregistreClient JPA Entities
     public static EnregistreClient mapToEnregistreClient(EmployeAjouteLocationDTO ajouteLocationDTO) {
         return new EnregistreClient(
@@ -33,6 +34,7 @@ public class EmployeAjouteLocationMapper {
         );
     }
 
+    
     // Convert EmployeAjouteLocationDTO into Client JPA Entity
     public static Client mapToClient(EmployeAjouteLocationDTO ajouteLocationDTO) {
         return new Client(

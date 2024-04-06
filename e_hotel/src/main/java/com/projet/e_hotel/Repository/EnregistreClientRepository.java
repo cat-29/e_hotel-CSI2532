@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface EnregistreClientRepository extends JpaRepository<EnregistreClient, Integer> {
     List<EnregistreClient> findByIdEmploye(String idEmploye);
-
 }

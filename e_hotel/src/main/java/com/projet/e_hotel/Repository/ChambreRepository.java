@@ -15,12 +15,6 @@ import com.projet.e_hotel.Classes.pk.ChambrePK;
 @Repository
 public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
-        // @Override
-        // default void deleteById(ChambrePK id) {
-        // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
-        // }
-
         Optional<List<Chambre>> findByIdHotel(Integer idHotel);
 
         Optional<List<Chambre>> findByIdHotelAndCapaciteChambreAndVueChambre(Integer idHotel, String capaciteChambre,
@@ -113,9 +107,11 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
         List<Object[]> determineIfNotAvailable(@Param("checkin") Date checkin, @Param("checkout") Date checkout,
                         @Param("idHotel") Integer idHotel, @Param("numeroChambre") Integer numeroChambre);
 
+
         // Determine number of all available rooms per province
         @Query(value = "select * from chambre_disponibles", nativeQuery = true)
         List<Object[]> getCountRoomAvailable();
+
 
         @Query(value = "With ErrReserve as (\r\n" + //
                         "\t (Select numero_chambre,id_hotel \r\n" + //
@@ -184,6 +180,7 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                         @Param("chambreMin") Integer chambreMin,
                         @Param("chambreMax") Integer chambreMax, @Param("etendre") Boolean etendre);
 
+
         @Query(value = "select * from chambreXhotel where (numero_chambre,id_hotel) in ( \r\n" + //
 
                         "(select numero_chambre,id_hotel from chambreXhotel except \r\n" + //
@@ -239,7 +236,6 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
 
                         "BETWEEN :chambreMin AND :chambreMax )) \r\n" + //
                         "intersect (select * from chambreXHotel where capacite_a_etendre = :etendre)\r\n", nativeQuery = true)
-
         // Filtrer par tout except checkin
         List<Object[]> getAllRoomsCheckoutOnly(@Param("checkin") Date checkin, @Param("checkout") Date checkout,
 
@@ -249,6 +245,7 @@ public interface ChambreRepository extends JpaRepository<Chambre, ChambrePK> {
                         @Param("chambreMin") Integer chambreMin,
                         @Param("chambreMax") Integer chambreMax, @Param("etendre") Boolean etendre);
 
+                        
         @Query(value = "select * from chambreXhotel where (numero_chambre,id_hotel) in ( \r\n" + //
 
                         "(select numero_chambre,id_hotel from chambreXhotel except \r\n" + //

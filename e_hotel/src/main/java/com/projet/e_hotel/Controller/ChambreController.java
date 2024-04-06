@@ -37,7 +37,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-// @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/chambre")
 public class ChambreController {
@@ -55,26 +54,19 @@ public class ChambreController {
     }
 
     @GetMapping("/numeroChambre/{hotelId}/{dateCheckIn}/{dateCheckOut}/{capacite}/{vue}")
-    public AjoutLocationChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId, @PathVariable String dateCheckIn,
+    public AjoutLocationChambreDTO getNumeroChambreForSpecifications(@PathVariable Integer hotelId,
+            @PathVariable String dateCheckIn,
             @PathVariable String dateCheckOut, @PathVariable String capacite,
             @PathVariable String vue) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date checkinFormatted = sdf.parse(dateCheckIn);
         Date checkoutFormatted = sdf.parse(dateCheckOut);
-        // Chambre infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkinFormatted,
-        //         checkoutFormatted, capacite,
-        //         vue);
-        AjoutLocationChambreDTO infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId, checkinFormatted,
+        AjoutLocationChambreDTO infoChambre = chambreService.getNumeroChambreForSpecifications(hotelId,
+                checkinFormatted,
                 checkoutFormatted, capacite,
                 vue);
-                return infoChambre;
-        // if (infoChambre == null) {
-        //     // Utilisateur doit changer ces filtres car il y a quelque chose qui est
-        //     // problematique
-        //     return ChambreMapper.mapToChambreDTO(new Chambre());
-        // }
-        // return ChambreMapper.mapToChambreDTO(infoChambre);
+        return infoChambre;
     }
 
     @GetMapping("/getAllRooms/rating")
@@ -193,17 +185,12 @@ public class ChambreController {
     @GetMapping("/getIsRoomAvailable/{checkin}/{checkout}/{idHotel}/{numeroChambre}")
     public List<ChambrePKDTO> isRoomAvailable(@PathVariable String checkin, @PathVariable String checkout,
             @PathVariable Integer idHotel, @PathVariable Integer numeroChambre) throws ParseException {
-        // System.out.println("I am testing before");
-        // Using this to not have problems with date conversion
+
+                // Using this to not have problems with date conversion
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        // System.out.println(checkin);
+
         Date checkinFormatted = sdf.parse(checkin);
         Date checkoutFormatted = sdf.parse(checkout);
-        // Date checkinFormatted = new Date(checkin);
-        // Date checkoutFormatted = new Date(checkout);
-        // System.out.println("I am testing after");
-        // System.out.println(checkinFormatted);
-        // System.out.println(checkoutFormatted);
 
         List<ChambrePKDTO> result = chambreService.isRoomAvailable(checkinFormatted, checkoutFormatted, idHotel,
                 numeroChambre);
@@ -211,7 +198,6 @@ public class ChambreController {
     }
 
     // Avoir tous les chambres, aucun filtres appliqués
-
     @GetMapping("/tous")
     // La methode doit retourner une list de type ChambreDTO
     public List<ChambreHotelDTO> getAllRooms() {
@@ -249,8 +235,6 @@ public class ChambreController {
     }
 
     // Tous filtres appliques
-    // {checkin}/{checkout}/{capacite}/{vue}/{prixMin}/{prixMax}/{chaines}/{classement}/{chambreMin}/{chambreMax}/{etendre}
-
     @GetMapping("/getRoomsFilters/noChaine/{checkin}/{checkout}/{capacite}/{vue}/{prixMin}/{prixMax}/{classement}/{chambreMin}/{chambreMax}/{etendre}")
     public List<ChambreHotelDTO> getAllRoomsSpecificationsWithoutChaine(@PathVariable String checkin,
             @PathVariable String checkout, @PathVariable String capacite,
@@ -303,7 +287,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && !checkout.equals("NAN")) { // cas 2: utilisateur entre tout a l
                                                                                // exception de checkin
-                    // System.out.println("I should be here");
                     calendar.setTime(checkoutFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, -1);
                     // ceci date checkin minimale
@@ -319,7 +302,6 @@ public class ChambreController {
                     }
                 } else if (!checkin.equals("NAN") && checkout.equals("NAN")) {// cas 3: utilisateur entre tout a l
                                                                               // exception de checkout
-                    // System.out.println("I should be here");
                     calendar.setTime(checkinFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                     // ceci date checkin minimale
@@ -335,7 +317,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && checkout.equals("NAN")) { // cas4: utilisateur entre tout a l
                                                                               // exception de checkin et checkout
-                    // System.out.println("I should be here NOW");
                     result = chambreService.getAllRoomsNoDates(capacite, vue, priceMinFormatted,
                             priceMaxFormatted, getAllChaine.get(i), classementFormatted, chambreMinFormatted,
                             chambreMaxFormatted, etendre);
@@ -376,7 +357,6 @@ public class ChambreController {
         // Cast
         Integer chambreMinFormatted = Integer.parseInt(chambreMin);
         Integer chambreMaxFormatted = Integer.parseInt(chambreMax);
-        // Integer classementFormatted = Integer.parseInt(classement);
         Double priceMinFormatted = Double.parseDouble(prixMin);
         Double priceMaxFormatted = Double.parseDouble(prixMax);
 
@@ -398,7 +378,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && !checkout.equals("NAN")) { // cas 2: utilisateur entre tout a l
                                                                                // exception de checkin
-                    // System.out.println("I should be here");
                     calendar.setTime(checkoutFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, -1);
                     // ceci date checkin minimale
@@ -414,7 +393,6 @@ public class ChambreController {
                     }
                 } else if (!checkin.equals("NAN") && checkout.equals("NAN")) {// cas 3: utilisateur entre tout a l
                                                                               // exception de checkout
-                    // System.out.println("I should be here");
                     calendar.setTime(checkinFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                     // ceci date checkin minimale
@@ -430,7 +408,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && checkout.equals("NAN")) { // cas4: utilisateur entre tout a l
                                                                               // exception de checkin et checkout
-                    // System.out.println("I should be here NOW");
                     result = chambreService.getAllRoomsNoDates(capacite, vue, priceMinFormatted,
                             priceMaxFormatted, chaine[i], getAllRatings[idx], chambreMinFormatted, chambreMaxFormatted,
                             etendre);
@@ -475,7 +452,6 @@ public class ChambreController {
         // Cast
         Integer chambreMinFormatted = Integer.parseInt(chambreMin);
         Integer chambreMaxFormatted = Integer.parseInt(chambreMax);
-        // Integer classementFormatted = Integer.parseInt(classement);
         Double priceMinFormatted = Double.parseDouble(prixMin);
         Double priceMaxFormatted = Double.parseDouble(prixMax);
 
@@ -497,7 +473,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && !checkout.equals("NAN")) { // cas 2: utilisateur entre tout a l
                                                                                // exception de checkin
-                    // System.out.println("I should be here");
                     calendar.setTime(checkoutFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, -1);
                     // ceci date checkin minimale
@@ -513,7 +488,6 @@ public class ChambreController {
                     }
                 } else if (!checkin.equals("NAN") && checkout.equals("NAN")) {// cas 3: utilisateur entre tout a l
                                                                               // exception de checkout
-                    // System.out.println("I should be here");
                     calendar.setTime(checkinFormatted);
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                     // ceci date checkin minimale
@@ -529,7 +503,6 @@ public class ChambreController {
                     }
                 } else if (checkin.equals("NAN") && checkout.equals("NAN")) { // cas4: utilisateur entre tout a l
                                                                               // exception de checkin et checkout
-                    // System.out.println("I should be here NOW");
                     result = chambreService.getAllRoomsNoDates(capacite, vue, priceMinFormatted,
                             priceMaxFormatted, getAllChaine.get(i), getAllRatings[idx], chambreMinFormatted,
                             chambreMaxFormatted, etendre);
@@ -644,7 +617,4 @@ public class ChambreController {
         return result;
 
     }
-
-    // Toutes les commoditees d une chambre specifique
-
 }

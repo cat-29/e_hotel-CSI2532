@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-// @Getter
 @Setter
 @Entity
 @Table(name = "client")
@@ -17,7 +16,6 @@ public class Client {
 
     @Getter
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)    
     @Column(name = "nas")
     private String nas;
 

@@ -12,11 +12,9 @@ import com.projet.e_hotel.Classes.dto.HotelCapaciteDto;
 import com.projet.e_hotel.Classes.dto.HotelDTO;
 import com.projet.e_hotel.Classes.mapper.HotelMapper;
 import com.projet.e_hotel.Service.HotelService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/hotel")
-
 public class HotelController {
     @Autowired
     private HotelService hotelService;

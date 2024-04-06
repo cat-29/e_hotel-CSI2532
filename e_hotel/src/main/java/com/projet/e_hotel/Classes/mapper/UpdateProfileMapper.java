@@ -8,6 +8,7 @@ import com.projet.e_hotel.Classes.dto.UpdateProfileDTO;
 
 public class UpdateProfileMapper {
 
+    // Convert UpdateProfileDTO into CompteEmploye JPA Entity
     public static CompteEmploye mapToCompteEmploye(UpdateProfileDTO dto) {
         return new CompteEmploye(
                 dto.getNas(),
@@ -15,6 +16,8 @@ public class UpdateProfileMapper {
                 dto.getPassword());
     }
 
+
+    // Convert UpdateProfileDTO into Employe JPA Entity
     public static Employe mapToEmploye(UpdateProfileDTO dto) {
         return new Employe(
                 dto.getNas(),
@@ -28,6 +31,8 @@ public class UpdateProfileMapper {
                 dto.getCodePostal());
     }
 
+
+    // Convert UpdateProfileDTO into Client JPA Entity
     public static Client mapToClient(UpdateProfileDTO dto) {
         return new Client(
             dto.getNas(),
@@ -42,6 +47,8 @@ public class UpdateProfileMapper {
         );
     }
 
+
+    // Convert UpdateProfileDTO into CompteClient JPA Entity
     public static CompteClient mapToCompteClient(UpdateProfileDTO dto) {
         return new CompteClient(
             dto.getNas(),

@@ -5,6 +5,7 @@ import com.projet.e_hotel.Classes.dto.AjoutLocationChambreDTO;
 
 public class AjoutLocationChambreMapper {
 
+    // Convert Chambre JPA Entity into AjoutLocationChambreDTO
     public static AjoutLocationChambreDTO mapToAjoutLocationChambreDTO(Chambre chambre, Integer errorType) {
         return new AjoutLocationChambreDTO(
             chambre.getNumeroChambre(),
@@ -16,6 +17,7 @@ public class AjoutLocationChambreMapper {
             errorType);
     }
 
+    // Convert Chambre JPA Entity into AjoutLocationChambreDTO
     public static AjoutLocationChambreDTO chambreNullmapToAjoutLocationChambreDTO(Chambre chambre, Integer errorType) {
         return new AjoutLocationChambreDTO(
             null,

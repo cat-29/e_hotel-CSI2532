@@ -19,7 +19,6 @@ public class ClientReserveService {
     }
 
     // custom method to save reservation for a client from a client side
-
     public void saveBooking(String idClient,Integer numeroChambre,Integer idHotel,
     Date dateCheckin,Date dateCheckout,Double prix,Date datePaiementComplete,Boolean isPaiementComplete){
         clientReserveRepository.saveBooking(idClient,numeroChambre,idHotel,dateCheckin,dateCheckout,

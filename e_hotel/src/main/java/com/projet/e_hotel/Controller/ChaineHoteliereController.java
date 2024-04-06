@@ -3,7 +3,6 @@ package com.projet.e_hotel.Controller;
 import com.projet.e_hotel.Classes.AjoutChaineHoteliere;
 import com.projet.e_hotel.Classes.ChaineHoteliere;
 import com.projet.e_hotel.Classes.Chambre;
-import com.projet.e_hotel.Classes.Employe;
 import com.projet.e_hotel.Classes.Hotel;
 import com.projet.e_hotel.Classes.dto.AjoutChaineHoteliereDTO;
 import com.projet.e_hotel.Classes.dto.AjoutHotelDTO;
@@ -30,16 +29,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/chaine")
 public class ChaineHoteliereController {
@@ -102,14 +98,12 @@ public class ChaineHoteliereController {
         // get chaineHoteliere by nomChaine
         ChaineHoteliere chaineHoteliere = chaineHoteliereService.findByNomChaine(oDto.getNomChaine());
         String nomChaine = chaineHoteliere.getNomChaine();
-        // String nomChaine = oDto.getNomChaine();
         ajoutHotelService.saveNewHotel(AjoutHotelMapper.mapToAjoutHotel(oDto, nomChaine));
     }
 
     @PostMapping("/ajoutChambre")
     public void saveNewChambre(@RequestBody ChambreDTO oDto) throws ParseException {
         // get chaineHoteliere by nomChaine
-        // Hotel hotel = hotelService.findByIdHotel(oDto.getIdHotel());
         Integer idHotel = oDto.getIdHotel();
         chambreService.saveNewChambre(ChambreMapper.mapToChambre(oDto, idHotel));
     }
@@ -117,7 +111,6 @@ public class ChaineHoteliereController {
     @PostMapping("/ajoutEmploye")
     public void saveNewEmploye(@RequestBody EmployeDTO oDto) throws ParseException {
         // get chaineHoteliere by nomChaine
-        // Hotel hotel = hotelService.findByIdHotel(oDto.getIdHotel());
         Integer idHotel = oDto.getIdHotel();
         employeService.saveNewEmploye(EmployeMapper.mapToEmploye(oDto, idHotel));
     }
@@ -144,15 +137,12 @@ public class ChaineHoteliereController {
 
     @PostMapping("/deleteChaine/{nomChaine}")
     public ResponseEntity<String> deleteChaine(@PathVariable String nomChaine) {
-        System.out.println("---------------------------------------------NOMCHAINE: " + nomChaine);
         chaineHoteliereService.deleteChaine(nomChaine);
         return ResponseEntity.ok("Chaine supprimée.");
     }
 
     @PostMapping("/deleteHotel/{id_hotel}")
     public ResponseEntity<String> deleteHotel(@PathVariable Integer id_hotel) {
-        System.out.println("---------------------------------------------IDHOTEL: " +
-                id_hotel);
         // Have to delete all loue_chambre and client_reserve
         hotelService.deleteHotel(id_hotel);
         return ResponseEntity.ok("Hotel supprimé.");
@@ -161,16 +151,12 @@ public class ChaineHoteliereController {
     @PostMapping("/deleteChambre/{id_hotel}/{numero_chambre}")
     public ResponseEntity<String> deleteChambre(@PathVariable Integer id_hotel,
             @PathVariable Integer numero_chambre) {
-        System.out.println("---------------------------------------------IDHOTEL: " + id_hotel);
-        System.out.println("---------------------------------------------NUMEROCHAMBRE: " + numero_chambre);
         chambreService.deleteChambre(id_hotel, numero_chambre);
         return ResponseEntity.ok("Chambre supprimée.");
     }
 
     @PostMapping("/deleteEmploye/{id_employe}")
     public ResponseEntity<String> deleteEmploye(@PathVariable String id_employe) {
-        System.out.println("---------------------------------------------IDEMPLOYE: "
-                + id_employe);
         employeService.deleteEmploye(id_employe);
         return ResponseEntity.ok("Employe supprimé.");
     }
@@ -180,11 +166,5 @@ public class ChaineHoteliereController {
         String nomChaine = hotelService.getNameHotel(id).getNomChaine();
         return ChaineHoteliereMapper.mapToChaineHoteliereDTO(chaineHoteliereService.getChaineInfo(nomChaine));
     }
-
-    // @GetMapping("/hotel/{idHotel}")
-    // public String getChaineHoteliere(@RequestParam String idHotel) {
-
-    // return chaineHoteliereService.getAllChaineHoteliere(idHotel);
-    // }
 
 }

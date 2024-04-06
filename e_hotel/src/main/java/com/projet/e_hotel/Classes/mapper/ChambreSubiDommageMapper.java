@@ -18,11 +18,12 @@ public class ChambreSubiDommageMapper {
                 dommage.getTypeDommage());
     }
 
+
+    // Convert List of SubiDommage JPA Entity into a list of ChambreSubiDommageDTO
     public static List<ChambreSubiDommageDTO> mapToListOfChambreSubiDommageDTO(List<SubiDommage> subiDommage,
             List<Dommage> dommage) {
 
         List<ChambreSubiDommageDTO> listSubiDommageDTOs = new ArrayList<>();
-
         for (int i = 0; i < subiDommage.size(); i++) {
             ChambreSubiDommageDTO dto = new ChambreSubiDommageDTO(
                     subiDommage.get(i).getIdDommage(),
@@ -32,10 +33,11 @@ public class ChambreSubiDommageMapper {
 
             listSubiDommageDTOs.add(dto);
         }
-
         return listSubiDommageDTOs;
     }
 
+
+    // Convert ChambreSubiDommageDTO into SubiDommage JPA Entity
     public static SubiDommage mapToSubiDommage(ChambreSubiDommageDTO dommageDTO, Integer idDommage) {
         return new SubiDommage(
             idDommage,
@@ -44,6 +46,8 @@ public class ChambreSubiDommageMapper {
         );
     }
 
+
+    // Convert ChambreSubiDommageDTO into Dommage JPA Entity
     public static Dommage mapToDommage(ChambreSubiDommageDTO dommageDTO) {
         return new Dommage(dommageDTO.getTypeDommage());
     }

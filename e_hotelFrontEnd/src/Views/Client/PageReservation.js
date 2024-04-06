@@ -39,7 +39,6 @@ export const PageReservation = () => {
     // Init the checkout to 3 days after tomorrow
 
     const todayCheckout = new Date();
-    // const nextDay = (new Date()+3).toISOString().slice(0,10);
     todayCheckout.setDate(todayCheckout.getDate() + 4);
 
     const vCheckin = todayCheckin.toISOString().slice(0,10);
@@ -64,7 +63,6 @@ export const PageReservation = () => {
     // Avoir les details de client, state est un object client
     const {state} = useLocation();
 
-    // console.log("state coming from useLocation",state);
 
     // Tous les erreurs doivent être enregistrés ici
 
@@ -74,7 +72,6 @@ export const PageReservation = () => {
     const roomsTotal = useLoaderData();
 
     const navigate = useNavigate();
-    // console.log("roomsTotal",roomsTotal);
 
     const [rooms,setRooms] = useState(roomsTotal);
 
@@ -83,7 +80,6 @@ export const PageReservation = () => {
     const handleFilters = (newState)=>{
         setComponentFilters(newState);
     }
-
 
     // To control error modal
     const [show,setShow] = useState(false);
@@ -96,20 +92,16 @@ export const PageReservation = () => {
         setShow((prev)=>!prev);
     }
 
-
-
     // La fonction que l'on appelle lorsque l'on clique sur filtrer, elle valide la valeur de quelques 
     // filtres: checkin<checkout, priceMin<prixMax,chambreMin<chambreMax
 
     const handleFilterSub=async()=>{
         console.log("in handle filters submit");
-        // console.log(filters);
         // BEFORE MAKING A GET REQUEST VALIDATE!
         // dates checkin < date checkout
         // price min < price max
         // chambre min < chambre max       
         const errors = ValidateFcts.validateFilters(filters);
-        // console.log("well those erros are",errors);
         setFilterError(errors);
 
         // flag used to track whether we submit to backend or we wait for user to fix its errors
@@ -128,18 +120,11 @@ export const PageReservation = () => {
 
         }else{
             console.log("fields are ready to be submitted to backend");
-            // console.log("filters to be applied are",filters);
 
             // Si la liste de la chaine est nulle, alors on insere toutes les chaines par defaut
-        
             // set le boolean de retour a true, pour qu'on ne vois pas l'erreur 
             setIsChambreDispo(true);
-
-
-            console.log(filters)
-
             const rooms  = await ValidateFcts.submitFilters(filters);
-            // console.log("rooms in frontend",rooms);
             setRooms(rooms);
             
             if (rooms.length == 0) {
@@ -153,7 +138,6 @@ export const PageReservation = () => {
 
     // Ceci permet d'aller à la page qui contient les détails d'une chambre spécifique
     const voirDetail = (chambre)=>{
-        // console.log("on doit ici changer vers la chambre de details de la chambre");
         navigate(`${chambre.idHotel}/${chambre.numeroChambre}`,{state: {client:state, chambre:chambre,nas:state.nas}});
     }
 
@@ -188,7 +172,6 @@ export const PageReservation = () => {
                     <Modal.Title key={'title'}>Des erreurs détectées</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* {console.log(filterError,typeof(filterError))} */}
                     {filterError.map((itemErr,index)=>(
                         itemErr?<li id={`error${index}`} key={`error${index}`}>{itemErr}</li>:<></>
                     ))}
@@ -201,7 +184,6 @@ export const PageReservation = () => {
 
 
             {/* Rooms go here */}
-            {/* {console.log("rooms are noewww",rooms)} */}
             {rooms ?
             <div className="d-flex flex-row p-3 gap-4 flex-wrap justify-content-center">
                 {rooms.map((item,index)=>{
@@ -211,12 +193,12 @@ export const PageReservation = () => {
                                 <img className="card-img-top" src={renderImages(item.capaciteChambre.toLowerCase())} alt={item.numeroChambre}/>
                                 <div className="card-body">
                                     <h4 style={{marginTop:"10px"}} className="card-title">{`chambre ${item.capaciteChambre.toLowerCase()}`}</h4>
-                                        <div id="hotel">{item.nom}</div>
-                                        <div id="chaine">{item.nomChaine}</div>
-                                        <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
-                                        <div id="prix">{`${item.prix} $ / nuit`}</div>
-                                        <div id="rating">{renderStars(item.rating)}</div>
-                                        <a className="btn btn-secondary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
+                                    <div id="hotel">{item.nom}</div>
+                                    <div id="chaine">{item.nomChaine}</div>
+                                    <div id="numChambre">Numero de chambre: {item.numeroChambre}</div>
+                                    <div id="prix">{`${item.prix} $ / nuit`}</div>
+                                    <div id="rating">{renderStars(item.rating)}</div>
+                                    <a className="btn btn-secondary p-1 m-3" onClick={()=>voirDetail(item)}>Voir</a>
                                 </div>
                             </div>
                         </div>

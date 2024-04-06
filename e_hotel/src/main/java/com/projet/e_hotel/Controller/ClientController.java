@@ -57,7 +57,6 @@ public class ClientController {
         Date checkinFormatted = sdf.parse(reservationDto.getDateCheckin());
         Date checkoutFormatted = sdf.parse(reservationDto.getDateCheckout());
         Date datePaiementComplete = null;
-        // System.out.println("reservation date paiement complete   "+ reservationDto.getDatePaiementComplete());
         if (reservationDto.getIsPaiementComplete()){
             datePaiementComplete = sdf.parse(reservationDto.getDatePaiementComplete());
         }

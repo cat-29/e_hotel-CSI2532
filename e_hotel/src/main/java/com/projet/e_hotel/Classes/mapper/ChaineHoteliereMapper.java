@@ -4,6 +4,7 @@ import com.projet.e_hotel.Classes.ChaineHoteliere;
 import com.projet.e_hotel.Classes.dto.ChaineHoteliereDTO;
 
 public class ChaineHoteliereMapper {
+    
     // Convert ChaineHoteliere JPA Entity into ChaineHoteliereDTO
     public static ChaineHoteliereDTO mapToChaineHoteliereDTO(ChaineHoteliere chaineHoteliere) {
         return new ChaineHoteliereDTO(
@@ -17,6 +18,8 @@ public class ChaineHoteliereMapper {
                 chaineHoteliere.getCodePostal());
     }
 
+
+    // Convert ChaineHoteliereDTO into ChaineHoteliere JPA Entity
     public static ChaineHoteliere mapToChaineHoteliere(ChaineHoteliereDTO dto) {
         return new ChaineHoteliere(
                 dto.getNomChaine(),

@@ -10,8 +10,6 @@ export const loadCountAv = async()=>{
 
 export const Stats = ()=>{
 
-    // const countAv = useLoaderData();
-    // console.log("data is",countAv[0]);
     const data = useLoaderData();
     const countAv = data[0];
     const capacites = data[1]; 

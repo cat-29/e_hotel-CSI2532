@@ -25,13 +25,4 @@ public class Compte {
 
     public Compte (){}
 
-    // public Compte(String email,String motDePasse){
-    //     this.email = email;
-    //     this.pwd = motDePasse;
-    // }
-
-    // public String getId(){
-    //     return this.email;
-    // }
-    
 }

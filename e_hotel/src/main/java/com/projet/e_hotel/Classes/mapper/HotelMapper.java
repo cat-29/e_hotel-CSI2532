@@ -5,8 +5,8 @@ import com.projet.e_hotel.Classes.dto.HotelDTO;
 
 public class HotelMapper {
 
+    // Convert Hotel JPA Entity into HotelDTO
     public static HotelDTO mapToHotelDTO(Hotel hotel) {
-        // return new HotelDTO(hotel.getId(), hotel.getNomChaine(), hotel.)
         return new HotelDTO(
                 hotel.getId(),
                 hotel.getNomChaine(),
@@ -21,6 +21,8 @@ public class HotelMapper {
                 hotel.getCodePostal());
     }
 
+
+    // Convert HotelDTO into Hotel JPA Entity
     public static Hotel mapToHotel(HotelDTO dto) {
         return new Hotel(
                 dto.getId(),

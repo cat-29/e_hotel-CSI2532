@@ -1,5 +1,3 @@
-
-// import "../main.css";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import "./View.css";
 

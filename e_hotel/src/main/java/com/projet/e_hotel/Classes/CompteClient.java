@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-// @Getter
 @Setter
 @Entity 
 @Table(name = "compte_client")
@@ -51,6 +50,4 @@ public class CompteClient {
         this.email = email;
         this.password = password;
     }
-
-    
 }

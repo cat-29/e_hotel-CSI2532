@@ -13,25 +13,22 @@ export const MethodePaiementClient = ()=>{
 
     const {state} = useLocation();
     const paiementInfo = state.paiementInfo;
-    const userInfo = state.clientInfo; // ici!
+    const userInfo = state.clientInfo; 
 
-    // console.log("paiementInfo",paiementInfo);
     let [formDataError,setFormDataError] = useState([]);
     const navigate = useNavigate();
     const [pending,setPending] = useState(false);
-    // console.log("in methode paiement client",state);
 
     const handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
         if (name == "numero" || name == "numCarte") {
-            // This desactivates all keyboards buttons axcept numbers
             const newValue = event.target.value.replace(/\D/, '');
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "prenom") {
-            const newValue = event.target.value.replace(/[^A-Za-z]+/g, '');
+            const newValue = event.target.value.replace(/\d/, '');
             setFormData({ ...formData, [name]: newValue });
         }
         else if (name == "cvc") {
@@ -148,10 +145,6 @@ export const MethodePaiementClient = ()=>{
                 </div>
                 {pending ? <p>Soumission...</p>:<></>}
             </form>
-
-
-
         </>
-
     );
 }

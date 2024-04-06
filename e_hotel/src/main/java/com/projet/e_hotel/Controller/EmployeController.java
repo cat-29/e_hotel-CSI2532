@@ -95,11 +95,7 @@ public class EmployeController {
                 Date checkoutFormatted = sdf.parse(dto.getDateCheckout());
 
                 // get client to add email in enregistre client
-                // Client client = clientServiceImpl.getClientFromId(aDto.getIdClient());
-
                 // save enregistre client
-                // clientServiceImpl.setEnregistrementClient(client, aDto.getIdEmploye());
-
                 return LoueChambreMapper.mapToLoueChambreDTO(loueChambreService.saveNewLocation(dto, checkinFormatted, checkoutFormatted));
         }
 
