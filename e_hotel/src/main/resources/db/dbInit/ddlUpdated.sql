@@ -2,7 +2,7 @@
 
 -- Sequences
 CREATE SEQUENCE hotel_id_seq START 40;
-CREATE SEQUENCE compte_client_id_compte_seq START 1;
+-- CREATE SEQUENCE compte_client_id_compte_seq START 1;
 
 -- TABLES DECLARATION
 
@@ -134,10 +134,15 @@ CREATE TABLE IF NOT EXISTS enregistre_client (
 
 -- COMPTE CLIENT
 CREATE TABLE IF NOT EXISTS compte_client (
-    id_compte INTEGER NOT NULL DEFAULT nextval('compte_client_id_compte_seq'), id_client CHAR(9), email VARCHAR(255) check (
+    id_compte SERIAL, id_client CHAR(9), email VARCHAR(255) check (
         email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
     ), password VARCHAR(255) check (length(password) >= 8), UNIQUE (id_client), UNIQUE (email, password), PRIMARY KEY (id_compte), FOREIGN KEY (id_client) REFERENCES client (nas)
 );
+-- CREATE TABLE IF NOT EXISTS compte_client (
+--     id_compte INTEGER NOT NULL DEFAULT nextval('compte_client_id_compte_seq'), id_client CHAR(9), email VARCHAR(255) check (
+--         email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
+--     ), password VARCHAR(255) check (length(password) >= 8), UNIQUE (id_client), UNIQUE (email, password), PRIMARY KEY (id_compte), FOREIGN KEY (id_client) REFERENCES client (nas)
+-- );
 
 CREATE TABLE IF NOT EXISTS compte_employe (
     id_compte SERIAL, id_employe CHAR(9), email VARCHAR(255) check (

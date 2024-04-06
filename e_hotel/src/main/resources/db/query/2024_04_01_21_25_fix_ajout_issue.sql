@@ -1,10 +1,6 @@
 -- Active: 1709601080698@@localhost@5432@e_hotel_projet@public
 DROP TABLE enregistre_client;
 
-DROP TABLE loue_chambre;
-
-DROP TABLE client_reserve;
-
 DROP TABLE contient_commodite CASCADE;
 
 DROP TABLE subi_dommage;
@@ -13,17 +9,15 @@ DROP TABLE commodite CASCADE;
 
 DROP TABLE dommage;
 
-DROP TABLE compte;
-
 DROP TABLE supervise;
 
 DROP TABLE compte_client;
 
 DROP TABLE compte_employe;
 
-DROP TABLE employe;
+DROP TABLE employe CASCADE;
 
-DROP TABLE client;
+DROP TABLE client CASCADE;
 
 DROP TABLE chambre CASCADE;
 
@@ -48,6 +42,10 @@ DROP TABLE log_client_reserve;
 DROP TABLE log_loue_chambre;
 
 DROP TABLE chaine_hoteliere;
+
+DROP TABLE loue_chambre;
+
+DROP TABLE client_reserve;
 
 -- Drop views
 DROP VIEW IF EXISTS chambre_disponibles CASCADE;
