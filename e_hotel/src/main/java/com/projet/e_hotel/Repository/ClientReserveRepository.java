@@ -41,7 +41,4 @@ public interface ClientReserveRepository extends JpaRepository<ClientReserve,Cli
         @Param("datePaiementComplete") Date datePaiementComplete,
         @Param("isPaiementComplete") Boolean isPaiementComplete);
 
-    // "select id_client,numero_chambre,id_hotel,date_checkin,date_checkout from client_reserve where id_client = :idClient and numero_chambre = :numeroChambre\r\n" + //
-    // "and id_hotel = :idHotel and date_checkin = :dateCheckin and date_checkout = :dateCheckout"
-
 } 

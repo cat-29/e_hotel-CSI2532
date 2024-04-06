@@ -42,22 +42,22 @@ public class ChambreHotelMapper {
     }
  
     public static ChambreHotelDTO mapFromObjectToChambreHotelDTO(Object[] row){
-        System.out.println("row0 is "+row[0]);
-        System.out.println("row1 is "+row[1]);
-        System.out.println("row2 is "+row[2]);
-        System.out.println("row3 is "+row[3]);
-        System.out.println("row4 is "+row[4]);
-        System.out.println("row5 is "+row[5]);
-        System.out.println("row6 is "+row[6]);
-        System.out.println("row7 is "+row[7]);
-        System.out.println("row8 is "+row[8]);
-        System.out.println("row9 is "+row[9]);
-        System.out.println("row10 is "+row[10]);
-        System.out.println("row11 is "+row[11]);
-        System.out.println("row12 is "+row[12]);
-        System.out.println("row13 is "+row[13]);
-        System.out.println("row14 is "+row[14]);
-        System.out.println("row15 is "+row[15]);
+        // System.out.println("row0 is "+row[0]);
+        // System.out.println("row1 is "+row[1]);
+        // System.out.println("row2 is "+row[2]);
+        // System.out.println("row3 is "+row[3]);
+        // System.out.println("row4 is "+row[4]);
+        // System.out.println("row5 is "+row[5]);
+        // System.out.println("row6 is "+row[6]);
+        // System.out.println("row7 is "+row[7]);
+        // System.out.println("row8 is "+row[8]);
+        // System.out.println("row9 is "+row[9]);
+        // System.out.println("row10 is "+row[10]);
+        // System.out.println("row11 is "+row[11]);
+        // System.out.println("row12 is "+row[12]);
+        // System.out.println("row13 is "+row[13]);
+        // System.out.println("row14 is "+row[14]);
+        // System.out.println("row15 is "+row[15]);
 
 
         ChambreHotelDTO chambreHotel = new ChambreHotelDTO((String) row[6],(String) row[7],(Integer) row[8],(Integer) row[9],(Integer) row[10],(String) row[11],

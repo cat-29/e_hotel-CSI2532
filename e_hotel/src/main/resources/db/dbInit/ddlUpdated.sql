@@ -322,7 +322,7 @@ from
     chambreXHotel
     natural join tot_chambres_per_hotel;
 
--- Vue 6: Vue montrant les commodtes dans chaque chambre;
+-- Vue 6: Vue montrant les commodites dans chaque chambre;
 create view chambreXcommodite as
 select *
 from contient_commodite

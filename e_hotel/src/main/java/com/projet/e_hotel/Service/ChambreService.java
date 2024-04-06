@@ -304,30 +304,6 @@ public class ChambreService {
 
     }
 
-    // Getting all available rooms with date checkin specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckin(Date checkin, Date minCheckout) {
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckin(checkin, minCheckout);
-        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
-        return rawResultFormatted;
-    }
-
-    // Getting all available rooms with date checkout specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckout(Date checkout, Date minCheckin) {
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckout(checkout, minCheckin);
-        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
-        return rawResultFormatted;
-    }
-
-    // Both checkin and checkout are now specified
-    public List<ChambreHotelDTO> getAllRoomsAvCheckinAndCheckout(Date checkin, Date checkout) {
-        List<Object[]> rawResult = this.chambreRepository.getAllRoomsAvCheckinAndCheckout(checkin, checkout);
-        List<ChambreHotelDTO> rawResultFormatted = rawResult.stream()
-                .map(item -> ChambreHotelMapper.mapFromObjectToChambreHotelDTO(item)).toList();
-        return rawResultFormatted;
-
-    }
 
     public Chambre saveNewChambre(Chambre chambre) {
         return chambreRepository.save(chambre);

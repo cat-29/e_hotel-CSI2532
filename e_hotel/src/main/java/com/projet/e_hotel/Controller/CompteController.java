@@ -16,26 +16,12 @@ public class CompteController {
     @Autowired
     private CompteService service;
 
-    // private final CompteRepository compteRepository;
-    // public CompteController(CompteRepository compteRepository){
-    //     this.compteRepository = compteRepository;
-    // }
-
-    
-    // public ResponseEntity<Compte> createCompte(@RequestBody Compte compte) throws URISyntaxException{
-    //     // Compte savedCompte = compteRepository.save(compte);
-    //     // return ResponseEntity.created(new URI("/compte"+savedCompte.getEmail())).body(savedCompte);
-    //     return new ResponseEntity<Compte>(service.createCompte(compte.getEmail(), compte.getMotDePasse()), HttpStatus.OK);
-
-    // } 
 
     @PostMapping("addAccount")
     
     public Compte addAccount(@RequestBody Compte compte){
         return service.saveCompte(compte);
     }
-
-    // We may have @Get
 
 
     
