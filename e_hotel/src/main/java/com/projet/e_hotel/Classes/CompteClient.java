@@ -18,7 +18,7 @@ import lombok.Setter;
 public class CompteClient {
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_compte")
     private Long id;
 
