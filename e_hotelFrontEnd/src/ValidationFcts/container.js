@@ -223,7 +223,7 @@ const validateDateCheckOut = (dateCheckout, dateCheckIn, res) => {
   return res;
 };
 
-const validateNasWithNasEmploye = (nas_employe, nas_client, res) => {
+const validateNasWithNasEmploye = (nas_client, nas_employe, res) => {
   console.log(
     "lets validate the nas employe with the nas client:",
     nas_employe,
@@ -242,9 +242,7 @@ const validateNasWithNasEmploye = (nas_employe, nas_client, res) => {
 const validateAllfields = (answer) => {
   console.log("the answer to be validated is", answer);
   let res = [];
-  let items = [];
   for (let key in answer) {
-    // items.push(answer[key]);
     if (key == "nas") {
       res = validateNas(answer[key], res);
     } else if (key == "prenom" || key == "nomFamille") {
@@ -263,14 +261,12 @@ const validateAllfields = (answer) => {
       res = validateSamePwd([answer[key], answer["pwdConfirmed"]], res);
     }
   }
-  // console.log("at the end",items);
   return res;
 };
 
 const validateAllModifProfile = (answer) => {
   console.log("the answer to be validated are", answer);
   let res = [];
-  let items = [];
   for (let key in answer) {
     if (key == "nas") {
       res = validateNas(answer[key], res);
