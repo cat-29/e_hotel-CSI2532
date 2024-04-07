@@ -97,7 +97,11 @@ export const AjoutEmploye = () => {
       <div className="text-center">
         <h4 className="">Ajout d'un employé</h4>
       </div>
-      <form noValidate className="align-middle mx-5 my-2 mb-5 border p-2" onSubmit={handleSubmit}>
+      <form
+        noValidate
+        className="align-middle mx-5 my-2 mb-5 border p-2"
+        onSubmit={handleSubmit}
+      >
         <div className="d-grid gap-2 d-md-flex m-3">
           <div className="col-md-2">
             <label htmlFor="id" className="form-label">
@@ -170,6 +174,7 @@ export const AjoutEmploye = () => {
             >
               <option value="EMPLOYE">Employé</option>
               <option value="SUPERVISEUR">Superviseur</option>
+              <option value="ADMIN">Administrateur</option>
               <option value="GESTIONNAIRE">Gestionnaire</option>
             </select>
           </div>
@@ -302,7 +307,6 @@ export const AjoutEmploye = () => {
           </button>
         </div>
       </form>
-      
     </>
   );
 };

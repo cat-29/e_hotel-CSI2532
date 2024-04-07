@@ -268,6 +268,7 @@ export const EmployeInfo = () => {
               >
                 <option value="EMPLOYE">Employé</option>
                 <option value="SUPERVISEUR">Superviseur</option>
+                <option value="ADMIN">Administrateur</option>
                 <option value="GESTIONNAIRE">Gestionnaire</option>
               </select>
             </div>
