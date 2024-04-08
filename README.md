@@ -8,7 +8,7 @@ Caterina Rose Moquin Bosi - 300214914\
 Amani Louendriz - 300218319
 
 #Étapes pour l’installation de l’application
-1. Téléchargez nos fichiers sur github\
+1. Téléchargez nos fichiers sur github
 2. Création de serveur et la base de donnée sur Postgresql:\
    a. Créer un serveur sur Postgresql et nommez le: CSI-2532_e_hotel_projet\
    b. Faitent un “Register” d’un serveur\
