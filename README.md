@@ -7,25 +7,14 @@ Mélina Rochon - 300238765\
 Caterina Rose Moquin Bosi - 300214914\
 Amani Louendriz - 300218319
 
-##Étapes pour l’installation de l’application
-Téléchargez nos fichiers sur github: https://github.com/cat-29/e_hotel-CSI2532
-Création de serveur et la base de donnée sur Postgresql
-Créer un serveur sur Postgresql et nommez le: CSI-2532_e_hotel_projet 
-
-
-Figure 19: création du serveur sur PostGresql
-
-Faitent un “Register” d’un serveur
-
-Figure 20: Enregistrement du serveur
-
-Remplir les données comme ci: Name: CSI-2532_e_hotel_projet
-Avant de cliquer sur save, allez dans la section “Connection” et écrivez le hostname/address comme “localhost”. Assurez-vous que le port de connexion est bien 5432 et que le username est “postgres”. Choisissez un mot de passe et inscrivez le dans la section “Password”.
-
-
-Figure 21: Complétion des champs pour le serveur
-
-Exécuter le fichier creation_db.sql. Cette exécution devrait créer la base de données localement. Si celle-ci ne fonctionne pas, continuez avec ces instructions (si elle a fonctionné, passez à la section f): sélectionnez “Create”, puis “Database…”. Écrivez “hotelio” dans la partie “Database”.
+#Étapes pour l’installation de l’application
+1. Téléchargez nos fichiers sur github
+2. Création de serveur et la base de donnée sur Postgresql:
+   Créer un serveur sur Postgresql et nommez le: CSI-2532_e_hotel_projet
+   Faitent un “Register” d’un serveur
+   Remplir les données comme ci: Name: CSI-2532_e_hotel_projet
+   Avant de cliquer sur save, allez dans la section “Connection” et écrivez le hostname/address comme “localhost”. Assurez-vous que le port de connexion est bien 5432 et que le username est “postgres”. Choisissez un mot de passe et inscrivez le dans la section “Password”.
+   Exécuter le fichier creation_db.sql. Cette exécution devrait créer la base de données localement. Si celle-ci ne fonctionne pas, continuez avec ces instructions (si elle a fonctionné, passez à la section f): sélectionnez “Create”, puis “Database…”. Écrivez “hotelio” dans la partie “Database”.
 
 
 Figure 22: Création de la base de données
